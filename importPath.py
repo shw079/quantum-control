@@ -112,9 +112,10 @@ class import_path(tk.Tk):
 		self.current_x = self.current_y = 300
 		self.coordinate_list = []
 		
-	def load_from_file(self):
+	def load_from_file(self, filename=None):
 		'''Allow user to choose file for input'''
-		filename = filedialog.askopenfilename(parent=root, initialdir="./", title='Please select a file')
+		if filename == None:
+			filename = filedialog.askopenfilename(parent=root, initialdir="./", title='Please select a file')
 				
 		#is file an analytic function?
 		#if it is, import user_function() from file and assign output to coordinate_list
