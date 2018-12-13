@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
 class Visualization:
     """Class for visualizing data of a DataStore object.
 
@@ -23,7 +26,14 @@ class Visualization:
         """Plot the field over time
 
         """
-        pass
+        plt.figure(figsize=(8,8))
+        plt.plot(self.t, self.field[:,0], color="blue", lw=2, label="x field")
+        plt.plot(self.t, self.field[:,1], color="red", lw=2, label="y field")
+        plt.xlabel("Time [ps]")
+        plt.ylabel("Amplitude [V/A]")
+        plt.title("Control field over time")
+        plt.legend(loc="upper right")
+        plt.show()
 
     def density(self):
         """Plot probability density over time for 
