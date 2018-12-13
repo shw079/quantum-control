@@ -135,6 +135,8 @@ class import_path(tk.Tk):
 	def get_coordinates(self):
 		'''Returns the list of coordinates as numpy array'''
 		coords = np.array(self.coordinate_list)
+		#make sure starts at (0,0)
+		coords = coords - coords[0]
 		return coords
 		
 	def plot_coordinates(self):
