@@ -8,7 +8,7 @@ import numpy as np
 
 def user_function():
 
-	t_list = np.linspace(0,2*np.pi,1000)
+	t_list = np.linspace(np.pi/2.0,10*np.pi,1000)
 	coord_list = [ [np.cos(t)*t, np.sin(t)*t] for t in t_list ]
 	return coord_list
 

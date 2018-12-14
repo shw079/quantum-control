@@ -46,8 +46,8 @@ class import_path(tk.Tk):
 		
 		#intialize variables
 		self.counter = 0
-		self.previous_x = self.previous_y = 300
-		self.current_x = self.current_y = 300
+		self.previous_x = self.current_x = int(self.width/2.0)
+		self.previous_y = self.current_y = int(self.height/2.0)
 		self.coordinate_list = []
 		
 		#add buttons		
@@ -61,6 +61,9 @@ class import_path(tk.Tk):
 		self.bind('<B1-Motion>', self.position_previous)
 		self.canvas.bind('<B1-Motion>', self.draw_line)
 		self.bind('<B1-Motion>',self.record_coordinates)
+		
+	def __del__(self):
+		return
 
 	def position_previous(self,event):
 		'''Need the track the previous position for drawing lines'''
@@ -108,8 +111,8 @@ class import_path(tk.Tk):
 		#re-instatiate variables
 		#intialize variables
 		self.counter = 0
-		self.previous_x = self.previous_y = 300
-		self.current_x = self.current_y = 300
+		self.previous_x = self.current_x = int(self.width/2.0)
+		self.previous_y = self.current_y = int(self.height/2.0)
 		self.coordinate_list = []
 		
 	def load_from_file(self, filename=None):
@@ -142,10 +145,16 @@ class import_path(tk.Tk):
 	def plot_coordinates(self):
 		'''Plot coordinates held in coordinate list'''
 		coords = self.get_coordinates()
-		coords = root.get_coordinates()
-		color_idx = np.linspace(0, 1, len(coords))
-		for i in range(0,len(coords)):
-			plt.plot([coords[i,0]],[coords[i,1]],'o',color=plt.cm.cool(color_idx[i]))
+		
+		#subsample if more than 10,000 coordinates
+		if len(coords) >= 10000:
+			dp = int(len(coords)/1000)
+			coords_p = coords[::dp]
+		else:
+			coords_p = coords
+		color_idx = np.linspace(0, 1, len(coords_p))
+		for i in range(0,len(coords_p)):
+			plt.plot([coords_p[i,0]],[coords_p[i,1]],'o',color=plt.cm.cool(color_idx[i]))
 		plt.show()
 
 if __name__ == "__main__":
