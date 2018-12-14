@@ -39,12 +39,12 @@ class test_importPath(unittest.TestCase):
 		filename = "example_user_function.py"
 		root = importPath.import_path()
 		root.load_from_file(filename)
-		coords = root.get_coordinates()
+
+		root.after(500, lambda: root.clear())
+		root.after(1000, lambda: root.destroy())
+		root.mainloop()
 		
-		root.clear()
-		coords = root.get_coordinates()
-		
-		npt.assert_array_almost_equal(np.array([]),coords)
+		self.assertRaises(ValueError, root.get_coordinates)
 		self.assertEqual(root.previous_x,int(root.width/2.0))
 		self.assertEqual(root.current_x,int(root.width/2.0))
 		self.assertEqual(root.previous_y,int(root.height/2.0))

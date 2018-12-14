@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import messagebox
 import numpy as np
 import os
 import importlib
@@ -48,14 +49,20 @@ class import_path(tk.Tk):
 		self.counter = 0
 		self.previous_x = self.current_x = int(self.width/2.0)
 		self.previous_y = self.current_y = int(self.height/2.0)
-		self.coordinate_list = []
+		self.coordinate_array = np.array([])
 		
-		#add buttons		
+		#add buttons
+		self.button_help = tk.Button(self, text = "Help", command = self.instructions)
+		self.button_help.pack(side="top", fill="both", expand=True)
+		
 		self.button_clear = tk.Button(self, text = "Select File", command = self.load_from_file)
 		self.button_clear.pack(side="top", fill="both", expand=True)
 		
 		self.button_clear = tk.Button(self, text = "Clear", command = self.clear)
 		self.button_clear.pack(side="top", fill="both", expand=True)
+		
+		self.button_done = tk.Button(self, text = "Done", command = self.finished)
+		self.button_done.pack(side="top", fill="both", expand=True)
 		
 		#bind commands
 		self.bind('<B1-Motion>', self.position_previous)
@@ -64,6 +71,10 @@ class import_path(tk.Tk):
 		
 	def __del__(self):
 		return
+		
+	def instructions(self):
+		messagebox.showinfo("Help",
+		"To draw a path, simply click and drag in the black space provided. If you would like to load from file (either data or a function) please use the 'Select File' button. When  you are finished, click 'Done'. To erase any drawn or imported data, click 'Clear'.")
 
 	def position_previous(self,event):
 		'''Need the track the previous position for drawing lines'''
@@ -95,12 +106,12 @@ class import_path(tk.Tk):
 		'''Keep every coordinate in a list, but not repeating coordinates
 		NOTE: need to subtract y from height since pixels are recorded from top'''
 		
-		if len(self.coordinate_list) == 0:
-			self.coordinate_list.append([event.x, self.height - event.y])
+		if len(self.coordinate_array) == 0:
+			self.coordinate_array = np.array([[event.x, self.height - event.y]])
 		#don't record duplicates
 		else:
-			if event.x != self.coordinate_list[-1][0] or event.y != self.coordinate_list[-1][1]:
-				self.coordinate_list.append([event.x, self.height - event.y])
+			if event.x != self.coordinate_array[-1,0] or event.y != self.coordinate_array[-1,1]:
+				self.coordinate_array = np.row_stack((self.coordinate_array, np.array([[event.x, self.height - event.y]])))
 				
 	def clear(self):
 		'''Clear all data held in the object and start over'''
@@ -113,7 +124,7 @@ class import_path(tk.Tk):
 		self.counter = 0
 		self.previous_x = self.current_x = int(self.width/2.0)
 		self.previous_y = self.current_y = int(self.height/2.0)
-		self.coordinate_list = []
+		self.coordinate_array = np.array([])
 		
 	def load_from_file(self, filename=None):
 		'''Allow user to choose file for input'''
@@ -121,23 +132,26 @@ class import_path(tk.Tk):
 			filename = filedialog.askopenfilename(parent=root, initialdir="./", title='Please select a file')
 				
 		#is file an analytic function?
-		#if it is, import user_function() from file and assign output to coordinate_list
+		#if it is, import user_function() from file and assign output to coordinate_array
 		#else if data, import data
 		filename_no_ext, file_ext = os.path.splitext(filename)
 		if file_ext == '.py':
 			user_module = import_my_module(filename_no_ext, filename)
-			self.coordinate_list = user_module.user_function() #function MUST be named user_function()
+			self.coordinate_array = user_module.user_function() #function MUST be named user_function()
 		elif file_ext == '.dat':
-			self.coordinate_list = np.loadtxt(filename, comments = ('#'))
+			self.coordinate_array = np.loadtxt(filename, comments = ('#'))
 		else:
 			raise ValueError("Path provided must be to a file with either the '.py' (function) or '.dat' (data) extenstion")
-
-		#cleanup
+			
+	def finished(self):
 		self.destroy()
 		
 	def get_coordinates(self):
 		'''Returns the list of coordinates as numpy array'''
-		coords = np.array(self.coordinate_list)
+		coords = np.array(self.coordinate_array)
+		if len(coords) == 0:
+			raise ValueError("Error: No coordinates present")
+			return np.array([])
 		#make sure starts at (0,0)
 		coords = coords - coords[0]
 		return coords
@@ -145,6 +159,9 @@ class import_path(tk.Tk):
 	def plot_coordinates(self):
 		'''Plot coordinates held in coordinate list'''
 		coords = self.get_coordinates()
+		if len(coords) == 0:
+			raise ValueError("Error: No coordinates present")
+			return
 		
 		#subsample if more than 10,000 coordinates
 		if len(coords) >= 10000:
