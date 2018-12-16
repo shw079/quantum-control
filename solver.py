@@ -36,7 +36,7 @@ class PathToField(object):
         self._cosphi_sinphi = f.cosphi(const.m) @ f.sinphi(const.m)
         self._sinphi_cosphi = f.sinphi(const.m) @ f.cosphi(const.m)
 
-        self.field = np.zeros((self.n,2))
+        self.field = np.zeros((self.n,2), dtype=complex)
         self.field[0,:] = (self._get_Ainv(state) @ self._get_b(0, state)).reshape((2,)).real
     
     def calc_state_and_field(self):
@@ -47,7 +47,7 @@ class PathToField(object):
             state = op.RotorH(field).evolve(self.states[j-1], self.dt)
             field = self._get_Ainv(state) @ self._get_b(j, state)
             self.states[j] = state
-            self.field[j,:] = field.real.reshape((2,))
+            self.field[j,:] = field#.real.reshape((2,))
 
         field_const = 5.142 * 10**11 * 10**(-10)
         self.field = field_const * self.field
@@ -57,7 +57,7 @@ class PathToField(object):
 
 
     def __call__(self):
-        return self.path_obtained
+        return self.path_predicted
 
     def _velidate(self):
         pass
@@ -84,7 +84,7 @@ class PathToField(object):
         c = const.B**2/const.hbar**2
         b1 = self._ddpath[i,0] + np.real(c*state.get_expt(self._op1))
         b2 = self._ddpath[i,1] + np.real(c*state.get_expt(self._op2))
-        return np.array([b1,b2]).reshape((2,1))
+        return np.array([b1,b2])
 
 
 class FieldToPath(object):
