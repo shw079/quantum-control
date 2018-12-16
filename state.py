@@ -15,7 +15,7 @@ class State(object):
         if value is not None:
             self.value = value
         else:
-            self.value = np.zeros(m)
+            self.value = np.zeros(2*m+1)
         
 
     def get_value(self):
