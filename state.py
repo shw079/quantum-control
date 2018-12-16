@@ -9,10 +9,14 @@ class State(object):
     and functions to access the state
     """
 
-    def __init__(self, value, m):
+    def __init__(self, m, value=None):
         """ Initializes a State instance with appropriate length m """
-        self.value = value
         self.m = m
+        if value is not None:
+            self.value = value
+        else:
+            self.value = np.zeros(m)
+        
 
     def get_value(self):
         """ Allow for user to return values of state """
