@@ -41,6 +41,16 @@ class test_Functions(unittest.TestCase):
         for i in range(0,2*m+1):
             self.assertEqual(d2dphi2[i,i],-1*abs(i-8)**2)
 
+    def test_d2dt2(self):
+        dt = 1
+        xi,xf = 0,10
+        n = int((xf-xi)/dt) + 1
+        # f(x) = x^2
+        x = np.power(np.linspace(xi,xf, num=n, dtype=float),2)
+        ddx_truth = 2 * np.ones(n, dtype=float)
+        ddx = f.d2dt2(x,dt)
+        np.testing.assert_array_almost_equal(ddx, ddx_truth)
+
 
 if __name__ == '__main__':
     unittest.main()
