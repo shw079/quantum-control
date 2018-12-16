@@ -30,7 +30,7 @@ class State(object):
         """ returns the original input state, known as 'ket' """
         return self.value.reshape((2*self.m+1,1))
 
-    def get_expectation(self, operator):
+    def get_expt(self, operator):
         """ calculates the expectation value of the operator acting on the state
         < bra | operator | ket >
         """
