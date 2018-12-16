@@ -81,5 +81,13 @@ class RotorH(HamiltonianBase): # subclass of Hamiltonian (generation 3)
         state_f = U @ state_i.get_value()
         return State(const.m, state_f)
 
+class DipoleX(ObservableBase):
+    def __init__(self):
+        self.operator = f.cosphi(const.m)
+
+class DipoleY(ObservableBase):
+    def __init__(self):
+        self.operator = f.sinphi(const.m)
+
 
 

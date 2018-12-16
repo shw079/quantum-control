@@ -2,6 +2,8 @@
 '''
 
 import numpy as np
+from state import State
+import operators as op
 
 def cosphi(m):
     """Calculates for x component of path """
@@ -38,3 +40,11 @@ def d2dt2(x,dt): # pass in a 1d np.array
         d2x[i] = ((x[i+1]-x[i])-(x[i]-x[i-1]))/(dt**2)
     d2x[n-1] = (x[n-3]-2*x[n-2]+x[n-1])/(dt**2)
     return d2x
+
+def states_to_path(states):
+    n = states.shape[1]
+    path = np.zeros((n,2))
+    for i in range(n):
+        path[i,1] = op.DipoleX().get_expt( states[i] )
+        path[i,2] = op.DipoleY().get_expt( states[i] )
+    return path
