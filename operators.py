@@ -35,7 +35,8 @@ class ObservableBase(ObservableAbstract):
         return self.operator @ State.as_ket()
 
     def get_expt(self, State):
-        return State.as_bra() @ self.operator @ State.as_ket()
+        expt = State.as_bra() @ self.operator @ State.as_ket()
+        return np.asscalar(expt)
 
 class HamiltonianBase(ObservableBase): # subclass of operator (generation 2)
     """ A Hamiltonian is one type of operator that is used to evolve the system

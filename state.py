@@ -34,4 +34,5 @@ class State(object):
         """ calculates the expectation value of the operator acting on the state
         < bra | operator | ket >
         """
-        return self.as_bra() @ operator @ self.as_ket()
+        expt = self.as_bra() @ operator @ self.as_ket()
+        return np.asscalar(expt)

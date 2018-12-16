@@ -42,9 +42,9 @@ def d2dt2(x,dt): # pass in a 1d np.array
     return d2x
 
 def states_to_path(states):
-    n = states.shape[1]
+    n = len(states)
     path = np.zeros((n,2))
     for i in range(n):
-        path[i,1] = op.DipoleX().get_expt( states[i] )
-        path[i,2] = op.DipoleY().get_expt( states[i] )
+        path[i,0] = op.DipoleX().get_expt( states[i] ).real
+        path[i,1] = op.DipoleY().get_expt( states[i] ).real
     return path
