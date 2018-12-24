@@ -7,7 +7,7 @@ import constants as const
 from operators import *
 from state import State
 import functions as f
-from field import Field
+from solver import *
 from scipy import linalg
 
 # class test_Path(unittest.TestCase):
@@ -34,20 +34,39 @@ from scipy import linalg
 #     	expected_y = np.conj(state_input).reshape((1,2*const.m+1))@path_obj.operator[1]@state_input.reshape((2*const.m+1,1))
 #     	np.testing.assert_array_equal(path_obj.get_value(),[expected_x.item(0),expected_y.item(0)])
 
+class test_Dipole(unittest.TestCase):
+
+    def test_dipoleX(self):
+        dipoleX_obj = DipoleX()
+        m=8
+        expected_dipoleX = f.cosphi(m)
+        np.testing.assert_array_equal(dipoleX_obj.operator,expected_dipoleX)
+
+    def test_dipoleY(self):
+        dipoleY_obj = DipoleY()
+        m=8
+        expected_dipoleY = f.sinphi(m)
+        np.testing.assert_array_equal(dipoleY_obj.operator,expected_dipoleY)
 
 class test_RotorH(unittest.TestCase):
 
-    def test_H_operator(self):
+    '''def test_H_operator(self):
         """test path constructor"""
         n=10
         t = 0
         field_input = np.arange(0,2)
-        field_obj = Field(n)
+        #field_obj = Field(n)
+     	path = [1,2]
+        field_obj = PathToField(n)
         field_obj.set_value(t,field_input)
         field = field_obj.get_value()
         rotor_obj = RotorH(field[0,:])
         expected_H = const.B*np.diag((np.arange(-const.m,const.m+1))**2,k=0)-const.mu*f.cosphi(const.m)*field[0,0]-const.mu*f.sinphi(const.m)*field[0,1]
         np.testing.assert_array_equal(rotor_obj.operator,expected_H)
+        '''
+
+
+        
 
     # def test_act_on_state(self):
     # 	"""test operating in state to obtain new state"""
