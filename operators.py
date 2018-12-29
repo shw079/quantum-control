@@ -12,7 +12,7 @@ from state import State
 
 
 #abstract base classes
-class ObservableAbstract(abc.ABC):
+class Observable(abc.ABC):
     """ An Operator is a variable that can be represented as an expectation value < variable|operator|variable >
     Class Operator provides types of operators and methods to utilize them.  This class is an abstract base class.
     """
@@ -22,23 +22,27 @@ class ObservableAbstract(abc.ABC):
         """Initialize with matrix repr of operator"""
         pass
 
-    @abc.abstractmethod
-    def act_on_a_state(self, state):
-        pass
-
-    @abc.abstractmethod
-    def get_expt(self, State):
-        pass
-
-class ObservableBase(ObservableAbstract):
     def act_on_a_state(self, State):
+        """Apply operator from the left to a state ket-vector.
+
+        Takes a State object as input arg. Returns a ket-vector of shape 
+        same as the one of State.as_ket().
+
+        """
+        
         return self.operator @ State.as_ket()
 
     def get_expt(self, State):
+        """Calculate the expectation value of a observable given a state.
+
+        Takes a State object as input arg. Returns a scalar.
+
+        """
+        
         expt = State.as_bra() @ self.operator @ State.as_ket()
         return np.asscalar(expt)
 
-class HamiltonianBase(ObservableBase): # subclass of operator (generation 2)
+class Hamiltonian(Observable): # subclass of operator (generation 2)
     """ A Hamiltonian is one type of operator that is used to evolve the system
     Class Operator provides methods to operate on the state and evolve the system
     """
@@ -66,7 +70,7 @@ class HamiltonianBase(ObservableBase): # subclass of operator (generation 2)
 #     def set_value(self, xy):
 #         self.value = xy # xy is a 1x2 array of a single time point of path trajectory
 
-class RotorH(HamiltonianBase): # subclass of Hamiltonian (generation 3)
+class RotorH(Hamiltonian): # subclass of Hamiltonian (generation 3)
     """ RotorH is a specific type of Hamiltonian that is used to evolve the system by operating on the state  
     Class RotorH is a subclass of Hamiltonian, which is a subclass of Operator.
     """
@@ -82,11 +86,11 @@ class RotorH(HamiltonianBase): # subclass of Hamiltonian (generation 3)
         state_f = U @ state_i.get_value()
         return State(const.m, state_f)
 
-class DipoleX(ObservableBase):
+class DipoleX(Observable):
     def __init__(self):
         self.operator = f.cosphi(const.m)
 
-class DipoleY(ObservableBase):
+class DipoleY(Observable):
     def __init__(self):
         self.operator = f.sinphi(const.m)
 
