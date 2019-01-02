@@ -10,12 +10,36 @@ from state import State
 
 class test_State(unittest.TestCase):
 
-    def test_get_value(self):
-        """check constructor and get_value"""
-        state_input = np.arange(0,2*const.m+1)
-        state_obj = State(const.m,state_input)
-        np.testing.assert_array_equal(state_obj.get_value(), state_input)
-        
+    # def test_get_value(self):
+    #     """check constructor and get_value"""
+    #     state_input = np.arange(0,2*const.m+1)
+    #     state_obj = State(const.m,state_input)
+    #     np.testing.assert_array_equal(state_obj.get_value(), state_input)
+    
+    def test_init(self):
+        """Init with or without specified state probability."""
+        m = 5
+        value = np.zeros(2*m+1)
+        state = State(m)
+        np.testing.assert_array_equal(state.value, value)
+
+        value = np.ones(2*m+1)
+        state = State(m, value)
+        np.testing.assert_array_equal(state.value, value)
+
+    def test_init_input(self):
+        m = 5
+        #correct input
+        value = np.ones(2*m+1)
+        state = State(m, value)
+        np.testing.assert_array_equal(state.value, value)
+        #incorrect input type
+        value = [1]*(2*m+1)
+        self.assertRaises(TypeError, State, m, value)
+        #incorrect input size
+        value = np.ones(m)
+        self.assertRaises(ValueError, State, m, value)
+
     def test_calc_bra(self):
     	"""calculate bra or complex conjugate of input state"""
     	state_input = (np.arange(0,2*const.m+1))*1j

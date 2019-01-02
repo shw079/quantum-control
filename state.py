@@ -10,17 +10,29 @@ class State(object):
     """
 
     def __init__(self, m, value=None):
-        """ Initializes a State instance with appropriate length m """
-        self.m = m
-        if value is not None:
-            self.value = value
-        else:
-            self.value = np.zeros(2*m+1)
-        
+        """Initializes a State instance with quantum number m and 
+        optionally probablility of each quantum state.
+        """
 
-    def get_value(self):
-        """ Allow for user to return values of state """
-        return self.value
+        self.m = m
+
+        #with no probability specified
+        if value is None:
+            self.value = np.zeros(int(2*m+1))
+        #check format of input probability
+        #maybe in the future can accept array-like
+        elif not isinstance(value, np.ndarray):
+            errmsg = "Expect np.array to be input."
+            raise TypeError(errmsg)
+        elif value.size is not (2*m+1):
+            errmsg = "Expect input to have " + str(2*m+1) + " elements."
+            raise ValueError(errmsg)
+        else: 
+            self.value = value
+        
+    # def get_value(self):
+    #     """ Allow for user to return values of state """
+    #     return self.value
 
     def as_bra(self):
         """ calculates the complex conjugate of the input state, known as 'bra' """
