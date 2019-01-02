@@ -83,7 +83,7 @@ class RotorH(Hamiltonian): # subclass of Hamiltonian (generation 3)
 
     def evolve(self, state_i, dt): # maybe not be necessary for this function to exist, could possibly combine with act_on_state
         U = linalg.expm((-1j/const.hbar)*self.operator*dt)
-        state_f = U @ state_i.get_value()
+        state_f = U @ state_i.as_ket()
         return State(const.m, state_f)
 
 class DipoleX(Observable):

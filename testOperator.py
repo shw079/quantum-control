@@ -39,14 +39,11 @@ class test_RotorH(unittest.TestCase):
 
     def test_H_operator(self):
         """test path constructor"""
-        n=10
-        t = 0
         field_input = np.arange(0,2)
-        field_obj = Field(n)
-        field_obj.set_value(t,field_input)
-        field = field_obj.get_value()
-        rotor_obj = RotorH(field[0,:])
-        expected_H = const.B*np.diag((np.arange(-const.m,const.m+1))**2,k=0)-const.mu*f.cosphi(const.m)*field[0,0]-const.mu*f.sinphi(const.m)*field[0,1]
+        field_obj = Field(field_input)
+        field = field_obj.value
+        rotor_obj = RotorH(field)
+        expected_H = const.B*np.diag((np.arange(-const.m,const.m+1))**2,k=0)-const.mu*f.cosphi(const.m)*field[0]-const.mu*f.sinphi(const.m)*field[1]
         np.testing.assert_array_equal(rotor_obj.operator,expected_H)
 
     # def test_act_on_state(self):
@@ -75,14 +72,13 @@ class test_RotorH(unittest.TestCase):
     	state_input = (np.arange(0,2*const.m+1))*1j
     	state_obj = State(const.m,state_input)
     	# generate rotor object
-    	n=10
     	t = 0
     	field = np.arange(0,2)
     	rotor_obj = RotorH(field)
     	# act on state function called
     	new_state = rotor_obj.evolve(state_obj,1)
     	expected_operator = const.B*np.diag((np.arange(-const.m,const.m+1))**2,k=0)-const.mu*f.cosphi(const.m)*field[0]-const.mu*f.sinphi(const.m)*field[1]
-    	expected_new_state = (linalg.expm((-1j/const.hbar)*expected_operator*(t+1)))@state_obj.value
+    	expected_new_state = (linalg.expm((-1j/const.hbar)*expected_operator*(t+1)))@state_obj.as_ket()
     	np.testing.assert_array_equal(new_state.value,expected_new_state)
 
 if __name__ == '__main__':
