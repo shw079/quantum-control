@@ -13,8 +13,12 @@ from state import State
 
 #abstract base classes
 class Observable(abc.ABC):
-    """ An Operator is a variable that can be represented as an expectation value < variable|operator|variable >
-    Class Operator provides types of operators and methods to utilize them.  This class is an abstract base class.
+    """
+    An Operator is a variable that can be represented as an expectation 
+    value < variable|operator|variable >. Class Operator provides types 
+    of operators and methods to utilize them.  This class is an 
+    abstract base class.
+
     """
 
     @abc.abstractmethod
@@ -43,8 +47,11 @@ class Observable(abc.ABC):
         return np.asscalar(expt)
 
 class Hamiltonian(Observable): # subclass of operator (generation 2)
-    """ A Hamiltonian is one type of operator that is used to evolve the system
-    Class Operator provides methods to operate on the state and evolve the system
+    """A Hamiltonian is an operator corresponding with observable energy.
+
+    A Hamiltonian can is also used to derive a unitary operator to evolve 
+    the system in time. Class Operator provides methods to operate on the 
+    state and evolve the system.
     """
 
     @abc.abstractmethod
@@ -71,15 +78,19 @@ class Hamiltonian(Observable): # subclass of operator (generation 2)
 #         self.value = xy # xy is a 1x2 array of a single time point of path trajectory
 
 class RotorH(Hamiltonian): # subclass of Hamiltonian (generation 3)
-    """ RotorH is a specific type of Hamiltonian that is used to evolve the system by operating on the state  
-    Class RotorH is a subclass of Hamiltonian, which is a subclass of Operator.
+    """A specific type of Hamiltonian that described the rotor molecule.
+
+    Rotor Hamiltonian is described by the basis and the field. Class RotorH 
+    is a subclass of Hamiltonian, which is a subclass of Observable.
     """
-    def __init__(self, field): # pass in field array at a single time point
+    def __init__(self, m, field): # pass in field array at a single time point
         #Hamiltonian.__init__([f.cosphi(const.m),f.sinphi(const.m)]). 
         # I used f.cosphi and f.sinphi here because I could not find a good way to inherit operator from Hamiltonian parent class
         # maybe there is a better way for inheritance bu the only methods I found were to initialize Hamiltonian inside RotorH, which seems backwards
         # so I resolved to just call constphi from functions.py, and did not use self.operator from Hamiltonian
-        self.operator = const.B*np.diag((np.arange(-const.m,const.m+1))**2,k=0)-const.mu*f.cosphi(const.m)*field[0]-const.mu*f.sinphi(const.m)*field[1]
+        self.operator = (const.B*np.diag((np.arange(-m,m+1))**2,k=0)
+                        -const.mu*f.cosphi(m)*field[0]
+                        -const.mu*f.sinphi(m)*field[1])
 
     def evolve(self, state_i, dt): # maybe not be necessary for this function to exist, could possibly combine with act_on_state
         U = linalg.expm((-1j/const.hbar)*self.operator*dt)
@@ -87,12 +98,12 @@ class RotorH(Hamiltonian): # subclass of Hamiltonian (generation 3)
         return State(const.m, state_f)
 
 class DipoleX(Observable):
-    def __init__(self):
-        self.operator = f.cosphi(const.m)
+    def __init__(self, m):
+        self.operator = f.cosphi(m)
 
 class DipoleY(Observable):
-    def __init__(self):
-        self.operator = f.sinphi(const.m)
+    def __init__(self, m):
+        self.operator = f.sinphi(m)
 
 
 

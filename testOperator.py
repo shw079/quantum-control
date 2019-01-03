@@ -42,7 +42,7 @@ class test_RotorH(unittest.TestCase):
         field_input = np.arange(0,2)
         field_obj = Field(field_input)
         field = field_obj.value
-        rotor_obj = RotorH(field)
+        rotor_obj = RotorH(const.m, field)
         expected_H = const.B*np.diag((np.arange(-const.m,const.m+1))**2,k=0)-const.mu*f.cosphi(const.m)*field[0]-const.mu*f.sinphi(const.m)*field[1]
         np.testing.assert_array_equal(rotor_obj.operator,expected_H)
 
@@ -74,12 +74,25 @@ class test_RotorH(unittest.TestCase):
     	# generate rotor object
     	t = 0
     	field = np.arange(0,2)
-    	rotor_obj = RotorH(field)
+    	rotor_obj = RotorH(const.m, field)
     	# act on state function called
     	new_state = rotor_obj.evolve(state_obj,1)
     	expected_operator = const.B*np.diag((np.arange(-const.m,const.m+1))**2,k=0)-const.mu*f.cosphi(const.m)*field[0]-const.mu*f.sinphi(const.m)*field[1]
     	expected_new_state = (linalg.expm((-1j/const.hbar)*expected_operator*(t+1)))@state_obj.as_ket()
     	np.testing.assert_array_equal(new_state.value,expected_new_state)
+
+class test_Dipole(unittest.TestCase):
+    def test_DipoleX_init(self):
+        m = const.m
+        dipole_x = DipoleX(m)
+        self.assertTrue(dipole_x.operator.shape == (2*m+1,2*m+1))
+
+    def test_DipoleX_get_expt(self):
+        m = const.m
+        state = State(m)
+        state.value[m] = 1
+        dipole_x = DipoleX(m)
+        dipole_x.get_expt(state)
 
 if __name__ == '__main__':
     unittest.main()
