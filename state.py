@@ -28,7 +28,7 @@ class State(object):
             errmsg = "Expect input to have " + str(2*m+1) + " elements."
             raise ValueError(errmsg)
         else: 
-            self.value = value
+            self.value = value.reshape((2*m+1,))
         
     # def get_value(self):
     #     """ Allow for user to return values of state """

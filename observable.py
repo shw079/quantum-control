@@ -89,8 +89,8 @@ class RotorH(Hamiltonian): # subclass of Hamiltonian (generation 3)
         # maybe there is a better way for inheritance bu the only methods I found were to initialize Hamiltonian inside RotorH, which seems backwards
         # so I resolved to just call constphi from functions.py, and did not use self.operator from Hamiltonian
         self.operator = (const.B*np.diag((np.arange(-m,m+1))**2,k=0)
-                        -const.mu*f.cosphi(m)*field[0]
-                        -const.mu*f.sinphi(m)*field[1])
+                        -const.mu*f.cosphi(m)*field.value[0]
+                        -const.mu*f.sinphi(m)*field.value[1])
 
     def evolve(self, state_i, dt): # maybe not be necessary for this function to exist, could possibly combine with act_on_state
         U = linalg.expm((-1j/const.hbar)*self.operator*dt)
