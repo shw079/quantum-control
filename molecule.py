@@ -47,6 +47,14 @@ class Rotor(Molecule):
         #calculate and set the new hamiltonian
         self.hamiltonian = obs.RotorH(self.m, field)
 
+    def get_states_asarray(self):
+        states = [state.value.flatten() for state in self.history['state']]
+        return np.stack(states, axis=1)
+
+    def get_fields_asarray(self):
+        fields = [field.value.flatten() for field in self.history['field']]
+        return np.stack(fields, axis=0)
+
 
 
 
