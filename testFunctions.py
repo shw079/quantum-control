@@ -1,8 +1,9 @@
-'''testDataStore.py
+'''testFunctions.py
 '''
 import unittest
 import numpy as np
 import functions as f
+import constants as const
 
 
 class test_Functions(unittest.TestCase):
@@ -50,6 +51,26 @@ class test_Functions(unittest.TestCase):
         ddx_truth = 2 * np.ones(n, dtype=float)
         ddx = f.d2dt2(x,dt)
         np.testing.assert_array_almost_equal(ddx, ddx_truth)
+
+    def test_d2dt2_sigmoid(self):
+        #import path and expected result
+        fname_path = 'testdata_solver/sigmoid_path.txt'
+        fname_d2dt2 = 'testdata_solver/sigmoid_path_d2dt2.txt'
+        path = np.genfromtxt(fname_path, dtype=float, delimiter=',')
+        d2dt2_truth = np.genfromtxt(fname_d2dt2, dtype=float, delimiter=',')
+
+        #determine dt
+        n = 100000
+        rotor_period = 2*np.pi*const.hbar/const.B
+        t_final = 100*rotor_period/(2*np.pi)
+        dt = t_final/n
+
+        #calculate second derivative using f.d2dt2()
+        d2dt2 = np.stack( (f.d2dt2(path[:,0],dt), f.d2dt2(path[:,1],dt)) , axis=1)
+
+        #compare calculated result with expected result
+        np.testing.assert_array_almost_equal(d2dt2, d2dt2_truth)
+
 
 
 if __name__ == '__main__':
