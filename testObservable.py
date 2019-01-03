@@ -4,7 +4,7 @@
 import unittest
 import numpy as np
 import constants as const
-from operators import *
+from observable import *
 from state import State
 import functions as f
 from field import Field
