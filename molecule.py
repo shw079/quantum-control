@@ -14,20 +14,6 @@ class Molecule(abc.ABC):
         """Evolve the state to next time point by a unitary operator"""
         pass
 
-    # @abc.abstractmethod
-    # def set_field(self):
-    #     """Let user set value of field and then update Hamiltonian"""
-    #     pass
-
-    # @abc.abstractmethod
-    # def _recalc_Hamiltonian(self):
-    #     pass
-
-    # @abc.abstractmethod
-    # def _update_history(self, attr):
-    #     """Aggregate newly assigned value for a specific attribute to its history"""
-    #     pass
-
 class Rotor(Molecule):
     def __init__(self, m):
         self.m = m
@@ -44,12 +30,23 @@ class Rotor(Molecule):
     def evolve(self, dt):
         #Use haniltonian to evolve the current state 
         state_new = self.hamiltonian.evolve(self.state, dt)
-        self.update_attr('state', state_new)
-        self.update_attr('time', self.time+dt)
+        self.update_state(state_new)
+        self.update_time(self.time+dt)
 
-    def update_attr(self, attr, value):
-        setattr(self, attr, value)
-        self.history[attr].append(value)
+    def update_time(self, value):
+        self.time = value
+        self.history['time'].append(value)
+
+    def update_state(self, state):
+        self.state = state
+        self.history['state'].append(state)
+
+    def update_field(self, field):
+        self.field = field
+        self.history['field'].append(field)
+        #calculate and set the new hamiltonian
+        self.hamiltonian = obs.RotorH(self.m, field)
+
 
 
 

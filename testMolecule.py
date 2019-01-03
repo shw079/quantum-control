@@ -18,14 +18,18 @@ class test_molecule(unittest.TestCase):
 
     def test_update_attr(self):
         rotor = Rotor(const.m)
-        rotor.update_attr('time', 1.0)
-        rotor.update_attr('state', State(const.m))
-        rotor.update_attr('field', Field(np.array([1, 1])))
+        rotor.update_time(1.0)
+        rotor.update_state(State(const.m))
+        rotor.update_field(Field(np.array([1, 1])))
         for attr in rotor.history:
             self.assertTrue(len(rotor.history[attr]) == 2)
 
     def test_evolve(self):
-        pass
+        rotor = Rotor(const.m)
+        for i in range(5):
+            rotor.evolve(0.1)
+        self.assertTrue(len(rotor.history['state']) == 6)
+
 
 
 
