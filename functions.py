@@ -34,7 +34,7 @@ def d2dt2(x,dt): # pass in a 1d np.array
     """Calculate second derivative of path using centered finite differences, used for solving b-vector in pathtofield"""
     # initial step (finite differences method)
     n=len(x)
-    d2x = np.zeros(n,dtype=complex)
+    d2x = np.zeros(n,dtype=float)
     d2x[0] = (x[2]-2*x[1]+x[0])/(dt**2)
     for i in range(1,n-1):
         d2x[i] = ((x[i+1]-x[i])-(x[i]-x[i-1]))/(dt**2)
