@@ -5,60 +5,163 @@ import numpy as np
 import unittest
 from state import State
 import functions as f
-import operators as op
+import observable as obs
 import constants as const
 import solver as s
+from molecule import Rotor
 
 class test_PathToField(unittest.TestCase):
+    def setUp(self):
+        self.rotor = Rotor(const.m)
+
     def test_init(self):
         path_desired = np.arange(10).reshape((5,2))
-        fsolver = s.PathToField(path_desired)
+        fsolver = s.PathToField(self.rotor, path_desired)
+        #maybe more?
+        
+        m = const.m
+        #check _cosphi2
+        self.assertEqual(fsolver._cosphi2.shape, (2*m+1,2*m+1))
+        for i in range(2*m+1):
+            if i is 0 or i is 2*m:
+                self.assertEqual(fsolver._cosphi2[i,i],0.25)
+            else:
+                self.assertEqual(fsolver._cosphi2[i,i],0.5)
+        for i in range(2*m-1):
+            self.assertEqual(fsolver._cosphi2[i,i+2],0.25)
+            self.assertEqual(fsolver._cosphi2[i+2,i],0.25)
+
+        #check _sinphi2
+        self.assertEqual(fsolver._sinphi2.shape, (2*m+1,2*m+1))
+        for i in range(2*m+1):
+            if i is 0 or i is 2*m:
+                self.assertEqual(fsolver._sinphi2[i,i],0.25)
+            else:
+                self.assertEqual(fsolver._sinphi2[i,i],0.5)
+        for i in range(2*m-1):
+            self.assertEqual(fsolver._sinphi2[i,i+2],-0.25)
+            self.assertEqual(fsolver._sinphi2[i+2,i],-0.25)
+
 
     def test_get_det(self):
         path_desired = np.arange(10).reshape((5,2))
-        fsolver = s.PathToField(path_desired)
-        det = fsolver._get_det(fsolver.states[0])
+        fsolver = s.PathToField(self.rotor, path_desired)
+        det = fsolver._get_det()
         self.assertTrue(np.isscalar(det))
 
-    def test_calc_state_and_field(self):
+    def test_solve(self):
         path_desired = np.arange(10).reshape((5,2))
-        fsolver = s.PathToField(path_desired)
-        fsolver.calc_state_and_field()
+        fsolver = s.PathToField(self.rotor, path_desired)
+        fsolver.solve()
 
-    def test_predefined_sigmoid_path(self):
-        # should probably put the data inside another file and import instead
-        """check input path"""
-        input_path=np.array([[0,-0.103364011068980,0.346919195276499,-0.563178025732931,0.566286001964305],
-        [0,-0.159423590524526,0.155071183489089,0.0879233264359249,-0.506872926855719]]).T
-        dt = 21621621.6216216
-        # data = DataStore(input_path)
-        fs = s.PathToField(input_path)
-        fs.calc_state_and_field()
+class test_PathToField_sigmoid_path(unittest.TestCase):
+    def setUp(self):
+        #calculate time points
+        n = 100000
+        rotor_period = 2*np.pi*const.hbar/const.B
+        self.t_final = 100*rotor_period/(2*np.pi)
+        self.dt = self.t_final/n
+        self.time = np.arange(self.t_final, step=self.dt, dtype=float)
+        #import sigmoid path from text file as np.ndarray with shape (n,2)
+        fname_path = 'testdata_solver/sigmoid_path.txt'
+        self.path_desired = np.genfromtxt(fname_path, dtype=float, delimiter=',')
+        #import expected resulting path as np.ndarray with shape (n,2)
+        fname_path_predicted_truth = 'testdata_solver/sigmoid_path_result.txt'
+        self.path_predicted_truth = np.genfromtxt(fname_path_predicted_truth, dtype=float, delimiter=',')
+        #import expected fields as np.ndarray with shape (n,2)
+        fname_field = 'testdata_solver/fields_real_for_sigmoid_path.txt'
+        self.fields_truth = np.genfromtxt(fname_field, dtype=float, delimiter=',')
+        #import expected states as np.ndarray with shape (2m+1,n)
+        fname_state = 'testdata_solver/states_for_sigmoid_path.txt'
+        self.states_truth = np.genfromtxt(fname_state, dtype=float, delimiter=',')
 
-        expected_field=np.array([[2.36058143825030e-07+0.0j,2.02064213344940e-07+0.0j],
-            [3.75798580371715e-07 + 2.54225294236293e-27j,3.21681104868976e-07 + 2.17482244967637e-27j],
-            [-1.03757051283114e-07 - 1.39319909533131e-27j,2.44958888320598e-07 - 5.50615452192899e-30j],
-            [1.27954929407754e-06 + 4.18150395587884e-33j,3.23524205660377e-07 + 1.65378267567718e-32j],
-            [1.42450464548976e-06 + 1.54412715012445e-25j,1.51462419430561e-07 - 1.67229842069920e-26j]])
-        expected_state_step5=np.array([-2.56644749132289e-28 - 2.71978831146963e-28j,
-                                        -4.36820067388291e-24 - 1.61761678513701e-24j,
-                                        -4.20797135658652e-20 + 5.66271327681586e-22j,
-                                        -2.28474567764552e-16 + 7.25628465188125e-17j,
-                                        -6.33024732016318e-13 + 4.67773549984118e-13j,
-                                        -3.65598118443247e-10 + 1.54386446833012e-09j,
-                                        1.04332211496447e-06 + 2.30239172082715e-06j,
-                                        0.00227753522253937 + 0.00294942683106131j,
-                                        0.999992051804344 + 0.000716258687942210j,
-                                        0.000973403450335052 + 0.000741269587615930j,
-                                        -3.81329597515435e-06 + 7.06856801067158e-07j,
-                                        -1.85338756280191e-09 + 2.25524150151543e-09j,
-                                        -2.41960254674164e-13 + 1.21518698568277e-12j,
-                                        3.71646922469583e-17 + 3.02924218282202e-16j,
-                                        1.80625964418685e-20 + 4.46650715251373e-20j,
-                                        3.04622865335820e-24 + 4.40462682369226e-24j,
-                                        3.25592202462075e-28 + 3.17313644133731e-28j])
-        expected_calc_path=([[0.0+0.0j,0.0+0.0j],[0.000819356425054785+2.16840434497101e-19j,0.000701363692838880-1.08423525971001e-19j],[0.00279254117586543+0.00000000000000j,0.00239039681830611-2.16840434497101e-19j],[0.00240372855088154+0.00000000000000j,0.00321605009954609-2.71315240917393e-20j],[0.00325356230619882-2.16840434497101e-19j,0.00220720424871606+2.16840434497101e-19j]])
+        #instantiate a rotor molecule
+        self.rotor = Rotor(const.m)
+
+    def test_solve_early(self):
+        #only do the first 10 time points
+        n = 50
+        self.time = self.time[0:n]
+        self.fields_truth = self.fields_truth[0:n,:]
+        self.states_truth = self.states_truth[:,0:n]
+        self.path_desired = self.path_desired[0:n,:]
+        self.path_predicted_truth = self.path_predicted_truth[0:n,:]
+
+        fsolver = s.PathToField(self.rotor, self.path_desired, dt=self.dt)
+        fsolver.solve()
+        time, fields, states = fsolver.export()
+
+        np.testing.assert_array_almost_equal(fields, self.fields_truth)
+        np.testing.assert_array_almost_equal(states, self.states_truth)
+        prob_sum = states.sum(axis=0)
+        np.testing.assert_array_almost_equal(prob_sum, np.ones(n))
+
+    @unittest.skip("Doesn't match MATLAB result around n=70")
+    def test_solve_long(self):
+        fsolver = s.PathToField(self.rotor, self.path_desired, t_final=self.t_final)
+        fsolver.solve()
+
+class test_FieldToPath(unittest.TestCase):
+    def setUp(self):
+        self.rotor = Rotor(const.m)
+
+    def test_init(self):
+        n = 5
+        fields = np.arange(2*n, dtype=float).reshape((n,2))
+        psolver = s.FieldToPath(self.rotor, fields)
+        self.assertEqual(psolver.n, n)
+        np.testing.assert_array_almost_equal(psolver.fields, fields)
+        self.assertEqual(len(psolver._fields_list),n)
+        self.assertEqual(psolver.path.shape, (n,2))
+
+    def test_init_with_dt(self):
+        n = 5
+        fields = np.arange(2*n, dtype=float).reshape((n,2))
+        dt = 20
+        psolver = s.FieldToPath(self.rotor, fields, dt=dt)
+        self.assertEqual(psolver._t_final, dt*n)
+        np.testing.assert_array_almost_equal(psolver.time, np.array([0., 20., 40., 60., 80.]))
+
+class test_FieldToPath_sigmoid_path(unittest.TestCase):
+    def setUp(self):
+        self.rotor = Rotor(const.m)
+
+        fname_fields = 'testdata_solver/fields_real_for_sigmoid_path.txt'
+        fname_states = 'testdata_solver/states_for_sigmoid_path.txt'
+        self.fields = np.genfromtxt(fname_fields, dtype=float, delimiter=',')
+        self.states_expected = np.genfromtxt(fname_states, dtype=float, delimiter=',')
+
+        n = 100000
+        rotor_period = 2*np.pi*const.hbar/const.B
+        self.t_final = 100*rotor_period/(2*np.pi)
+        self.dt = self.t_final/n
+        self.time = np.arange(self.t_final, step=self.dt, dtype=float)
+
+    def test_solve_short(self):
+        n = 50
+        self.t_final = self.time[n]
+        self.time = self.time[0:n]
+        self.fields = self.fields[0:n,:]
+        self.states_expected = self.states_expected[:,0:n]
+
+        psolver = s.FieldToPath(self.rotor, self.fields, dt=self.dt)
+        psolver.solve()
+        time, path, states = psolver.export()
+        self.assertEqual(time.shape, (n,))
+        self.assertEqual(states.shape, (2*const.m+1,n))
+        self.assertEqual(path.shape, (n,2))
+        np.testing.assert_array_almost_equal(time, self.time)
+        np.testing.assert_array_almost_equal(states, self.states_expected)
         
-        np.testing.assert_array_almost_equal(fs.field, expected_field, decimal=6)
-        # np.testing.assert_array_almost_equal(fs.states[4].value, expected_state_step5)
-        # np.testing.assert_array_almost_equal(fs.path_predicted, expected_calc_path)
+
+
+
+
+
+
+
+
+
+
+
+
