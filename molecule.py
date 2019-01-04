@@ -36,6 +36,8 @@ class Rotor(Molecule):
     def set_field(self, field):
         self.field = field
         self.hamiltonian = obs.RotorH(self.m, field)
+        # rewrite history manually
+        self.history['field'][-1] = field
 
     def update_time(self, value):
         self.time = value
@@ -50,6 +52,10 @@ class Rotor(Molecule):
         self.history['field'].append(field)
         #calculate and set the new hamiltonian
         self.hamiltonian = obs.RotorH(self.m, field)
+
+    def get_time_asarray(self):
+        times = [time for time in self.history['time']]
+        return np.stack(times)
 
     def get_states_asarray(self):
         states = [state.value.flatten() for state in self.history['state']]
