@@ -33,6 +33,10 @@ class Rotor(Molecule):
         self.update_state(state_new)
         self.update_time(self.time+dt)
 
+    def set_field(self, field):
+        self.field = field
+        self.hamiltonian = obs.RotorH(self.m, field)
+
     def update_time(self, value):
         self.time = value
         self.history['time'].append(value)
