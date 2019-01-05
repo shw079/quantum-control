@@ -1,14 +1,14 @@
-'''testSolver.py
+'''test_solver.py
 '''
 
 import numpy as np
 import unittest
-from state import State
-import functions as f
-import observable as obs
-import constants as const
-import solver as s
-from molecule import Rotor
+from .state import State
+from . import functions as f
+from . import observable as obs
+from . import constants as const
+from . import solver as s
+from .molecule import Rotor
 
 class test_PathToField(unittest.TestCase):
     def setUp(self):
@@ -63,16 +63,16 @@ class test_PathToField_sigmoid_path(unittest.TestCase):
         self.dt = self.t_final/n
         self.time = np.arange(self.t_final, step=self.dt, dtype=float)
         #import sigmoid path from text file as np.ndarray with shape (n,2)
-        fname_path = 'testdata_solver/sigmoid_path.txt'
+        fname_path = 'testdata/sigmoid_path.txt'
         self.path_desired = np.genfromtxt(fname_path, dtype=float, delimiter=',')
         #import expected resulting path as np.ndarray with shape (n,2)
-        fname_path_predicted_truth = 'testdata_solver/sigmoid_path_result.txt'
+        fname_path_predicted_truth = 'testdata/sigmoid_path_result.txt'
         self.path_predicted_truth = np.genfromtxt(fname_path_predicted_truth, dtype=float, delimiter=',')
         #import expected fields as np.ndarray with shape (n,2)
-        fname_field = 'testdata_solver/fields_real_for_sigmoid_path.txt'
+        fname_field = 'testdata/fields_real_for_sigmoid_path.txt'
         self.fields_truth = np.genfromtxt(fname_field, dtype=float, delimiter=',')
         #import expected states as np.ndarray with shape (2m+1,n)
-        fname_state = 'testdata_solver/states_for_sigmoid_path.txt'
+        fname_state = 'testdata/states_for_sigmoid_path.txt'
         self.states_truth = np.genfromtxt(fname_state, dtype=float, delimiter=',')
 
         #instantiate a rotor molecule
@@ -126,8 +126,8 @@ class test_FieldToPath_sigmoid_path(unittest.TestCase):
     def setUp(self):
         self.rotor = Rotor(const.m)
 
-        fname_fields = 'testdata_solver/fields_real_for_sigmoid_path.txt'
-        fname_states = 'testdata_solver/states_for_sigmoid_path.txt'
+        fname_fields = 'testdata/fields_real_for_sigmoid_path.txt'
+        fname_states = 'testdata/states_for_sigmoid_path.txt'
         self.fields = np.genfromtxt(fname_fields, dtype=float, delimiter=',')
         self.states_expected = np.genfromtxt(fname_states, dtype=float, delimiter=',')
 
