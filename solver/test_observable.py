@@ -3,11 +3,11 @@
 
 import unittest
 import numpy as np
-import constants as const
-from observable import *
-from state import State
-import functions as f
-from field import Field
+from . import constants as const
+from .observable import *
+from .state import State
+from . import functions as f
+from .field import Field
 from scipy import linalg
 
 # class test_Path(unittest.TestCase):
@@ -81,6 +81,7 @@ class test_RotorH(unittest.TestCase):
         new_state = rotor_obj.evolve(state_obj,1)
         expected_operator = const.B*np.diag((np.arange(-const.m,const.m+1))**2,k=0)-const.mu*f.cosphi(const.m)*field[0]-const.mu*f.sinphi(const.m)*field[1]
         expected_new_state = (linalg.expm((-1j/const.hbar)*expected_operator*(t+1)))@state_obj.as_ket()
+        expected_new_state = expected_new_state.flatten()
         np.testing.assert_array_equal(new_state.value,expected_new_state)
 
 class test_Dipole(unittest.TestCase):
