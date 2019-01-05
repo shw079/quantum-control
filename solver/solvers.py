@@ -15,9 +15,13 @@ class PathToField(object):
 
 
     """
-    def __init__(self, rotor, path_desired, dt=1000):
-        self.molecule = rotor
-        m = rotor.m
+    def __init__(self, path_desired, dt=1000, molecule=None):
+        if molecule is None:
+            self.molecule = Rotor(const.m)
+        else:
+            self.molecule = rotor
+
+        m = self.molecule.m
 
         self.path = path_desired
         self.path_predicted = np.zeros_like(path_desired)
@@ -110,9 +114,13 @@ class PathToField(object):
 
 
 class FieldToPath(object):
-    def __init__(self, rotor, fields, dt=1000):
-        ## System of interest; usually a molecule
-        self.molecule = rotor
+    def __init__(self, fields, dt=1000, molecule=None):
+        if molecule is None:
+            ## System of interest
+            ## Default: a Rotor object with quantum number = const.m
+            self.molecule = Rotor(const.m)
+        else:
+            self.molecule = rotor
         ## Number of time points
         self.n = fields.shape[0]
         ## An nx2 np.ndarray containing the given field.

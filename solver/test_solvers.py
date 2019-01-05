@@ -16,7 +16,7 @@ class test_PathToField(unittest.TestCase):
 
     def test_init(self):
         path_desired = np.arange(10).reshape((5,2))
-        fsolver = s.PathToField(self.rotor, path_desired)
+        fsolver = s.PathToField(path_desired)
         #maybe more?
         
         m = const.m
@@ -45,13 +45,13 @@ class test_PathToField(unittest.TestCase):
 
     def test_get_det(self):
         path_desired = np.arange(10).reshape((5,2))
-        fsolver = s.PathToField(self.rotor, path_desired)
+        fsolver = s.PathToField(path_desired)
         det = fsolver._get_det()
         self.assertTrue(np.isscalar(det))
 
     def test_solve(self):
         path_desired = np.arange(10).reshape((5,2))
-        fsolver = s.PathToField(self.rotor, path_desired)
+        fsolver = s.PathToField(path_desired)
         fsolver.solve()
 
 class test_PathToField_sigmoid_path(unittest.TestCase):
@@ -87,7 +87,7 @@ class test_PathToField_sigmoid_path(unittest.TestCase):
         self.path_desired = self.path_desired[0:n,:]
         self.path_predicted_truth = self.path_predicted_truth[0:n,:]
 
-        fsolver = s.PathToField(self.rotor, self.path_desired, dt=self.dt)
+        fsolver = s.PathToField(self.path_desired, dt=self.dt)
         fsolver.solve()
         time, fields, states = fsolver.export()
 
@@ -98,7 +98,7 @@ class test_PathToField_sigmoid_path(unittest.TestCase):
 
     @unittest.skip("Doesn't match MATLAB result around n=70")
     def test_solve_long(self):
-        fsolver = s.PathToField(self.rotor, self.path_desired, t_final=self.t_final)
+        fsolver = s.PathToField(self.path_desired, t_final=self.t_final)
         fsolver.solve()
 
 class test_FieldToPath(unittest.TestCase):
@@ -108,7 +108,7 @@ class test_FieldToPath(unittest.TestCase):
     def test_init(self):
         n = 5
         fields = np.arange(2*n, dtype=float).reshape((n,2))
-        psolver = s.FieldToPath(self.rotor, fields)
+        psolver = s.FieldToPath(fields)
         self.assertEqual(psolver.n, n)
         np.testing.assert_array_almost_equal(psolver.fields, fields)
         self.assertEqual(len(psolver._fields_list),n)
@@ -118,7 +118,7 @@ class test_FieldToPath(unittest.TestCase):
         n = 5
         fields = np.arange(2*n, dtype=float).reshape((n,2))
         dt = 20
-        psolver = s.FieldToPath(self.rotor, fields, dt=dt)
+        psolver = s.FieldToPath(fields, dt=dt)
         self.assertEqual(psolver._t_final, dt*n)
         np.testing.assert_array_almost_equal(psolver.time, np.array([0., 20., 40., 60., 80.]))
 
@@ -144,7 +144,7 @@ class test_FieldToPath_sigmoid_path(unittest.TestCase):
         self.fields = self.fields[0:n,:]
         self.states_expected = self.states_expected[:,0:n]
 
-        psolver = s.FieldToPath(self.rotor, self.fields, dt=self.dt)
+        psolver = s.FieldToPath(self.fields, dt=self.dt)
         psolver.solve()
         time, path, states = psolver.export()
         self.assertEqual(time.shape, (n,))
