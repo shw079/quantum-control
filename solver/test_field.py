@@ -3,8 +3,8 @@
 
 import unittest
 import numpy as np
-import functions as f
-from field import Field
+from . import functions as f
+from .field import Field
 
 
 class test_Field(unittest.TestCase):

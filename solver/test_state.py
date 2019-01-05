@@ -3,9 +3,9 @@
 
 import unittest
 import numpy as np
-import functions as f
-import constants as const
-from state import State
+from . import functions as f
+from . import constants as const
+from .state import State
 
 
 class test_State(unittest.TestCase):

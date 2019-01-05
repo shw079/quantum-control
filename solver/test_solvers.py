@@ -7,7 +7,7 @@ from .state import State
 from . import functions as f
 from . import observable as obs
 from . import constants as const
-from . import solver as s
+from . import solvers as s
 from .molecule import Rotor
 
 class test_PathToField(unittest.TestCase):
