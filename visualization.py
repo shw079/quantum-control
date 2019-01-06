@@ -7,6 +7,7 @@ class Visualization:
     """
 
     def __init__(self, dat):
+        self.state = data.state
         self.t = dat.t
         self.field = dat.field
         self.sin_phi_actual = dat.path_actual[:, 1]
@@ -19,9 +20,11 @@ class Visualization:
         and <sin(phi) vs t, <sin(phi)> vs <cos(phi)>
 
         """
+        # set up grids
         fig = plt.figure(figsize=(16.5, 8))
         grid = plt.GridSpec(2, 4, wspace=0.5)
 
+        # trajectories over time
         ax1 = fig.add_subplot(grid[0, :2])
         ax1.plot(self.t, self.cos_phi_actual, color="blue", lw=2,
                  alpha=0.6, label="actual x track")
@@ -41,6 +44,7 @@ class Visualization:
         ax2.set_xlabel("Time [ps]", fontsize=14)
         ax2.legend(loc="upper left", fontsize=12)
 
+        # phase plot
         ax3 = fig.add_subplot(grid[:, 2:])
         ax3.plot(self.cos_phi_actual, self.sin_phi_actual,
                  color="black", lw=2, label="phase plot")
@@ -65,7 +69,7 @@ class Visualization:
         plt.xlabel("Time [ps]")
         plt.ylabel("Amplitude [V/A]")
         plt.title("Control field over time")
-        plt.legend(loc="upper right")
+        plt.legend(loc="upper right", fontsize=12)
         plt.show()
 
     def density(self):
@@ -74,3 +78,25 @@ class Visualization:
 
         """
         pass
+
+
+def get_probability(m, state, n_grid=100):
+    """Calculate population density with defined quantum number m,
+       and grid size
+
+    """
+    # get equally spaced points in [0, 2 * pi)
+    phi = np.linspace(0, 2 * np.pi, n_grid, endpoint=False)
+
+    # initialize arrays
+    # wave_trans of shape (2m+1, len(phi))
+    wave_trans = np.empty(2 * m + 1, len(phi))
+    
+    for l in range(1, 2 * m + 2):
+        wave_trans[:, l] = 1 / np.sqrt(2 * np.pi) * \
+                           np.exp(1j * (l - m + 1) * phi)
+
+    # state of shape (2m+1, len(t))
+    # prob_proj of shape (len(phi), len(t))
+    prob_proj = np.abs(np.dot(wave_trans.T, state)) ** 2 
+    return prob_proj
