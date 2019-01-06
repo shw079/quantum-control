@@ -33,10 +33,10 @@ class DataContainer(object):
         time point. A numpy  ndarray of shape ((2m+1),n).
 
         noise_stat_mean: mean x and y at each time point. A numpy
-        ndarray of     shape (n,2).
+        ndarray of shape (n,2).
         
         noise_stat_sd: standard deviation of x and y at each time
-        point. A     numpy ndarray of shape (n,2).
+        point. A numpy ndarray of shape (n,2).
 
     """
 
@@ -45,9 +45,8 @@ class DataContainer(object):
 
         Parameters:
 
-            path_desired: A numpy.ndarray of shape (n,2) where  n >= 2
-            and each row contains (in this order) x- and y-projection
-            of dipole moment.
+            path: A numpy.ndarray of shape (n,2) and each row contains
+            (in this order) x- and y-projection of dipole moment.
 
         Raises:
 
@@ -80,15 +79,15 @@ class DataContainer(object):
         self.path_desired = path[:,0:].astype(float)
         
         #attr initialized with all entries being zeros but of correct
-        #shapes 
-        ## Control field calculated by PathToField solver.
-        ##+n-by-2 np.ndarray.
+        #shapes         
+        ## Control field calculated by PathToField solver. n-by-2
+        ## np.ndarray.
         self.field = np.zeros((self.n, 2),dtype=complex)
         ## Path predicted by the control field calculated. Shape same
-        ##+as `path_desired`
+        ## as `path_desired`
         self.path_obs = np.zeros_like(self.path_desired)
         ## Weights of 2m+1 basis describing the system. Each column is
-        ##+a 2m+1 vector for a time point. (2m+1)xn np.ndarray.
+        ## a 2m+1 vector for a time point. (2m+1)xn np.ndarray.
         self.state = None
         ## Mean of paths from noisy fields.
         self.noise_stat_mean = np.zeros((self.n, 2))
