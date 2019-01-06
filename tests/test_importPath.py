@@ -1,6 +1,8 @@
 import unittest
 import numpy as np
 import numpy.testing as npt
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'modules'))
 import importPath
 
 '''Unit tests for importPath module'''
@@ -11,7 +13,7 @@ class test_importPath(unittest.TestCase):
 		root = importPath.import_path()
 		
 	def test_loadFile(self):
-		filename = "example_data.dat"
+		filename = "example_user_data.dat"
 		root = importPath.import_path()
 		root.load_from_file(filename)
 		coords = root.get_coordinates()
