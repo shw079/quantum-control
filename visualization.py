@@ -8,6 +8,7 @@ class Visualization:
 
     def __init__(self, dat):
         self.state = data.state
+        self.m = data.Const.m
         self.t = dat.t
         self.field = dat.field
         self.sin_phi_actual = dat.path_actual[:, 1]
@@ -55,6 +56,7 @@ class Visualization:
         ax3.legend(loc="upper right", fontsize=12)
 
         fig.suptitle("Trajectory of the rigid rotor", fontsize=20)
+
         plt.show()
 
     def field(self):
@@ -66,21 +68,28 @@ class Visualization:
                  label="x field")
         plt.plot(self.t, self.field[:, 1], color="red", lw=2, 
                  label="y field")
-        plt.xlabel("Time [ps]")
-        plt.ylabel("Amplitude [V/A]")
-        plt.title("Control field over time")
+        plt.xlabel("Time [ps]", fontsize=14)
+        plt.ylabel("Amplitude [V/A]", fontsize=14)
+        plt.title("Control field over time", fontsize=20)
         plt.legend(loc="upper right", fontsize=12)
         plt.show()
 
-    def density(self):
+    def density(self, n_grid=100):
         """Plot probability density over time for 
         different rotational angles
 
         """
-        pass
+        prob_proj = get_probability(self.m, self.state, n_grid)
 
+        plt.figure(figsize=(8, 8))
 
-def get_probability(m, state, n_grid=100):
+        # display matrix
+        plt.matshow(prob_proj)
+
+        plt.show()
+        
+
+def get_probability(m, state, n_grid):
     """Calculate population density with defined quantum number m,
        and grid size
 
@@ -90,10 +99,10 @@ def get_probability(m, state, n_grid=100):
 
     # initialize arrays
     # wave_trans of shape (2m+1, len(phi))
-    wave_trans = np.empty(2 * m + 1, len(phi))
+    wave_trans = np.empty((2 * m + 1, len(phi)))
     
-    for l in range(1, 2 * m + 2):
-        wave_trans[:, l] = 1 / np.sqrt(2 * np.pi) * \
+    for l in range(2 * m + 1):
+        wave_trans[l, :] = 1 / np.sqrt(2 * np.pi) * \
                            np.exp(1j * (l - m + 1) * phi)
 
     # state of shape (2m+1, len(t))
