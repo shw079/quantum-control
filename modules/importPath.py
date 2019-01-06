@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
+import pandas as pd
 import numpy as np
 import os
 import importlib
@@ -139,7 +140,7 @@ class import_path(tk.Tk):
 			user_module = import_my_module(filename_no_ext, filename)
 			self.coordinate_array = user_module.user_function() #function MUST be named user_function()
 		elif file_ext == '.dat':
-			self.coordinate_array = np.loadtxt(filename, comments = ('#'))
+			self.coordinate_array = pd.read_table(filename, sep=" ", header=None)
 		else:
 			raise ValueError("Path provided must be to a file with either the '.py' (function) or '.dat' (data) extenstion")
 			

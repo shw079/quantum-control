@@ -18,10 +18,14 @@ class test_importPath(unittest.TestCase):
 		root.load_from_file(filename)
 		coords = root.get_coordinates()
 		
+		#make sure coords are right dimension
+		npt.assert_equal((495,2),coords.shape)
 		#check coords start at [0,0]
 		npt.assert_array_almost_equal([0,0],coords[0])
 		#check last coords - need to subtract coords at zero
 		npt.assert_array_almost_equal(np.array([142,454])-np.array([148, 443]),coords[-1])
+		#make sure no nan
+		npt.assert_equal(np.isnan(coords),False)
 		
 	def test_loadFunction(self):
 		filename = "example_user_function.py"
