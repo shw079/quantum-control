@@ -1,8 +1,8 @@
 '''!@namespace solvers
 
-@brief This module contains two solver classes to calculate (1) control
-fields for a given path (class PathToField), and (2) resulting path
-from a given field (class PathToField). 
+@brief Module solvers implements two classes to calculate (1) control
+fields for a given path (PathToField), and (2) resulting path from a 
+given field (FieldToPath). 
 
 '''
 
@@ -11,17 +11,44 @@ import math
 import functions as f
 import constants as const
 from state import State
-from field import Field
-import observable as obs
 from molecule import Rotor
+import abc
 
-class PathToField(object):
-    """!@brief Solve control fields for a given path of dipole moment projection.
+class Solver(abc.ABC):
+    """!@brief Abstract base class for a solver used for quantum 
+    control.
+
+    """
+
+    @abc.abstractmethod
+    def __init__(self):
+        """!@brief Instantiate a solver object."""
+        pass
+
+    @abc.abstractmethod
+    def solve(self):
+        """!@brief Solve for the quantity of interesst."""
+        pass
+
+    @abc.abstractmethod
+    def export(self):
+        """!@brief Export the calculated results as arrays."""
+        pass
+
+class PathToField(Solver):
+    """!@brief Solve control fields for a given path of dipole moment 
+    projection.
+
+    Class PathToField is used to solve a set of control fields that
+    drive the dipole moment projection of the system of interest to 
+    follow a given path. The system of interest by default is a rotor 
+    (molecule.Rotor.)  
 
     """
 
     def __init__(self, path_desired, dt=1000, molecule=None):
-        """!@brief Instantiate a PathToField object for solving a specified path.
+        """!@brief Instantiate a PathToField object for solving a 
+        specified path.
 
         
 
@@ -175,7 +202,7 @@ class PathToField(object):
         return np.array([b1,b2])
 
 
-class FieldToPath(object):
+class FieldToPath(Solver):
     """!@brief Calculate the resulting path from a given set of control fields.
     """
 
