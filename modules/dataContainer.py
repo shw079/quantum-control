@@ -79,7 +79,9 @@ class DataContainer(object):
         self.path_desired = path[:,0:].astype(float)
         
         #attr initialized with all entries being zeros but of correct
-        #shapes         
+        #shapes
+        ## Time difference between two adjacent time points
+        self.dt = 0.         
         ## Control field calculated by PathToField solver. n-by-2
         ## np.ndarray.
         self.field = np.zeros((self.n, 2),dtype=complex)
