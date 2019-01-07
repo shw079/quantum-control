@@ -8,12 +8,12 @@ from a given field (class PathToField).
 
 import numpy as np
 import math
-from . import functions as f
-from . import constants as const
-from .state import State
-from .field import Field
-from . import observable as obs
-from .molecule import Rotor
+import functions as f
+import constants as const
+from state import State
+from field import Field
+import observable as obs
+from molecule import Rotor
 
 class PathToField(object):
     """!@brief Solve control fields for a given path of dipole moment projection.

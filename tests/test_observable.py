@@ -1,13 +1,14 @@
 '''testOperator.py
 '''
-
+import sys
+sys.path.append('../modules')
 import unittest
 import numpy as np
-from . import constants as const
-from .observable import *
-from .state import State
-from . import functions as f
-from .field import Field
+import constants as const
+from observable import *
+from state import State
+import functions as f
+from field import Field
 from scipy import linalg
 
 # class test_Path(unittest.TestCase):

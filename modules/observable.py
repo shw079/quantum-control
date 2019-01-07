@@ -3,12 +3,12 @@
 
 import numpy as np
 # from dataStore import DataStore
-from . import constants as const
-from . import functions as f
+import constants as const
+import functions as f
 import math
 from scipy import linalg
 import abc
-from .state import State
+from state import State
 
 
 #abstract base classes

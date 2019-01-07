@@ -1,11 +1,12 @@
 '''test_State.py
 '''
-
+import sys
+sys.path.append('../modules')
 import unittest
 import numpy as np
-from . import functions as f
-from . import constants as const
-from .state import State
+import functions as f
+import constants as const
+from state import State
 
 
 class test_State(unittest.TestCase):

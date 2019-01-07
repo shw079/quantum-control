@@ -1,9 +1,11 @@
 '''testFunctions.py
 '''
+import sys
+sys.path.append('../modules')
 import unittest
 import numpy as np
-from . import functions as f
-from . import constants as const
+import functions as f
+import constants as const
 
 
 class test_Functions(unittest.TestCase):
@@ -54,8 +56,8 @@ class test_Functions(unittest.TestCase):
 
     def test_d2dt2_sigmoid(self):
         #import path and expected result
-        fname_path = 'testdata/sigmoid_path.txt'
-        fname_d2dt2 = 'testdata/sigmoid_path_d2dt2.txt'
+        fname_path = 'testdata_solver/sigmoid_path.txt'
+        fname_d2dt2 = 'testdata_solver/sigmoid_path_d2dt2.txt'
         path = np.genfromtxt(fname_path, dtype=float, delimiter=',')
         d2dt2_truth = np.genfromtxt(fname_d2dt2, dtype=float, delimiter=',')
 

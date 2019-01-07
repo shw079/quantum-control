@@ -6,9 +6,9 @@ system of interest.
 
 import abc
 import numpy as np
-from .state import State
-from .field import Field
-from . import observable as obs
+from state import State
+from field import Field
+import observable as obs
 
 class Molecule(abc.ABC):
     """!@ Abstract base class for molecules (system of interest)

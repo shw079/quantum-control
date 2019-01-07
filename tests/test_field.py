@@ -1,10 +1,11 @@
 '''test_Field.py
 '''
-
+import sys
+sys.path.append('../modules')
 import unittest
 import numpy as np
-from . import functions as f
-from .field import Field
+import functions as f
+from field import Field
 
 
 class test_Field(unittest.TestCase):

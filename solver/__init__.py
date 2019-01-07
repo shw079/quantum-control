@@ -1,1 +1,0 @@
-from solver.solvers import PathToField, FieldToPath

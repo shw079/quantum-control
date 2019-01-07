@@ -1,13 +1,14 @@
 '''testMolecule.py
 '''
-
+import sys
+sys.path.append('../modules')
 import unittest
 import numpy as np
-from .molecule import Rotor
-from .state import State
-from .field import Field
-from . import observable as obs
-from . import constants as const
+from molecule import Rotor
+from state import State
+from field import Field
+import observable as obs
+import constants as const
 
 class test_molecule(unittest.TestCase):
     def setUp(self):
