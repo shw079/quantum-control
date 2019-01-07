@@ -1,26 +1,59 @@
+"""!@package docstring
+The visualization module uses data in a DataStore object for plotting.
+This module allows plotting of:
+    1. control fields amplitude over time for both x and y fields.
+    2. actual and expected trajectory of the rigid rotor for dimensions
+       x and y over time, together with a phase plot of x and y tracks.
+    3. a heatmap of probability density for rotational angle over time.
+"""
+
+
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import numpy as np
+
 
 class Visualization:
     """Class for visualizing data of a DataStore object.
 
     """
-
     def __init__(self, dat):
+        """!
+        Construct a Visualization object.
+        
+        @param dat the DataContainer object used for plotting.
+        """
+        ## time points
+        self.t = t
+        ## system state at each time point
         self.state = dat.state
+        ## magnetic quantum number
         self.m = dat.Const.m
-        self.t = dat.t
+        ## control fields
         self.field = dat.field
-        self.sin_phi_actual = dat.path_actual[:, 1]
+        ## actual x track
         self.cos_phi_actual = dat.path_actual[:, 0]
-        self.sin_phi_desired = dat.path_desired[:, 1]
+        ## actual y track 
+        self.sin_phi_actual = dat.path_actual[:, 1]
+        ## desired x track
         self.cos_phi_desired = dat.path_desired[:, 0]
+        ## desired y track
+        self.sin_phi_desired = dat.path_desired[:, 1]
 
     def density(self, n_grid=100, out=None):
-        """Plot probability density over time for
-        different rotational angles
+        """!
+        Plot a probability density heatmap over time for different 
+        rotational angles. 
 
+        @param n_grid number of equally spaced rotational angles to 
+                      calculate probability density between 0 and 
+                      2&pi;. Default to 100.
+
+        @param out the path to save the figure if not None. If None,
+                   show the figure in the console. Default to None.
+
+        @return a numpy ndarray for probability density for plotting, 
+                with shape of (n_grid, self.t).
         """
         # calculate probability density
         # get equally spaced points in [0, 2 * pi)
@@ -37,7 +70,7 @@ class Visualization:
                                np.exp(1j * (l - self.m - 1) * phi)
 
         # state of shape (2m+1, len(t))
-        # prob_proj of shape (len(phi), len(t))
+        # proba of shape (len(phi), len(t))
         proba = np.flip(np.abs(np.dot(wave_trans.T, self.state)) ** 2,
                         axis = 0)
 
@@ -65,12 +98,17 @@ class Visualization:
         return proba
     
     def trajectory(self, out=None):
-        """Plot trajectories from field <cos(phi)> vs t, 
-        and <sin(phi) vs t, <sin(phi)> vs <cos(phi)>
+        """!@brief Plot trajectories of the rigid rotor.
 
+        Plot actual and expected trajectories of x (i.e. <cos(&phi;)>) 
+        and y (i.e. <sin(&phi;)>) over time and also the phase plot of
+        x and y.
+
+        @param out the path to save the figure if not None. If None,
+                   show the figure in the console. Default to None.
         """
         # set up grids
-        fig = plt.figure(figsize=(16.5, 8))
+        fig = plt.figure(figsize=(20.5, 10))
         grid = plt.GridSpec(2, 4, wspace=0.5)
 
         # trajectories over time
@@ -79,7 +117,7 @@ class Visualization:
 
         ax1.plot(self.t, self.cos_phi_actual, color="blue", lw=2,
                  alpha=0.6, label="actual x track")
-        ax1.plot(self.t, self.cos_phi_actual, color="blue", lw=2,
+        ax1.plot(self.t, self.cos_phi_desired, color="blue", lw=2,
                  ls="--", label="expected x track")
 
         ax1.set_ylabel(u"<cos(${\phi}$)>", fontsize=14)
@@ -91,7 +129,7 @@ class Visualization:
 
         ax2.plot(self.t, self.sin_phi_actual, color="red", lw=2,
                  alpha=0.6, label="actual y track")
-        ax2.plot(self.t, self.sin_phi_actual, color="red", lw=2,
+        ax2.plot(self.t, self.sin_phi_desired, color="red", lw=2,
                  ls="--", label="expected y track")
 
         ax2.set_ylabel(u"<sin(${\phi}$)>", fontsize=14)
@@ -103,7 +141,11 @@ class Visualization:
         ax3 = fig.add_subplot(grid[:, 2:])
 
         ax3.plot(self.cos_phi_actual, self.sin_phi_actual,
-                 color="black", lw=2, label="phase plot")
+                 color="black", lw=2, alpha=0.6, 
+                 label="actual phase plot")
+        ax3.plot(self.cos_phi_desired, self.sin_phi_desired,
+                 color="black", lw=2, ls="--", 
+                 label="expected phase plot")
 
         ax3.set_ylabel(u"<sin(${\phi}$)>", fontsize=14)
         ax3.set_xlabel(u"<cos(${\phi}$)>", fontsize=14)
@@ -119,11 +161,15 @@ class Visualization:
         else:
             plt.show()
 
-    def field(self):
-        """Plot the field over time
+    def field(self, out=None):
+        """!
+        Plot contol fields amplitude over time for both x and y 
+        dimensions.
 
+        @param out the path to save the figure if not None. If None,
+                   show the figure in the console. Default to None.
         """
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(10, 10))
 
         # plot the real part only
         plt.plot(self.t, np.real(self.field[:, 0]), color="blue", 
@@ -133,7 +179,7 @@ class Visualization:
 
         plt.xlabel("Time [ps]", fontsize=14)
         plt.ylabel("Amplitude [V/A]", fontsize=14)
-        plt.title("Control field over time", fontsize=20)
+        plt.title("Control fields over time", fontsize=20)
         plt.legend(loc="upper right", fontsize=12)
 
         # save or display figure
