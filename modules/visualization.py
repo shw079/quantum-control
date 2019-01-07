@@ -17,7 +17,7 @@ class Visualization:
         self.sin_phi_desired = dat.path_desired[:, 1]
         self.cos_phi_desired = dat.path_desired[:, 0]
 
-    def density(self, n_grid=100):
+    def density(self, n_grid=100, out=None):
         """Plot probability density over time for
         different rotational angles
 
@@ -53,14 +53,18 @@ class Visualization:
 
         plt.colorbar(fraction=0.0457, pad=0.04)
         plt.xlabel("Time [ps]", fontsize=14)
-        plt.ylabel(u"Angle of rotation $\phi \in [0, 2\pi]$", fontsize=14)
+        plt.ylabel(u"Angle of rotation $\phi \in [0, 2\pi)$", fontsize=14)
         plt.title(u"Probability density $|<\phi|\psi(t)>|^2$", fontsize=20)
 
-        plt.show()
+        # save or display figure
+        if out:
+            plt.savefig(out)
+        else:
+            plt.show()
         # return proba for unit testing
         return proba
     
-    def trajectory(self):
+    def trajectory(self, out=None):
         """Plot trajectories from field <cos(phi)> vs t, 
         and <sin(phi) vs t, <sin(phi)> vs <cos(phi)>
 
@@ -109,7 +113,11 @@ class Visualization:
 
         fig.suptitle("Trajectory of the rigid rotor", fontsize=20)
 
-        plt.show()
+        # save or display figure
+        if out:
+            plt.savefig(out)
+        else:
+            plt.show()
 
     def field(self):
         """Plot the field over time
@@ -128,5 +136,9 @@ class Visualization:
         plt.title("Control field over time", fontsize=20)
         plt.legend(loc="upper right", fontsize=12)
 
-        plt.show()
+        # save or display figure
+        if out:
+            plt.savefig(out)
+        else:
+            plt.show()
 
