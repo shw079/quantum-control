@@ -1,6 +1,8 @@
 '''test_dataContainer.py
 '''
 
+import sys
+sys.path.append('../modules')
 import unittest
 import numpy as np
 from dataContainer import DataContainer
