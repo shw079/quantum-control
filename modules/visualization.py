@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 import numpy as np
 
 class Visualization:
@@ -37,15 +38,16 @@ class Visualization:
 
         # state of shape (2m+1, len(t))
         # prob_proj of shape (len(phi), len(t))
-        proba = np.flip(np.abs(np.dot(wave_trans.T, self.state)) ** 2)
+        proba = np.flip(np.abs(np.dot(wave_trans.T, self.state)) ** 2,
+                        axis = 0)
 
         # plot probability density
         plt.figure(figsize=(10, 10))
 
         # display matrix
-        plt.imshow(proba, extent=[test_data.t.min(), test_data.t.max(),
-                                  0, 2 * np.pi],
-                   aspect = np.ptp(test_data.t) / (2 * np.pi),
+        plt.imshow(proba, extent=[self.t.min(), self.t.max(), 
+                   0, 2 * np.pi],
+                   aspect = np.ptp(self.t) / (2 * np.pi),
                    cmap="jet", vmin=0, vmax=1,
                    interpolation="bilinear")
 
