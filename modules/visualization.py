@@ -7,8 +7,8 @@ class Visualization:
     """
 
     def __init__(self, dat):
-        self.state = data.state
-        self.m = data.Const.m
+        self.state = dat.state
+        self.m = dat.Const.m
         self.t = dat.t
         self.field = dat.field
         self.sin_phi_actual = dat.path_actual[:, 1]
@@ -16,6 +16,48 @@ class Visualization:
         self.sin_phi_desired = dat.path_desired[:, 1]
         self.cos_phi_desired = dat.path_desired[:, 0]
 
+    def density(self, n_grid=100):
+        """Plot probability density over time for
+        different rotational angles
+
+        """
+        # calculate probability density
+        # get equally spaced points in [0, 2 * pi)
+        phi = np.linspace(0, 2 * np.pi, n_grid, endpoint=False)
+
+        # initialize arrays
+        # energy to anuglar representation transformation
+        # wave_trans of shape (2m+1, len(phi))
+        wave_trans = np.empty((2 * self.m + 1, len(phi)),
+                              dtype=np.complex64)
+
+        for l in range(2 * self.m + 1):
+            wave_trans[l, :] = 1 / np.sqrt(2 * np.pi) * \
+                               np.exp(1j * (l - self.m - 1) * phi)
+
+        # state of shape (2m+1, len(t))
+        # prob_proj of shape (len(phi), len(t))
+        proba = np.flip(np.abs(np.dot(wave_trans.T, self.state)) ** 2)
+
+        # plot probability density
+        plt.figure(figsize=(10, 10))
+
+        # display matrix
+        plt.imshow(proba, extent=[test_data.t.min(), test_data.t.max(),
+                                  0, 2 * np.pi],
+                   aspect = np.ptp(test_data.t) / (2 * np.pi),
+                   cmap="jet", vmin=0, vmax=1,
+                   interpolation="bilinear")
+
+        plt.colorbar(fraction=0.0457, pad=0.04)
+        plt.xlabel("Time [ps]", fontsize=14)
+        plt.ylabel(u"Angle of rotation $\phi \in [0, 2\pi]$", fontsize=14)
+        plt.title(u"Probability density $|<\phi|\psi(t)>|^2$", fontsize=20)
+
+        plt.show()
+        # return proba for unit testing
+        return proba
+    
     def trajectory(self):
         """Plot trajectories from field <cos(phi)> vs t, 
         and <sin(phi) vs t, <sin(phi)> vs <cos(phi)>
@@ -86,41 +128,3 @@ class Visualization:
 
         plt.show()
 
-    def density(self, n_grid=100):
-        """Plot probability density over time for 
-        different rotational angles
-
-        """
-        # calculate probability density
-        # get equally spaced points in [0, 2 * pi)
-        phi = np.linspace(0, 2 * np.pi, n_grid, endpoint=False)
-
-        # initialize arrays
-        # energy to anuglar representation transformation
-        # wave_trans of shape (2m+1, len(phi))
-        wave_trans = np.empty((2 * self.m + 1, len(phi)), 
-                              dtype=np.complex128)
-
-        for l in range(2 * self.m + 1):
-            wave_trans[l, :] = 1 / np.sqrt(2 * np.pi) * \
-                               np.exp(1j * (l - self.m - 1) * phi)
-
-        # state of shape (2m+1, len(t))
-        # prob_proj of shape (len(phi), len(t))
-        proba = np.flip(np.abs(np.dot(wave_trans.T, self.state)) ** 2)
-
-        # plot probability density
-        plt.figure(figsize=(10, 10))
-
-        # display matrix
-        plt.imshow(proba, extent=[test_data.t.min(), test_data.t.max(), 
-                                  0, 2 * np.pi], 
-                   aspect = np.ptp(test_data.t) / (2 * np.pi), 
-                   cmap="jet", vmin=0, vmax=1, 
-                   interpolation="bilinear")
-
-        plt.colorbar(fraction=0.0457, pad=0.04)
-        plt.xlabel("Time [ps]", fontsize=14)
-        plt.ylabel(u"Angle of rotation $\phi \in [0, 2\pi]$", fontsize=14)
-        plt.title(u"Probability density $|<\phi|\psi(t)>|^2$", fontsize=20)
-        plt.show()
