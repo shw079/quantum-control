@@ -239,7 +239,7 @@ class FieldToPath(Solver):
         self.fields = fields
         field_const = 5.142 * 10**11 * 10**(-10) #amplitude in V/angstrom
         self.fields = self.fields/field_const #back to atomic units
-        self._fields_list = [fields[i,:].flatten() for i in range(self.n)]
+        self._fields_list = [self.fields[i,:].flatten() for i in range(self.n)]
         ## The resulting path from the given fields.
         self.path = np.zeros((self.n,2))
         ## Time difference between two adjacent time points.
@@ -259,6 +259,7 @@ class FieldToPath(Solver):
 
         for i in range(1,self.n):
             self.molecule.evolve(self.dt)
+            self.molecule.set_field(self._fields_list[i])
 
     def export(self):
         """!@brief Export calculated time vector, fields, and states as np.ndarray.
