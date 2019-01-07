@@ -26,20 +26,26 @@ class Visualization:
         grid = plt.GridSpec(2, 4, wspace=0.5)
 
         # trajectories over time
+        # x track
         ax1 = fig.add_subplot(grid[0, :2])
+
         ax1.plot(self.t, self.cos_phi_actual, color="blue", lw=2,
                  alpha=0.6, label="actual x track")
         ax1.plot(self.t, self.cos_phi_actual, color="blue", lw=2,
                  ls="--", label="expected x track")
+
         ax1.set_ylabel(u"<cos(${\phi}$)>", fontsize=14)
         ax1.set_ylim(-1,1)
         ax1.legend(loc="upper left", fontsize=12)
 
+        # y track
         ax2 = fig.add_subplot(grid[1, :2])
+
         ax2.plot(self.t, self.sin_phi_actual, color="red", lw=2,
                  alpha=0.6, label="actual y track")
         ax2.plot(self.t, self.sin_phi_actual, color="red", lw=2,
                  ls="--", label="expected y track")
+
         ax2.set_ylabel(u"<sin(${\phi}$)>", fontsize=14)
         ax2.set_ylim(-1,1)
         ax2.set_xlabel("Time [ps]", fontsize=14)
@@ -47,8 +53,10 @@ class Visualization:
 
         # phase plot
         ax3 = fig.add_subplot(grid[:, 2:])
+
         ax3.plot(self.cos_phi_actual, self.sin_phi_actual,
                  color="black", lw=2, label="phase plot")
+
         ax3.set_ylabel(u"<sin(${\phi}$)>", fontsize=14)
         ax3.set_xlabel(u"<cos(${\phi}$)>", fontsize=14)
         ax3.set_xlim(-1,1)
@@ -64,14 +72,18 @@ class Visualization:
 
         """
         plt.figure(figsize=(8, 8))
-        plt.plot(self.t, self.field[:, 0], color="blue", lw=2, 
-                 label="x field")
-        plt.plot(self.t, self.field[:, 1], color="red", lw=2, 
-                 label="y field")
+
+        # plot the real part only
+        plt.plot(self.t, np.real(self.field[:, 0]), color="blue", 
+                 lw=2, label="x field")
+        plt.plot(self.t, np.real(self.field[:, 1]), color="red", 
+                 lw=2, label="y field")
+
         plt.xlabel("Time [ps]", fontsize=14)
         plt.ylabel("Amplitude [V/A]", fontsize=14)
         plt.title("Control field over time", fontsize=20)
         plt.legend(loc="upper right", fontsize=12)
+
         plt.show()
 
     def density(self, n_grid=100):
