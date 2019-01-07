@@ -2,7 +2,7 @@
 '''
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '.', 'modules'))
-import importPath, solvers
+import importPath, transform_path, solvers
 from dataContainer import DataContainer
 from visualization import Visualization
 
@@ -12,10 +12,7 @@ user_path.mainloop()
 path_in = user_path.get_coordinates()
 
 # Determine delta t and modify path array if necessary
-# Below two lines just pretend as we got the desired `dt` and 
-# `path_desired`.
-dt = 1000 #This is just for demo
-path_desired = path_in #This is just for demo
+path_desired, dt = transform_path(path_in)
 
 # Instantiate a DataContainer object with path specified by the user
 data = DataContainer(path_desired, dt)
@@ -30,6 +27,6 @@ data.t, data.field, data.path_actual, data.state = s.export()
 
 # Visualize results
 vis = Visualization(data)
-vis.density()
-vis.trajectory()
-vis.field()
+# vis.density()
+# vis.trajectory()
+# vis.field()
