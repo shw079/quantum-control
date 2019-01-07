@@ -1,7 +1,8 @@
 '''testMolecule.py
 '''
 import sys
-sys.path.append('../modules')
+from os.path import dirname, abspath, join
+sys.path.append(join(dirname(dirname(abspath(__file__))), "modules"))
 import unittest
 import numpy as np
 from molecule import Rotor

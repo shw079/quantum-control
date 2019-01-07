@@ -1,7 +1,8 @@
 '''test_solver.py
 '''
 import sys
-sys.path.append('../modules')
+from os.path import dirname, abspath, join
+sys.path.append(join(dirname(dirname(abspath(__file__))), "modules"))
 import numpy as np
 import unittest
 from state import State
