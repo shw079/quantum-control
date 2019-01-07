@@ -16,7 +16,7 @@ class test_DataContainer(unittest.TestCase):
         data = DataContainer(path)
         self.assertEqual(data.n, path.shape[0])
         np.testing.assert_array_equal(data.path_desired, path)
-        self.assertEqual(data.path_obs.shape, path.shape)
+        self.assertEqual(data.path_actual.shape, path.shape)
 
     def test_hasNanInf(self):
         """Raise ValueError if input path contains NaN or Inf"""

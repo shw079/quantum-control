@@ -9,44 +9,48 @@ import numpy as np
 from collections import namedtuple
 
 class DataContainer(object):
-    """A DataContainer contains all data associated with a single path.
+    """!@brief A DataContainer contains all data associated with a single path.
 
     Class DataContainer provides a container to store data associated
     with a single path specified by user.
-  
-    Attributes:
+    """
+    """
+    #### Attributes:
 
-        n: Number of time points.
+    - n: Number of time points.
 
-        path_desired: User-specified desired path of dipole moment
-        projection  described by x and y (in this order). A numpy
-        ndarray of shape  (n,2).
+    - path_desired: User-specified desired path of dipole moment
+    projection  described by x and y (in this order). A numpy
+    ndarray of shape  (n,2).
 
-        field: Control fields e_x and e_y at each time point
-        calculated by  PathToField. A numpy.ndarray of shape of (n,2).
+    - field: Control fields e_x and e_y at each time point
+    calculated by  PathToField. A numpy.ndarray of shape of (n,2).
 
-        path_actual: Path of dipole moment projection described by x
-        and y that is resulted from the control field. A numpy.ndarray
-        of shape (n,2).
+    - path_actual: Path of dipole moment projection described by x
+    and y that is resulted from the control field. A numpy.ndarray
+    of shape (n,2).
 
-        state: Weights of (2m+1) basis describing the system at each
-        time point. A numpy  ndarray of shape ((2m+1),n).
+    - state: Weights of (2m+1) basis describing the system at each
+    time point. A numpy  ndarray of shape ((2m+1),n).
 
-        noise_stat_mean: mean x and y at each time point. A numpy
-        ndarray of shape (n,2).
-        
-        noise_stat_sd: standard deviation of x and y at each time
-        point. A numpy ndarray of shape (n,2).
+    - noise_stat_mean: mean x and y at each time point. A numpy
+    ndarray of shape (n,2).
+    
+    - noise_stat_sd: standard deviation of x and y at each time
+    point. A numpy ndarray of shape (n,2).
 
     """
 
-    def __init__(self, path):
+    def __init__(self, path, dt=1000.):
         """Initialize an object of DataContainer with a desired path.
 
         Parameters:
 
             path: A numpy.ndarray of shape (n,2) and each row contains
             (in this order) x- and y-projection of dipole moment.
+
+            dt: (Optional) Time difference between two adjacent time 
+            points
 
         Raises:
 
@@ -77,17 +81,20 @@ class DataContainer(object):
         self.n = path.shape[0]
         ## User-specified path. n-by-2 np.ndarray
         self.path_desired = path[:,0:].astype(float)
+        ## Time difference between two adjacent time points in atomic units
+        self.dt_atomic = dt
+        self._t_atomic = np.arange(self.n*self.dt, step=self.dt, dtype=float)
         
         #attr initialized with all entries being zeros but of correct
         #shapes
-        ## Time difference between two adjacent time points
-        self.dt = 0.         
+        ## Time vector
+        self.t = None
         ## Control field calculated by PathToField solver. n-by-2
         ## np.ndarray.
         self.field = np.zeros((self.n, 2),dtype=complex)
         ## Path predicted by the control field calculated. Shape same
         ## as `path_desired`
-        self.path_obs = np.zeros_like(self.path_desired)
+        self.path_actual = np.zeros_like(self.path_desired)
         ## Weights of 2m+1 basis describing the system. Each column is
         ## a 2m+1 vector for a time point. (2m+1)xn np.ndarray.
         self.state = None
