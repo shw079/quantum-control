@@ -147,7 +147,7 @@ class PathToField(Solver):
             path[i,0] = states_list[i].get_expt(oper_x).real
             path[i,1] = states_list[i].get_expt(oper_y).real
 
-        return time, fields, states
+        return time, fields, path, states
     
     def _get_field(self, j, real=False):
         """Calculate the required field for the next step.

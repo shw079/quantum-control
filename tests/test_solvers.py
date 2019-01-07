@@ -90,7 +90,7 @@ class test_PathToField_sigmoid_path(unittest.TestCase):
 
         fsolver = s.PathToField(self.path_desired, dt=self.dt)
         fsolver.solve()
-        time, fields, states = fsolver.export()
+        time, fields, path, states = fsolver.export()
 
         np.testing.assert_array_almost_equal(fields, self.fields_truth)
         np.testing.assert_array_almost_equal(states, self.states_truth)
