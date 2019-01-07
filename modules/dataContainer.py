@@ -83,7 +83,8 @@ class DataContainer(object):
         self.path_desired = path[:,0:].astype(float)
         ## Time difference between two adjacent time points in atomic units
         self.dt_atomic = dt
-        self._t_atomic = np.arange(self.n*self.dt, step=self.dt, dtype=float)
+        self._t_atomic = np.arange(self.n*self.dt_atomic,
+                                   step=self.dt_atomic, dtype=float)
         
         #attr initialized with all entries being zeros but of correct
         #shapes
