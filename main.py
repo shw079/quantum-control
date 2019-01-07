@@ -1,9 +1,10 @@
 ''' main.py
 '''
-
-from modules import importPath, solvers
-from modules.dataContainer import DataContainer
-from modules.visualization import Visualization
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '.', 'modules'))
+import importPath, solvers
+from dataContainer import DataContainer
+from visualization import Visualization
 
 # Get user-specified path
 user_path = importPath.import_path()
