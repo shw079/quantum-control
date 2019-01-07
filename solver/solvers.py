@@ -84,7 +84,7 @@ class PathToField(object):
 
         for j in range(1,self.n):
             self.molecule.evolve(self.dt)
-            field = self._get_field(j)
+            field = self._get_field(j, real=True)
             self.molecule.update_field(field)
 
         # self._velidate()
