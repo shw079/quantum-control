@@ -125,6 +125,9 @@ class PathToField(Solver):
         @return fields: Control fields required for the path of 
         interest. In unit of V/angstrom. Numpy.ndarray of shape (n,2)
 
+        @return path: Resulting path based on the calculated fields. 
+        np.ndarray of shape (n,2)
+
         @return states: States of the system at every time point.
         Numpy.ndarray of shape (2m+1,n)
 
