@@ -1,4 +1,4 @@
-'''!@namespace solver.constants
+'''!@namespace constants
 
 @brief Physical constants used within solver package.
 

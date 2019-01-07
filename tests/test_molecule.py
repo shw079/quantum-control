@@ -6,8 +6,6 @@ import unittest
 import numpy as np
 from molecule import Rotor
 from state import State
-from field import Field
-import observable as obs
 import constants as const
 
 class test_molecule(unittest.TestCase):
@@ -22,7 +20,7 @@ class test_molecule(unittest.TestCase):
     def test_update_attr(self):
         self.rotor.update_time(1.0)
         self.rotor.update_state(State(const.m))
-        self.rotor.update_field(Field(np.array([1, 1])))
+        self.rotor.update_field(np.array([1, 1]))
         for attr in self.rotor.history:
             self.assertTrue(len(self.rotor.history[attr]) == 2)
 
@@ -34,7 +32,7 @@ class test_molecule(unittest.TestCase):
     def test_get_history_asarray(self):
         for i in range(5):
             self.rotor.evolve(0.1)
-            self.rotor.update_field(Field(np.array([0,0])))
+            self.rotor.update_field(np.array([0,0]))
         self.assertEqual(self.rotor.get_states_asarray().shape, (2*const.m+1,6))
         self.assertEqual(self.rotor.get_fields_asarray().shape, (6,2))
 

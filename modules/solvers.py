@@ -1,4 +1,4 @@
-'''!@namespace solver.solvers
+'''!@namespace solvers
 
 @brief This module contains two solver classes to calculate (1) control
 fields for a given path (class PathToField), and (2) resulting path
@@ -113,8 +113,8 @@ class PathToField(object):
         fields = fields * field_const
 
         path = np.zeros((self.n,2))
-        oper_x = obs.DipoleX(self.molecule.m).operator
-        oper_y = obs.DipoleY(self.molecule.m).operator
+        oper_x = self.molecule.dipole_x
+        oper_y = self.molecule.dipole_y
         states_list = self.molecule.history['state']
         for i in range(self.n):
             path[i,0] = states_list[i].get_expt(oper_x).real
@@ -134,13 +134,15 @@ class PathToField(object):
 
         Return value:
 
-            The Field object (solver.field.Field) for the next step.
+            An array of size 2 containing x- and y-component of the
+            control field for the next step.
+
         """
 
-        value = self._get_Ainv() @ self._get_b(j)
+        field = self._get_Ainv() @ self._get_b(j)
         if real:
-            value = value.real
-        return Field(value)
+            field = field.real
+        return field.flatten()
 
     def _get_det(self):
         """Calculate determinant of matrix A"""
@@ -208,7 +210,9 @@ class FieldToPath(object):
         ## An nx2 np.ndarray containing the given field.
         ## Each row is the x- and y-component of such field at a time point.
         self.fields = fields
-        self._fields_list = [Field(fields[i,:]) for i in range(self.n)]
+        field_const = 5.142 * 10**11 * 10**(-10) #amplitude in V/angstrom
+        self.fields = self.fields/field_const #back to atomic units
+        self._fields_list = [fields[i,:].flatten() for i in range(self.n)]
         ## The resulting path from the given fields.
         self.path = np.zeros((self.n,2))
         ## Time difference between two adjacent time points.
@@ -248,8 +252,8 @@ class FieldToPath(object):
         states = self.molecule.get_states_asarray()
         states_list = self.molecule.history['state']
         path = np.zeros((self.n,2))
-        oper_x = obs.DipoleX(self.molecule.m).operator
-        oper_y = obs.DipoleY(self.molecule.m).operator
+        oper_x = self.molecule.dipole_x
+        oper_y = self.molecule.dipole_y
         for i in range(self.n):
             path[i,0] = states_list[i].get_expt(oper_x).real
             path[i,1] = states_list[i].get_expt(oper_y).real

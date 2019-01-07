@@ -6,7 +6,6 @@ import numpy as np
 import unittest
 from state import State
 import functions as f
-import observable as obs
 import constants as const
 import solvers as s
 from molecule import Rotor
@@ -111,7 +110,9 @@ class test_FieldToPath(unittest.TestCase):
         fields = np.arange(2*n, dtype=float).reshape((n,2))
         psolver = s.FieldToPath(fields)
         self.assertEqual(psolver.n, n)
-        np.testing.assert_array_almost_equal(psolver.fields, fields)
+        field_const = field_const = 5.142 * 10**11 * 10**(-10)
+        np.testing.assert_array_almost_equal(psolver.fields, 
+                                             fields/field_const)
         self.assertEqual(len(psolver._fields_list),n)
         self.assertEqual(psolver.path.shape, (n,2))
 

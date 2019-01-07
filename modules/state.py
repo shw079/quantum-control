@@ -1,4 +1,4 @@
-'''!@namespace solver.state
+'''!@namespace state
 
 @brief Implementation of class State to hold weights of basis 
 wavefunctions describing the system.

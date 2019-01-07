@@ -1,4 +1,4 @@
-'''!@namespace solver.molecule
+'''!@namespace molecule
 
 @brief Implementation of class Rotor as a basic unit to describe a 
 system of interest.
@@ -7,11 +7,12 @@ system of interest.
 import abc
 import numpy as np
 from state import State
-from field import Field
-import observable as obs
+import functions as f
+from scipy import linalg
+import constants as const
 
 class Molecule(abc.ABC):
-    """!@ Abstract base class for molecules (system of interest)
+    """!@brief Abstract base class for molecules (system of interest)
     """
     @abc.abstractmethod
     def __init__(self):
@@ -56,10 +57,12 @@ class Rotor(Molecule):
         ## Field object (solver.field.Field) containing the external 
         ## control field that will change the hamiltonian of the
         ## molecule
-        self.field = Field(np.zeros(2))
+        self.field = np.zeros(2)
         ## Molecule-specific Hamiltonian object, in this case, a 
         ## RotorH (solver.observable.RotorH).
-        self.hamiltonian = obs.RotorH(m, self.field)
+        self.hamiltonian = self._get_hamiltonian()
+        self.dipole_x = f.cosphi(self.m)
+        self.dipole_y = f.sinphi(self.m)
         ## Current time
         self.time = 0.0
         ## A dictionary for history of `time`, `state`, and `field` 
@@ -84,10 +87,31 @@ class Rotor(Molecule):
         """
 
         #Use haniltonian to evolve the current state 
-        state_new = self.hamiltonian.evolve(self.state, dt)
+        U = linalg.expm((-1j/const.hbar)*self.hamiltonian*dt)
+        weights = U @ self.state.as_ket()
+        state_new = State(self.m, weights)
         #Update (including writing history) of time and state
         self.update_state(state_new)
         self.update_time(self.time+dt)
+
+    def _get_hamiltonian(self):
+        """!@brief Calculate rotor hamiltonian with the current 
+        control field
+
+        @return Hamiltonian matrix representation. A np.ndarray of 
+        shape (2m+1,2m+1) where m is the maxinum energy quantum 
+        number.
+
+        """
+
+        m = self.m
+        field = self.field
+        H = (const.B*np.diag((np.arange(-m,m+1))**2,k=0)
+            -const.mu*f.cosphi(m)*field[0]
+            -const.mu*f.sinphi(m)*field[1])
+
+        return H
+
 
     def set_field(self, field):
         """!@brief Set the external field and calculate hamiltonian accordingly.
@@ -106,7 +130,7 @@ class Rotor(Molecule):
         """
 
         self.field = field
-        self.hamiltonian = obs.RotorH(self.m, field)
+        self.hamiltonian = self._get_hamiltonian()
         # rewrite history manually
         self.history['field'][-1] = field
 
@@ -128,7 +152,7 @@ class Rotor(Molecule):
         self.field = field
         self.history['field'].append(field)
         #calculate and set the new hamiltonian
-        self.hamiltonian = obs.RotorH(self.m, field)
+        self.hamiltonian = self._get_hamiltonian()
 
     def get_time_asarray(self):
         """!@brief Return history of time as an array.
@@ -159,7 +183,7 @@ class Rotor(Molecule):
         time points. Each row is the control field at each time point.
 
         """
-        fields = [field.value.flatten() for field in self.history['field']]
+        fields = [field.flatten() for field in self.history['field']]
         return np.stack(fields, axis=0)
 
 
