@@ -38,6 +38,6 @@ def transform_path(path):
     Ox = savitzky_golay(Ox, 8*math.floor(len(Ox)/len(path[:,0]))+1, 5)
     Oy = savitzky_golay(Oy, 8*math.floor(len(Ox)/len(path[:,0]))+1, 5)
 
-    new_path = np.stack((Ox,Oy))
+    new_path = np.stack((Ox,Oy)).T
 
     return new_path, dt
