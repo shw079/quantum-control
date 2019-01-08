@@ -9,14 +9,15 @@ def transform_path(path):
     TOL = 0.5;
     # this if loop may need more testing
     if (np.amax(abs(path[:,0]))>TOL or np.amax(abs(path[:,1]))>TOL):
-        path[:,0] = path[:,0]*(TOL/np.amax(abs(path[:,0])))
-        path[:,1] = path[:,1]*(TOL/np.amax(abs(path[:,1])))
+        x = path[:,0]*(TOL/np.amax(abs(path[:,0])))
+        y = path[:,1]*(TOL/np.amax(abs(path[:,1])))
+        path = np.column_stack((x,y))
 
-    print('path len',len(path))
+    print('shape',path.shape)
     lengthxy=0
     for k in range(1,len(path)):
         lengthxy = math.sqrt((path[k,0]-path[k-1,0])**2+(path[k,1]-path[k-1,1])**2)+lengthxy
- 
+
     dt = 1000
     Trot = 2*math.pi*const.hbar/const.B
     max_t = 10*lengthxy*Trot/(2*math.pi)
