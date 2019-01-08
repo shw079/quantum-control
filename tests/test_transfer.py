@@ -18,7 +18,7 @@ class test_Transform(unittest.TestCase):
         rawtrack[:,0] = rawtrack[:,0] - rawtrack[0,0]
         rawtrack[:,1] = rawtrack[:,1] - rawtrack[0,1]
         new_path,dt = transform_path(rawtrack)
-        self.assertAlmostEqual(new_path[0,-1],0.4548999818)
+        self.assertAlmostEqual(new_path[-1,0],0.4548999818)
 
 
 if __name__ == '__main__':
