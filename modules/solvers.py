@@ -13,6 +13,7 @@ import constants as const
 from state import State
 from molecule import Rotor
 import abc
+import tqdm
 
 class Solver(abc.ABC):
     """!@brief Abstract base class for a solver used for quantum 
@@ -109,7 +110,7 @@ class PathToField(Solver):
         """!@brief Calculate the control field required for each time step.
         """
 
-        for j in range(1,self.n):
+        for j in tqdm.tqdm(range(1,self.n)):
             self.molecule.evolve(self.dt)
             field = self._get_field(j, real=True)
             self.molecule.update_field(field)
@@ -260,7 +261,7 @@ class FieldToPath(Solver):
         """!@brief Calculate path of rotor dipole moment projection from given fields.
         """
 
-        for i in range(1,self.n):
+        for i in tqdm.tqdm(range(1,self.n)):
             self.molecule.evolve(self.dt)
             self.molecule.set_field(self._fields_list[i])
 
