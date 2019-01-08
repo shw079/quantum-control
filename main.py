@@ -12,11 +12,8 @@ user_path = importPath.import_path()
 user_path.mainloop()
 path_in = user_path.get_coordinates()
 
-# Determine delta t and modify path array if necessary
-path_desired, dt = transform_path(path_in)
-
 # Instantiate a DataContainer object with path specified by the user
-data = DataContainer(path_desired, dt)
+data = DataContainer(path_in)
 
 # Solve for the required control fields
 s = solvers.PathToField(data.path_desired, data.dt_atomic)
