@@ -10,9 +10,14 @@ import importPath
 class test_importPath(unittest.TestCase):
 
 	def test_objectCreation(self):
+		'''Test that object creation does not fail'''	
+		
 		root = importPath.import_path()
+		self.assertEqual(root.counter,0)
 		
 	def test_loadFile(self):
+		'''Test ability to load data from file'''
+		
 		filename = "example_user_data.dat"
 		root = importPath.import_path()
 		root.load_from_file(filename)
@@ -28,6 +33,8 @@ class test_importPath(unittest.TestCase):
 		npt.assert_equal(np.isnan(coords),False)
 		
 	def test_loadFunction(self):
+		'''Test ability to load data from user function'''
+		
 		filename = "example_user_function.py"
 		root = importPath.import_path()
 		root.load_from_file(filename)
@@ -42,6 +49,8 @@ class test_importPath(unittest.TestCase):
 									  np.array([np.cos(t0)*t0,np.sin(t0)*t0]),coords[-1])
 									  
 	def test_clear(self):
+		'''Test clear button actually removes data'''
+
 		filename = "example_user_function.py"
 		root = importPath.import_path()
 		root.load_from_file(filename)
