@@ -12,6 +12,7 @@ def transform_path(path):
         path[:,0] = path[:,0]*(TOL/np.amax(abs(path[:,0])))
         path[:,1] = path[:,1]*(TOL/np.amax(abs(path[:,1])))
 
+    print('path len',len(path))
     lengthxy=0
     for k in range(1,len(path)):
         lengthxy = math.sqrt((path[k,0]-path[k-1,0])**2+(path[k,1]-path[k-1,1])**2)+lengthxy
@@ -37,6 +38,6 @@ def transform_path(path):
     Ox = savitzky_golay(Ox, 8*math.floor(len(Ox)/len(path[:,0]))+1, 5)
     Oy = savitzky_golay(Oy, 8*math.floor(len(Ox)/len(path[:,0]))+1, 5)
 
-    new_path = np.stack((Ox,Oy)).T
+    new_path = np.stack((Ox,Oy))
 
     return new_path, dt
