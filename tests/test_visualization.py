@@ -13,7 +13,6 @@ class test_data:
     """
     def __init__(self):
         self.state = np.load("example_state.npz")['arr_0']
-        Const = namedtuple("Const", ["m"])
         self.t = np.arange(10000)
         self.field = None
         self.path_actual = np.array([[0, 0]])
