@@ -1,6 +1,5 @@
 import unittest
 import numpy as np
-from collections import namedtuple
 from os.path import dirname, abspath, join
 import sys
 sys.path.append(join(dirname(dirname(abspath(__file__))), "modules"))
@@ -15,7 +14,6 @@ class test_data:
     def __init__(self):
         self.state = np.load("example_state.npz")['arr_0']
         Const = namedtuple("Const", ["m"])
-        self.Const = Const(8)
         self.t = np.arange(10000)
         self.field = None
         self.path_actual = np.array([[0, 0]])
