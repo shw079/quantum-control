@@ -1,4 +1,4 @@
-"""!@package docstring
+"""!@namespace
 The visualization module uses data in a DataStore object for plotting.
 This module allows plotting of:
     1. control fields amplitude over time for both x and y fields.
