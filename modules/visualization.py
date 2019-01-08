@@ -11,7 +11,7 @@ This module allows plotting of:
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import numpy as np
-
+import constants 
 
 class Visualization:
     """Class for visualizing data of a DataStore object.
@@ -24,11 +24,11 @@ class Visualization:
         @param dat the DataContainer object used for plotting.
         """
         ## time points
-        self.t = t
+        self.t = dat.t
         ## system state at each time point
         self.state = dat.state
         ## magnetic quantum number
-        self.m = dat.Const.m
+        self.m = constants.m
         ## control fields
         self.field = dat.field
         ## actual x track
