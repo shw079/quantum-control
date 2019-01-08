@@ -9,9 +9,10 @@ This module allows plotting of:
 
 
 import matplotlib.pyplot as plt
-plt.switch_backend('agg')
 import numpy as np
-import constants 
+
+import constants
+
 
 class Visualization:
     """Class for visualizing data of a DataStore object.
@@ -91,6 +92,7 @@ class Visualization:
 
         # save or display figure
         if out:
+            plt.switch_backend('agg')
             plt.savefig(out)
         else:
             plt.show()
@@ -157,6 +159,7 @@ class Visualization:
 
         # save or display figure
         if out:
+            plt.switch_backend('agg')
             plt.savefig(out)
         else:
             plt.show()
@@ -184,6 +187,7 @@ class Visualization:
 
         # save or display figure
         if out:
+            plt.switch_backend('agg')
             plt.savefig(out)
         else:
             plt.show()
