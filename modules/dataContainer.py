@@ -44,7 +44,7 @@ class DataContainer(object):
 
     """
 
-    def __init__(self, path, dt=1000.):
+    def __init__(self, path):
         """Initialize an object of DataContainer with a desired path.
 
         Parameters:
