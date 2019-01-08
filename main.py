@@ -5,8 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '.', 'modules'))
 import importPath, solvers
 from transform import transform_path
 from dataContainer import DataContainer
-#from visualization import Visualization
-import matplotlib.pyplot as plt
+from visualization import Visualization
 
 # Get user-specified path
 user_path = importPath.import_path()
@@ -30,17 +29,15 @@ s.solve()
 data.t, data.field, data.path_actual, data.state = s.export()
 
 
-#plt.plot(data.t[:],data.path_desired[:,0],label='desired')
-#plt.plot(data.t[:],data.path_actual[:,0],label='actual')
-plt.plot(data.path_desired[:,0],data.path_desired[:,1],label='desired')
-plt.plot(data.path_actual[:,0],data.path_actual[:,1],label='actual')
-plt.legend()
-plt.show()
+#plt.plot(data.path_desired[:,0],data.path_desired[:,1],label='desired')
+#plt.plot(data.path_actual[:,0],data.path_actual[:,1],label='actual')
+#plt.legend()
+#plt.show()
 
 # Analyze resulting paths from noisy control fields
 
 # Visualize results
-#vis = Visualization(data)
-# vis.density()
-# vis.trajectory()
-# vis.field()
+vis = Visualization(data)
+vis.density()
+vis.trajectory()
+vis.field()

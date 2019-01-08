@@ -20,6 +20,7 @@ class test_Transform(unittest.TestCase):
         rawtrack[:,1] = rawtrack[:,1] - rawtrack[0,1]
         new_path,dt = transform_path(rawtrack)
         self.assertTrue(len(new_path)>len(rawtrack))
+        print(new_path[0,0])
 
         file_verify = 'transform_verify.dat'
         verify_path = np.genfromtxt(file_verify)

@@ -18,9 +18,9 @@ def transform_path(path):
     for k in range(1,len(path)):
         lengthxy = math.sqrt((path[k,0]-path[k-1,0])**2+(path[k,1]-path[k-1,1])**2)+lengthxy
 
-    dt = 1000
+    dt = 500
     Trot = 2*math.pi*const.hbar/const.B
-    max_t = 10*lengthxy*Trot/(2*math.pi)
+    max_t = 5*lengthxy*Trot/(2*math.pi)
     t = np.arange(0,max_t,dt)
     max_t = t[-1]
 
@@ -36,8 +36,8 @@ def transform_path(path):
     Ox = np.interp(sigmoid, t_raw, path[:,0])
     Oy = np.interp(sigmoid, t_raw, path[:,1])
 
-    Ox = savitzky_golay(Ox, 8*math.floor(len(Ox)/len(path[:,0]))+1, 5)
-    Oy = savitzky_golay(Oy, 8*math.floor(len(Ox)/len(path[:,0]))+1, 5)
+    Ox = savitzky_golay(Ox, 2*math.floor(len(Ox)/len(path[:,0]))+1, 5)
+    Oy = savitzky_golay(Oy, 2*math.floor(len(Ox)/len(path[:,0]))+1, 5)
 
     new_path = np.stack((Ox,Oy)).T
 
