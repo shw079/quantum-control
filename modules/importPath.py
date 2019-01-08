@@ -74,6 +74,8 @@ class import_path(tk.Tk):
 		return
 		
 	def instructions(self):
+		'''Display instuctions when 'instructions' button clicked'''
+
 		messagebox.showinfo("Help",
 		"To draw a path, simply click and drag in the black space provided. If you would like to load from file (either data or a function) please use the 'Select File' button. When  you are finished, click 'Done'. To erase any drawn or imported data, click 'Clear'.")
 
@@ -149,6 +151,7 @@ class import_path(tk.Tk):
 		
 	def get_coordinates(self):
 		'''Returns the list of coordinates as numpy array'''
+
 		coords = np.array(self.coordinate_array)
 		if len(coords) == 0:
 			raise ValueError("Error: No coordinates present")
@@ -159,6 +162,7 @@ class import_path(tk.Tk):
 		
 	def plot_coordinates(self):
 		'''Plot coordinates held in coordinate list'''
+
 		coords = self.get_coordinates()
 		if len(coords) == 0:
 			raise ValueError("Error: No coordinates present")
