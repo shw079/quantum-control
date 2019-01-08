@@ -161,7 +161,7 @@ class Visualization:
         else:
             plt.show()
 
-    def field(self, out=None):
+    def fields(self, out=None):
         """!
         Plot contol fields amplitude over time for both x and y 
         dimensions.
