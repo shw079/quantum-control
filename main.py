@@ -3,7 +3,6 @@
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '.', 'modules'))
 import importPath, solvers
-from transform import transform_path
 from dataContainer import DataContainer
 from visualization import Visualization
 
