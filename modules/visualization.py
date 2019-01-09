@@ -1,4 +1,4 @@
-"""!@package docstring
+"""!@namespace
 The visualization module uses data in a DataStore object for plotting.
 This module allows plotting of:
     1. control fields amplitude over time for both x and y fields.
@@ -9,8 +9,9 @@ This module allows plotting of:
 
 
 import matplotlib.pyplot as plt
-plt.switch_backend('agg')
 import numpy as np
+
+import constants
 
 
 class Visualization:
@@ -24,11 +25,11 @@ class Visualization:
         @param dat the DataContainer object used for plotting.
         """
         ## time points
-        self.t = t
+        self.t = dat.t
         ## system state at each time point
         self.state = dat.state
         ## magnetic quantum number
-        self.m = dat.Const.m
+        self.m = constants.m
         ## control fields
         self.field = dat.field
         ## actual x track
@@ -91,6 +92,7 @@ class Visualization:
 
         # save or display figure
         if out:
+            plt.switch_backend('agg')
             plt.savefig(out)
         else:
             plt.show()
@@ -157,11 +159,12 @@ class Visualization:
 
         # save or display figure
         if out:
+            plt.switch_backend('agg')
             plt.savefig(out)
         else:
             plt.show()
 
-    def field(self, out=None):
+    def fields(self, out=None):
         """!
         Plot contol fields amplitude over time for both x and y 
         dimensions.
@@ -184,6 +187,7 @@ class Visualization:
 
         # save or display figure
         if out:
+            plt.switch_backend('agg')
             plt.savefig(out)
         else:
             plt.show()
