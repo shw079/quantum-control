@@ -1,5 +1,9 @@
-'''testFunctions.py
+'''!@namespace testing.testFunctions
+
+@brief Unittests for functions.py
+
 '''
+
 import sys
 from os.path import dirname, abspath, join
 sys.path.append(join(dirname(dirname(abspath(__file__))), "modules"))
@@ -12,7 +16,7 @@ import constants as const
 class test_Functions(unittest.TestCase):
 
     def test_calc_cosphi(self):
-        """check cosphi function"""
+        """!@brief check cosphi function"""
         m=8
         cosphi = f.cosphi(m)
         self.assertEqual(cosphi.shape,(2*m+1,2*m+1))
@@ -21,7 +25,7 @@ class test_Functions(unittest.TestCase):
             self.assertEqual(cosphi[i+1,i],0.5)
 
     def test_calc_sinphi(self):
-        """check sinphi function"""
+        """!@brief check sinphi function"""
         m=8
         sinphi = f.sinphi(m)
         self.assertEqual(sinphi.shape,(2*m+1,2*m+1))
@@ -30,7 +34,7 @@ class test_Functions(unittest.TestCase):
             self.assertEqual(sinphi[i+1,i],0.-0.5j)
 
     def test_calc_ddphi(self):
-        """check cosphi function"""
+        """!@brief check cosphi function"""
         m=8
         ddphi = f.ddphi(m)
         self.assertEqual(ddphi.shape,(2*m+1,2*m+1))
@@ -38,7 +42,7 @@ class test_Functions(unittest.TestCase):
             self.assertEqual(ddphi[i,i],(i-8)*1j)
 
     def test_calc_d2dpi2(self):
-        """check d2dphi2 function"""
+        """!@brief check d2dphi2 function"""
         m=8
         d2dphi2 = f.d2dphi2(m)
         self.assertEqual(d2dphi2.shape,(2*m+1,2*m+1))
@@ -46,6 +50,7 @@ class test_Functions(unittest.TestCase):
             self.assertEqual(d2dphi2[i,i],-1*abs(i-8)**2)
 
     def test_d2dt2(self):
+        """!@brief check d2di2 function"""
         dt = 1
         xi,xf = 0,10
         n = int((xf-xi)/dt) + 1
@@ -56,6 +61,7 @@ class test_Functions(unittest.TestCase):
         np.testing.assert_array_almost_equal(ddx, ddx_truth)
 
     def test_d2dt2_sigmoid(self):
+        """!@brief check d2di2 function for sigmoid path"""
         #import path and expected result
         fname_path = 'testdata_solver/sigmoid_path.txt'
         fname_d2dt2 = 'testdata_solver/sigmoid_path_d2dt2.txt'

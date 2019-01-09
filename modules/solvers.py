@@ -1,4 +1,4 @@
-'''!@namespace solvers
+'''!@namespace modules.solvers
 
 @brief Module solvers implements two classes to calculate (1) control
 fields for a given path (PathToField), and (2) resulting path from a 
