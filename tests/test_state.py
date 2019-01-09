@@ -1,5 +1,9 @@
-'''test_State.py
+'''!@namespace testing.testState
+
+@brief Unittests for State.py
+
 '''
+
 import sys
 from os.path import dirname, abspath, join
 sys.path.append(join(dirname(dirname(abspath(__file__))), "modules"))

@@ -7,9 +7,9 @@ from dataContainer import DataContainer
 from visualization import Visualization
 
 # Get user-specified path
-user_path = importPath.import_path()
-user_path.mainloop()
-path_in = user_path.get_coordinates()
+root = importPath.import_path()
+root.mainloop()
+path_in = root.get_coordinates()
 
 # Instantiate a DataContainer object with path specified by the user
 data = DataContainer(path_in)
