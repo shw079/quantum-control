@@ -3,9 +3,9 @@
 
 import numpy as np
 from solvers import FieldToPath
-import math
-import functions as f
-import constants as const
+#import math
+#import functions as f
+#import constants as const
 
 class NoiseAnalyser(object):
     """this part does some noise analysis for a given field
@@ -25,16 +25,15 @@ class NoiseAnalyser(object):
         for i in range(self.numfield):
             sx=np.random.normal(0, self.variance, len(self.field))
             sy=np.random.normal(0, self.variance, len(self.field))
-            noisy_field[:,0+i*2]=self.field[:,0]+np.transpose(sx)
-            noisy_field[:,1+i*2]=self.field[:,1]+np.transpose(sy)
+            noisy_field[:,0+i*2]=self.field[:,0]+np.transpose(sx)*self.field[:,0]
+            noisy_field[:,1+i*2]=self.field[:,1]+np.transpose(sy)*self.field[:,1]
             
         self.noisy_field = noisy_field.astype(float)
        
      
     def calc_path(self):
-        self.path=np.empty((len(self.field), 2 * self.numfield),dtype=complex)
         for i in range(self.numfield):
-            path_solver = FieldToPath(self.noisy_field[:,[i*2,i*2+1]], dt)
+            path_solver = FieldToPath(self.noisy_field[:,[i*2,i*2+1]], self.dt)
             # Then invoke the solve() method of the path_solver object
             path_solver.solve()
             self.path[:,[i*2,i*2+1]]= path_solver.export()[1]
