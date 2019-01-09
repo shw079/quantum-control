@@ -1,4 +1,4 @@
-'''!@namespace molecule
+'''!@namespace modules.molecule
 
 @brief Implementation of class Rotor as a basic unit to describe a 
 system of interest.

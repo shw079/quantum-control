@@ -34,7 +34,7 @@ class NoiseAnalyser(object):
     def calc_path(self):
         self.path=np.empty((len(self.field), 2 * self.numfield),dtype=complex)
         for i in range(self.numfield):
-            path_solver = FieldToPath(self.noisy_field[:,[i*2,i*2+1]], dt)
+            path_solver = FieldToPath(self.noisy_field[:,[i*2,i*2+1]], self.dt)
             # Then invoke the solve() method of the path_solver object
             path_solver.solve()
             self.path[:,[i*2,i*2+1]]= path_solver.export()[1]

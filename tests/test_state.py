@@ -1,5 +1,9 @@
-'''test_State.py
+'''!@namespace testing.testState
+
+@brief Unittests for State.py
+
 '''
+
 import sys
 from os.path import dirname, abspath, join
 sys.path.append(join(dirname(dirname(abspath(__file__))), "modules"))
@@ -19,7 +23,7 @@ class test_State(unittest.TestCase):
     #     np.testing.assert_array_equal(state_obj.get_value(), state_input)
     
     def test_init(self):
-        """Init with or without specified state probability."""
+        """!@brief Test initialization with or without specified state probability."""
         m = 5
         value = np.zeros(2*m+1)
         state = State(m)

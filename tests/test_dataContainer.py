@@ -1,4 +1,7 @@
-'''test_dataContainer.py
+'''!@namespace testing.testdataContainer
+
+@brief Unittesting for dataContainer.py
+
 '''
 
 import sys
