@@ -7,7 +7,7 @@ import os
 import importlib
 import matplotlib.pyplot as plt
 
-"""!@namespace importPath
+"""!@namespace modules.importPath
 
 !@breif This module exists to hold the import_path class, which takes user input and returns the data array for the desired path. All inputs come through the Tkinter GUI that is opened for the user. The user is given the option to (1) Draw their path with the cursor, (2) Load a path from file, or (3) Load a function from file.
 
@@ -141,7 +141,10 @@ class import_path(tk.Tk):
 		self.destroy()
 		
 	def get_coordinates(self):
-		'''!@breif Returns the list of coordinates as numpy array'''
+		'''!@breif Returns the list of coordinates as numpy array
+                
+                @reutrn Coorinates from the user input (2xn)  
+                '''
 
 		coords = np.array(self.coordinate_array)
 		if len(coords) == 0:
