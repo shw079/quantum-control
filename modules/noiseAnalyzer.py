@@ -6,7 +6,8 @@ from solvers import FieldToPath
 #import math
 #import functions as f
 #import constants as const
-from joblib import Parallel, delayed
+# from joblib import Parallel, delayed
+from multiprocessing import Process
 
 class NoiseAnalyser(object):
     """this part does some noise analysis for a given field
@@ -39,7 +40,14 @@ class NoiseAnalyser(object):
             path_solver.solve()
             self.path[:,[i*2,i*2+1]]= path_solver.export()[1]
 
-        Parallel(n_jobs=8)(delayed(calc_a_path)(i) for i in range(self.numfield))
+        # Parallel(n_jobs=8)(delayed(calc_a_path)(i) for i in range(self.numfield))
+        # with Pool() as pool:
+        #     pool(calc_a_path, range(self.numfield))
+        p = Process(target=calc_a_path, args=(range(self.numfield)))
+        p.start()
+        p.join()
+
+
         
        
         
