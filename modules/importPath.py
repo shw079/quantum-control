@@ -7,22 +7,14 @@ import os
 import importlib
 import matplotlib.pyplot as plt
 
-"""@package docstring`
+"""!@namespace importPath
 
-This module exists to hold the import_path class, which takes user input and returns the data array for the desired path
-All inputs come through the Tkinter GUI that is opened for the user
-The user is given the option to: 
-	1. Draw their path with the cursor
-	2. Load a path from file
-	3. Enter an analytic formula
+!@breif This module exists to hold the import_path class, which takes user input and returns the data array for the desired path. All inputs come through the Tkinter GUI that is opened for the user. The user is given the option to (1) Draw their path with the cursor, (2) Load a path from file, or (3) Load a function from file.
 
 """
 
 def import_my_module(full_name, path):
-	"""Import a python module from a path. 3.4+ only.
-
-	Does not call sys.modules[full_name] = path
-	"""
+	"""!@breif Import a python module from a path. 3.4+ only. """
 	from importlib import util
 
 	spec = util.spec_from_file_location(full_name, path)
@@ -33,13 +25,12 @@ def import_my_module(full_name, path):
 
 class import_path(tk.Tk):
 
-	'''This class provides the viualization window for the user to draw a path. 
+	'''!@breif This class provides the viualization window for the user to draw a path. 
 	The coordinates of the path are then recorded in a list for future use
-	
 	credit to: stack_exchange_40604233 for base design'''
 
 	def __init__(self):
-		'''Initialize class; create canvas for gui and set initial variables'''
+		'''!@breif Initialize class; create canvas for gui and set initial variables'''
 		tk.Tk.__init__(self)
 		self.width = 600
 		self.height = 600
@@ -74,7 +65,7 @@ class import_path(tk.Tk):
 		return
 		
 	def instructions(self):
-		'''Display instuctions when 'instructions' button clicked'''
+		'''!@breif Display instuctions when 'instructions' button clicked'''
 
 		messagebox.showinfo("Help",
 		"To draw a path, simply click and drag in the black space provided. If you would like to load from file (either data or a function) please use the 'Select File' button. When  you are finished, click 'Done'. To erase any drawn or imported data, click 'Clear'.")
@@ -86,7 +77,7 @@ class import_path(tk.Tk):
 		self.previous_y = event.y
 
 	def draw_line(self, event):
-		'''Visualize the path as it's being drawn'''
+		'''!@breif Visualize the path as it's being drawn'''
 	
 		#if this is the first click, intialize near the click
 		if self.counter == 0:
@@ -106,7 +97,7 @@ class import_path(tk.Tk):
 		self.counter += 1
 		
 	def record_coordinates(self, event):
-		'''Keep every coordinate in a list, but not repeating coordinates
+		'''!@breif Keep every coordinate in a list, but not repeating coordinates
 		NOTE: need to subtract y from height since pixels are recorded from top'''
 		
 		if len(self.coordinate_array) == 0:
@@ -117,7 +108,7 @@ class import_path(tk.Tk):
 				self.coordinate_array = np.row_stack((self.coordinate_array, np.array([[event.x, self.height - event.y]])))
 				
 	def clear(self):
-		'''Clear all data held in the object and start over'''
+		'''!@breif Clear all data held in the object and start over'''
 		
 		#clear canvas
 		self.canvas.delete("all")
@@ -130,7 +121,7 @@ class import_path(tk.Tk):
 		self.coordinate_array = np.array([])
 		
 	def load_from_file(self, filename=None):
-		'''Allow user to choose file for input'''
+		'''!@breif Allow user to choose file for input'''
 		if filename == None:
 			filename = filedialog.askopenfilename(initialdir="./", title='Please select a file')
 				
@@ -150,7 +141,7 @@ class import_path(tk.Tk):
 		self.destroy()
 		
 	def get_coordinates(self):
-		'''Returns the list of coordinates as numpy array'''
+		'''!@breif Returns the list of coordinates as numpy array'''
 
 		coords = np.array(self.coordinate_array)
 		if len(coords) == 0:
@@ -161,7 +152,7 @@ class import_path(tk.Tk):
 		return coords
 		
 	def plot_coordinates(self):
-		'''Plot coordinates held in coordinate list'''
+		'''!@breif Plot coordinates held in coordinate list'''
 
 		coords = self.get_coordinates()
 		if len(coords) == 0:
