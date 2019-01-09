@@ -1,5 +1,9 @@
-'''test_solver.py
+'''!@namespace testing.testSolvers
+
+@brief Unittets for solvers.py
+
 '''
+
 import sys
 from os.path import dirname, abspath, join
 sys.path.append(join(dirname(dirname(abspath(__file__))), "modules"))
