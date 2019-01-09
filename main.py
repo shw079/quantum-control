@@ -5,6 +5,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '.', 'modules'))
 import importPath, solvers
 from dataContainer import DataContainer
 from visualization import Visualization
+from noiseAnalyzer import NoiseAnalyser
+import matplotlib.pyplot as plt
 
 # Get user-specified path
 root = importPath.import_path()
@@ -19,11 +21,20 @@ s = solvers.PathToField(data.path_desired, data.dt_atomic)
 s.solve()
 data.t, data.field, data.path_actual, data.state = s.export()
 
-
 # Analyze resulting paths from noisy control fields
+myNA = NoiseAnalyser(data.field, data.dt_atomic,1e-6, 10)
+data.noise_stat_mean,data.noise_stat_var = myNA.analyze()
+
+plt.figure(1)
+plt.plot(data.t,data.path_actual[:,0],label='path_actual')
+plt.plot(data.t,data.noise_stat_mean[:,0],label='mean')
+plt.figure(2)
+plt.plot(data.t,data.noise_stat_var[:,0])
+plt.legend()
+plt.show()
 
 # Visualize results
-vis = Visualization(data)
-vis.density()
-vis.trajectory()
-vis.fields()
+#vis = Visualization(data)
+#vis.density()
+#vis.trajectory()
+#vis.fields()
