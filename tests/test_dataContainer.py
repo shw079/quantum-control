@@ -7,17 +7,19 @@ sys.path.append(join(dirname(dirname(abspath(__file__))), "modules"))
 import unittest
 import numpy as np
 from dataContainer import DataContainer
+from transform import transform_path
 
 class test_DataContainer(unittest.TestCase):
 
     def test_init(self):
         """Instantiate DataContainer object with input using fake path."""
-        #create a fake yet correct input path which is a 5x2 ndarray
-        path = np.array([np.arange(5), np.arange(1,6)]).T
+        #create a fake yet correct input path which is a 10x2 ndarray
+        path = np.array([np.arange(10), np.arange(1,11)]).T
+        transformed_path,dt = transform_path(path)
         data = DataContainer(path)
-        self.assertEqual(data.n, path.shape[0])
-        np.testing.assert_array_equal(data.path_desired, path)
-        self.assertEqual(data.path_actual.shape, path.shape)
+        self.assertEqual(data.n, transformed_path.shape[0])
+        np.testing.assert_array_equal(data.path_desired, transformed_path)
+        self.assertEqual(data.path_actual.shape, transformed_path.shape)
 
     def test_hasNanInf(self):
         """Raise ValueError if input path contains NaN or Inf"""
