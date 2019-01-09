@@ -22,7 +22,7 @@ s.solve()
 data.t, data.field, data.path_actual, data.state = s.export()
 
 # Analyze resulting paths from noisy control fields
-myNA = NoiseAnalyser(data.field, data.dt_atomic,1e-6, 10)
+myNA = NoiseAnalyser(data.field, data.dt_atomic,0.01, 5)
 data.noise_stat_mean,data.noise_stat_var = myNA.analyze()
 
 plt.figure(1)
