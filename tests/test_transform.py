@@ -17,6 +17,12 @@ from transform import transform_path
 class test_Transform(unittest.TestCase):
 
     def test_transform(self):
+        """!@brief Test transform function which 'transforms' input
+        path by interpolation to higher density points. Compares 
+        transformed path to verification data
+
+        """
+
         file = 'transform_data.dat'
         rawtrack = np.genfromtxt(file,delimiter=",")
         rawtrack[:,0] = rawtrack[:,0] - rawtrack[0,0]

@@ -23,7 +23,11 @@ class test_State(unittest.TestCase):
     #     np.testing.assert_array_equal(state_obj.get_value(), state_input)
     
     def test_init(self):
-        """!@brief Test initialization with or without specified state probability."""
+        """!@brief Test initialization with or without specified state 
+        probability.
+        
+        """
+
         m = 5
         value = np.zeros(2*m+1)
         state = State(m)
@@ -34,6 +38,8 @@ class test_State(unittest.TestCase):
         np.testing.assert_array_equal(state.value, value)
 
     def test_init_input(self):
+        """!@brief Test constructor for instantiation of a State"""
+
         m = 5
         #correct input
         value = np.ones(2*m+1)
@@ -47,7 +53,11 @@ class test_State(unittest.TestCase):
         self.assertRaises(ValueError, State, m, value)
 
     def test_calc_bra(self):
-    	"""calculate bra or complex conjugate of input state"""
+    	"""!@brief Test calculation of bra or complex conjugate of 
+        input state.
+        
+        """
+
     	state_input = (np.arange(0,2*const.m+1))*1j
     	state_obj = State(const.m,state_input)
     	bra = state_obj.as_bra()
@@ -55,7 +65,11 @@ class test_State(unittest.TestCase):
     	np.testing.assert_array_equal(bra,np.conj(state_input.reshape(1,2*const.m+1)))
 
     def test_calc_ket(self):
-    	"""calculate ket (reshaped array of state) of input state"""
+    	"""!@brief Test calculation of ket (reshaped array of state) 
+        of input state
+
+        """
+
     	state_input = (np.arange(0,2*const.m+1))*1j
     	state_obj = State(const.m,state_input)
     	ket = state_obj.as_ket()
@@ -63,7 +77,11 @@ class test_State(unittest.TestCase):
     	np.testing.assert_array_equal(ket,state_input.reshape(2*const.m+1,1))
 
     def test_expt(self):
-    	"""calculate expectation value from bra, ket, and input operator"""
+    	"""Test calculation of expectation value from bra, ket, and 
+        input operator.
+
+        """
+
     	state_input = (np.arange(0,2*const.m+1))*1j
     	state_obj = State(const.m,state_input)
     	bra = state_obj.as_bra()

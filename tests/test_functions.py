@@ -14,6 +14,7 @@ import constants as const
 
 
 class test_Functions(unittest.TestCase):
+    """!@brief Testing class for functions.py."""
 
     def test_calc_cosphi(self):
         """!@brief check cosphi function"""
