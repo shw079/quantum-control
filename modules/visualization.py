@@ -88,7 +88,7 @@ class Visualization:
 
         Returns
         -------
-        numpy.array, shape=(n_grid, n)
+        proba : numpy.array, shape=(n_grid, n)
             A numpy ndarray for probability density for plotting.
 
         """
