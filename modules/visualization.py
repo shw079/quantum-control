@@ -220,3 +220,27 @@ class Visualization:
         else:
             plt.show()
 
+    def noise_variance(self, out=None)
+        """Plot variance of x and y trajectories over time under noise.
+
+        """
+        plt.figure(figsize=(10, 10))
+
+        plt.plot(self.t, self.noise_stat_var[:, 0], color="blue",
+                 lw=2, label="u"<cos(${\phi}$)>"")
+        plt.plot(self.t, self.noise_stat_var[:, 1], color="red",
+                 lw=2, label="u"<sin(${\phi}$)>"")
+
+        plt.xlabel("Time [ps]", fontsize=14)
+        plt.ylabel("Variance", fontsize=14)
+        plt.title("Variance of trajectory over time under noise", 
+                  fontsize=20)
+        plt.legend(loc="upper right", fontsize=12)
+
+        # save or display figure
+        if out:
+            plt.switch_backend('agg')
+            plt.savefig(out)
+        else:
+            plt.show()
+
