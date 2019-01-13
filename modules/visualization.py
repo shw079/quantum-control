@@ -148,7 +148,7 @@ class Visualization:
             Whether to plot mean trajectories under noise over time.
             Default to True.
 
-        out : str
+        out : str, optional (default=None)
             The path to save the figure if not None. If None, show 
             the figure in the console. Default to None.
 
@@ -236,7 +236,7 @@ class Visualization:
 
         Parameters
         ----------
-        out : str
+        out : str, optional (default=None)
             The path to save the figure if not None. If None, show 
             the figure in the console. Default to None.
 
@@ -266,7 +266,7 @@ class Visualization:
 
         Parameters
         ----------
-        out : str
+        out : str, optional (default=None)
             The path to save the figure if not None. If None, show
             the figure in the console. Default to None.
 
