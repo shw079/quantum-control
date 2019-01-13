@@ -79,7 +79,7 @@ class Visualization:
         ----------
         n_grid : int, optional (default=100)
             Number of equally spaced rotational angles to calculate 
-            probability density between 0 and 2:math:`pi`. Default 
+            probability density in :math:`[0, 2{\pi})`. Default 
             to 100.
 
         out : str, optional (default=None)
@@ -139,7 +139,7 @@ class Visualization:
         """Plot trajectories of the rigid rotor.
 
         Plot actual and expected trajectories of x (i.e. 
-        <cos(:math:`phi`)>) and y (i.e. <sin(:math:`phi`)>) over time 
+        <cos(:math:`{\phi}`)>) and y (i.e. <sin(:math:`{\phi}`)>) over time 
         and also the phase plot of x and y.
 
         Parameters
