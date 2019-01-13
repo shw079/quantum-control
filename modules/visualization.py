@@ -40,6 +40,12 @@ class Visualization:
         self.cos_phi_desired = dat.path_desired[:, 0]
         ## desired y track
         self.sin_phi_desired = dat.path_desired[:, 1]
+        # mean actual x track w/ noise
+        self.mean_cos_phi_actual_noise = dat.noise_stat_mean[:, 0]
+        # mean actual y track w/ noise
+        self.mean_sin_phi_actual_noise = dat.noise_stat_mean[:, 1]
+        # variance of actual tracks w/ noise
+        self.noise_stat_var = dat.noise_stat_var
 
     def density(self, n_grid=100, out=None):
         """!
@@ -99,7 +105,7 @@ class Visualization:
         # return proba for unit testing
         return proba
     
-    def trajectory(self, out=None):
+    def trajectory(self, noise=True, out=None):
         """!@brief Plot trajectories of the rigid rotor.
 
         Plot actual and expected trajectories of x (i.e. <cos(&phi;)>) 
@@ -118,9 +124,16 @@ class Visualization:
         ax1 = fig.add_subplot(grid[0, :2])
 
         ax1.plot(self.t, self.cos_phi_actual, color="blue", lw=2,
-                 alpha=0.6, label="actual x track")
+                 alpha=0.6, label="actual x track" if not noise else \
+                                  "actual x track, w/o noise")
+
+        if noise:
+            ax1.plot(self.t, self.mean_cos_phi_actual_noise,
+                     color="blue", lw=2, alpha=0.6, ls=":",
+                     label="mean actual x track, w/ noise")
+
         ax1.plot(self.t, self.cos_phi_desired, color="blue", lw=2,
-                 ls="--", label="expected x track")
+                 ls="-.", label="expected x track")
 
         ax1.set_ylabel(u"<cos(${\phi}$)>", fontsize=14)
         ax1.set_ylim(-1,1)
@@ -130,9 +143,16 @@ class Visualization:
         ax2 = fig.add_subplot(grid[1, :2])
 
         ax2.plot(self.t, self.sin_phi_actual, color="red", lw=2,
-                 alpha=0.6, label="actual y track")
+                 alpha=0.6, label="actual y track" if not noise else \
+                                  "actual y track, w/o noise")
+ 
+        if noise:
+            ax2.plot(self.t, self.mean_sin_phi_actual_noise,
+                     color="red", lw=2, alpha=0.6, ls=":",
+                     label="mean actual y track, w/ noise")
+
         ax2.plot(self.t, self.sin_phi_desired, color="red", lw=2,
-                 ls="--", label="expected y track")
+                 ls="-.", label="expected y track")
 
         ax2.set_ylabel(u"<sin(${\phi}$)>", fontsize=14)
         ax2.set_ylim(-1,1)
@@ -144,9 +164,17 @@ class Visualization:
 
         ax3.plot(self.cos_phi_actual, self.sin_phi_actual,
                  color="black", lw=2, alpha=0.6, 
-                 label="actual phase plot")
+                 label="actual phase plot" if not noise else \
+                       "actual phase plot, w/o noise")
+
+        if noise:
+            ax3.plot(self.mean_cos_phi_actual_noise,
+                     self.mean_sin_phi_actual_noise,
+                     color="black", lw=2, alpha=0.6, ls=":",
+                     label="mean actual phase plot, w/ noise")
+
         ax3.plot(self.cos_phi_desired, self.sin_phi_desired,
-                 color="black", lw=2, ls="--", 
+                 color="black", lw=2, ls="-.",
                  label="expected phase plot")
 
         ax3.set_ylabel(u"<sin(${\phi}$)>", fontsize=14)
