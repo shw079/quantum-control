@@ -55,7 +55,7 @@ class Visualization:
         Mean actual y trajectory with noise.
 
     noise_stat_var : numpy.array, shape=(n, 2)
-        Variance of actual trajectorys with noise.
+        Variance of actual trajectories with noise.
 
     """
     def __init__(self, dat):
