@@ -7,14 +7,23 @@ import os
 import importlib
 import matplotlib.pyplot as plt
 
-"""!@namespace modules.importPath
-
-!@breif This module exists to hold the import_path class, which takes user input and returns the data array for the desired path. All inputs come through the Tkinter GUI that is opened for the user. The user is given the option to (1) Draw their path with the cursor, (2) Load a path from file, or (3) Load a function from file.
-
-"""
-
 def import_my_module(full_name, path):
-	"""!@breif Import a python module from a path. 3.4+ only. """
+	"""Function for importing a python module from path. Python 3.4+ only.
+	
+	Parameters
+	----------
+	full_name : str
+		Name of the module (no file extension)
+	
+	path : str
+		Path to the module (with file extension)
+	
+	Returns
+	-------	
+	mod : object
+		Module object
+	
+	"""
 	from importlib import util
 
 	spec = util.spec_from_file_location(full_name, path)
@@ -25,12 +34,45 @@ def import_my_module(full_name, path):
 
 class import_path(tk.Tk):
 
-	'''!@breif This class provides the viualization window for the user to draw a path. 
-	The coordinates of the path are then recorded in a list for future use
-	credit to: stack_exchange_40604233 for base design'''
+	""" Class provides the viualization window for the user to draw a path. The path can also be loaded from
+	a data file or generated with a provided function. The coordinates of the path are then recorded in a list for 
+	future use, and can be retrieved with the get_coordinates() function.
+	credit to: stack_exchange_40604233 for base design
+	
+	
+	Attributes
+	----------
+	width : float
+		Width of the GUI in pixels
+		
+	height : float
+		Height of the GUI in pixels
+		
+	canvas : Tkinter object
+		Tkinter canvas object for allowing the user to draw a path and select files
+		
+	counter : int
+		Counter for use in drawing path
+		
+	previous_x : float
+		Last pointer x position
+		
+	previous_y : float
+		Last pointer y position
+		
+	current_x : float
+		Current x position
+		
+	current_y : float
+		Current y position
+		
+	coordinate_array : numpy.array, shape=(n, 2)
+		Coordinates for the user path
+	
+	"""
+	
 
 	def __init__(self):
-		'''!@breif Initialize class; create canvas for gui and set initial variables'''
 		tk.Tk.__init__(self)
 		self.width = 600
 		self.height = 600
@@ -65,19 +107,35 @@ class import_path(tk.Tk):
 		return
 		
 	def instructions(self):
-		'''!@breif Display instuctions when 'instructions' button clicked'''
+		'''Display instuctions when 'instructions' button clicked
+		
+		'''
 
 		messagebox.showinfo("Help",
 		"To draw a path, simply click and drag in the black space provided. If you would like to load from file (either data or a function) please use the 'Select File' button. When  you are finished, click 'Done'. To erase any drawn or imported data, click 'Clear'.")
 
 	def position_previous(self,event):
-		'''Need the track the previous position for drawing lines'''
-	
+		'''Need to track the previous position for drawing lines
+		
+		Parameters
+		----------
+		event : object
+			Tkinter object that stores (among other things), the x and y positon of the cursor
+			
+		'''
+			
 		self.previous_x = event.x
 		self.previous_y = event.y
 
 	def draw_line(self, event):
-		'''!@breif Visualize the path as it's being drawn'''
+		'''Visualize the path as it's being drawn
+		
+		Parameters
+		----------
+		event : object
+			Tkinter object that stores (among other things), the x and y positon of the cursor
+			
+		'''
 	
 		#if this is the first click, intialize near the click
 		if self.counter == 0:
@@ -97,8 +155,15 @@ class import_path(tk.Tk):
 		self.counter += 1
 		
 	def record_coordinates(self, event):
-		'''!@breif Keep every coordinate in a list, but not repeating coordinates
-		NOTE: need to subtract y from height since pixels are recorded from top'''
+		'''Keep every coordinate in a list, but not repeating coordinates
+		NOTE: need to subtract y from height since pixels are recorded from top
+		
+		Parameters
+		----------
+		event : object
+			Tkinter object that stores (among other things), the x and y positon of the cursor
+			
+		'''
 		
 		if len(self.coordinate_array) == 0:
 			self.coordinate_array = np.array([[event.x, self.height - event.y]])
@@ -108,7 +173,9 @@ class import_path(tk.Tk):
 				self.coordinate_array = np.row_stack((self.coordinate_array, np.array([[event.x, self.height - event.y]])))
 				
 	def clear(self):
-		'''!@breif Clear all data held in the object and start over'''
+		'''Clear all data held in the object and start over
+		
+		'''
 		
 		#clear canvas
 		self.canvas.delete("all")
@@ -121,7 +188,15 @@ class import_path(tk.Tk):
 		self.coordinate_array = np.array([])
 		
 	def load_from_file(self, filename=None):
-		'''!@breif Allow user to choose file for input'''
+		'''Allow user to choose file for input
+		
+		Parameters
+		----------
+		filename : str
+			Filename for user data/user function
+			
+		'''
+		
 		if filename == None:
 			filename = filedialog.askopenfilename(initialdir="./", title='Please select a file')
 				
@@ -141,10 +216,14 @@ class import_path(tk.Tk):
 		self.destroy()
 		
 	def get_coordinates(self):
-		'''!@breif Returns the list of coordinates as numpy array
-                
-                @reutrn Coorinates from the user input (2xn)  
-                '''
+		'''Returns the list of coordinates as numpy array
+		
+		Returns
+		-------
+		coords : numpy.array, shape=(n,2)
+			Coordinates of the path
+			
+		'''
 
 		coords = np.array(self.coordinate_array)
 		if len(coords) == 0:
@@ -155,7 +234,9 @@ class import_path(tk.Tk):
 		return coords
 		
 	def plot_coordinates(self):
-		'''!@breif Plot coordinates held in coordinate list'''
+		'''Plot coordinates held in coordinate list
+		
+		'''
 
 		coords = self.get_coordinates()
 		if len(coords) == 0:
