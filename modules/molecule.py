@@ -1,7 +1,6 @@
-'''!@namespace modules.molecule
+'''Implementation of class Rotor as a basic unit to describe a system 
+of interest.
 
-@brief Implementation of class Rotor as a basic unit to describe a 
-system of interest.
 '''
 
 import abc
@@ -12,7 +11,7 @@ from scipy import linalg
 import constants as const
 
 class Molecule(abc.ABC):
-    """!@brief Abstract base class for molecules (system of interest)
+    """Abstract base class for molecules (i.e., system of interest)
     """
     @abc.abstractmethod
     def __init__(self):
@@ -24,11 +23,11 @@ class Molecule(abc.ABC):
         pass
 
 class Rotor(Molecule):
-    """!@brief A basic unit to describe a rotor molecule.
+    """A basic unit to describe a rotor molecule.
 
     Class Rotor provides a basic unit to describe and manipulate a 
     rotor molecule. It can be used within a solver like 
-    solver.solvers.PathToField or solver.solvers.FieldToPath.
+    solvers.PathToField or solvers.FieldToPath.
 
     In contains information including the maximum energy quantum 
     number `m`, the current time, and the current state of the 
@@ -38,15 +37,34 @@ class Rotor(Molecule):
     write them into its history, as well as exporting the history as 
     np.ndarray.
 
+    Parameters
+    ----------
+    m: int
+        Maximum energy quantum number
+
+    Attributes
+    ----------
+    state: State object
+        Contining amplitudes of basic wave functions for the molecule
+
+    field: numpy.array, shape=(2,)
+        External control field expresses as (e_x, e_y)
+
+    hamiltonian: numpy.array, shape=(2m+1,2m+1)
+        Matrix representation of molecule-specific Hamiltonian 
+        operator.
+
+    dipole_x: numpy.array, shape=(2m+1,2m+1)
+        Matrix representation of operator for x-projection of dipole 
+        moment.
+
+    dipole_y: numpy.array, shape=(2m+1,2m+1)
+        Matrix representation of operator for y-projection of dipole 
+        moment.
+
     """
 
     def __init__(self, m):
-        """!@brief Initializes a Rotor instance with quantum number m 
-        and sets it at its ground state.
-
-        @param m: Maximum energy quantum number
-
-        """
         ## Maximun energy quantum number
         self.m = m
         ground_state = np.zeros(2*m+1)
@@ -75,14 +93,17 @@ class Rotor(Molecule):
                         'field':[self.field]}
 
     def evolve(self, dt):
-        """!@brief Evolve and update the state of molecule using its 
+        """Evolve and update the state of molecule using its 
         hamiltonian.
 
         Method `evolve` invokes the method in hamiltonian to evolve 
         the molecule state by `dt` forward in time. It then updates 
         the time and state, and records them into history. 
 
-        @param dt: Step size of time.
+        Parameters
+        ----------
+        dt: float
+            Step size of time.
 
         """
 
@@ -95,12 +116,12 @@ class Rotor(Molecule):
         self.update_time(self.time+dt)
 
     def _get_hamiltonian(self):
-        """!@brief Calculate rotor hamiltonian with the current 
-        control field
+        """Calculate rotor hamiltonian with the current control field.
 
-        @return Hamiltonian matrix representation. A np.ndarray of 
-        shape (2m+1,2m+1) where m is the maxinum energy quantum 
-        number.
+        Returns
+        -------
+        H: numpy.array, shape=(2m+1,2m+1)
+            Matrix representation for Hamiltonian operator.
 
         """
 
@@ -114,18 +135,22 @@ class Rotor(Molecule):
 
 
     def set_field(self, field):
-        """!@brief Set the external field and calculate hamiltonian accordingly.
+        """Set the external field and calculate hamiltonian 
+        accordingly.
 
         `set_field` will set rotor.field to input field object and 
         change self.hamiltonian to the new hamiltonian based on the 
         new field. This DOES NOT add a new value to history but 
         instead change the last value of history, and hence should 
         only be used to set the initial field when a rotor object 
-        instantiated within a solver. (solver.solvers.FieldToPath or 
-        solver.solvers.PathToField)
-
-        @param field: A solver.field.Field object containing the new 
-        external field to set to the molecule.
+        instantiated within a solver. (solvers.FieldToPath or 
+        solvers.PathToField)
+    
+        Parameters
+        ----------
+        field: numpy.array, shape=(2,)
+            New external field expressed as (e_x, e_y) to set to the 
+            molecule.
 
         """
 
@@ -135,18 +160,39 @@ class Rotor(Molecule):
         self.history['field'][-1] = field
 
     def update_time(self, time):
-        """!@brief Set and update time of molecule with history appended."""
+        """Set and update time of molecule with history appended.
+
+        Parameters
+        ----------
+        time: float
+            Current time.
+
+        """
         self.time = time
         self.history['time'].append(time)
 
     def update_state(self, state):
-        """!@brief Set and update state of molecule with history appended."""
+        """Set and update state of molecule with history appended.
+
+        Parameters
+        ----------
+        state: State object
+            Current state of the molecule.
+
+        """
         self.state = state
         self.history['state'].append(state)
 
     def update_field(self, field):
-        """!@brief Set and update field of molecule with history 
-        appended and hamiltonian recalculated.
+        """Set and update field of molecule with history appended and 
+        hamiltonian recalculated.
+
+        Parameters
+        ----------
+        field: numpy.array, shape=(2,)
+            New external field expressed as (e_x, e_y) to set to the 
+            molecule.
+
         """
 
         self.field = field
@@ -155,32 +201,39 @@ class Rotor(Molecule):
         self.hamiltonian = self._get_hamiltonian()
 
     def get_time_asarray(self):
-        """!@brief Return history of time as an array.
+        """Return history of time as an array.
 
-        @return Numpy ndarray of shape (n,) where n is the number of 
-        time points.
+        Returns
+        -------
+        times: numpy.array, shape=(n,)
+            Array containing n time points.
+
         """
         times = [time for time in self.history['time']]
         return np.stack(times)
 
     def get_states_asarray(self):
-        """!@brief Return history of state as an array.
+        """Return history of state as an array.
 
-        @return Numpy ndarray of shape (2m+1,n) where m is the 
-        maximum energy quantum number of the rotor and n is the 
-        number of time points. Each column of this returned 2D-array
-        describes the weights of basis wavefunctions at each time 
-        point.
+        Returns
+        -------
+        states: numpy.array, shape=(2m+1,n)
+            State amplitudes of the molecule at each time points. 
+            Each column of this returned 2D-array is a state 
+            amplitudes vector.
 
         """
         states = [state.value.flatten() for state in self.history['state']]
         return np.stack(states, axis=1)
 
     def get_fields_asarray(self):
-        """!@brief Return history of field as an array.
+        """Return history of field as an array.
 
-        @return Numpy ndarray of shape (n,2) where n is the number of 
-        time points. Each row is the control field at each time point.
+        Returns
+        -------
+        fields: numpy.array, shape=(n,2)
+            Control fields to apply to the molecule. Each row is a 
+            field described as (e_x,e_y) at a time point.
 
         """
         fields = [field.flatten() for field in self.history['field']]
