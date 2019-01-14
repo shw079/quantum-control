@@ -1,6 +1,4 @@
-'''!@namespace testing.testTransform
-
-@brief Unittests for transform.py
+'''Unittests for transform.py
 
 '''
 
@@ -17,7 +15,7 @@ from transform import transform_path
 class test_Transform(unittest.TestCase):
 
     def test_transform(self):
-        """!@brief Test transform function which 'transforms' input
+        """Test transform function which 'transforms' input
         path by interpolation to higher density points. Compares 
         transformed path to verification data
 

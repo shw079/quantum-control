@@ -1,6 +1,4 @@
-'''!@namespace testing.testdataContainer
-
-@brief Unittesting for dataContainer.py
+'''Unittesting for dataContainer.py
 
 '''
 
@@ -13,10 +11,10 @@ from dataContainer import DataContainer
 from transform import transform_path
 
 class test_DataContainer(unittest.TestCase):
-    """!@brief Testing class for DataContainer class"""
+    """Testing class for DataContainer class"""
 
     def test_init(self):
-        """!@brief Instantiate DataContainer object with input using fake 
+        """Instantiate DataContainer object with input using fake 
         path.
         
         """
@@ -30,14 +28,14 @@ class test_DataContainer(unittest.TestCase):
         self.assertEqual(data.path_actual.shape, transformed_path.shape)
 
     def test_hasNanInf(self):
-        """!@brief Raise ValueError if input path contains NaN or Inf."""
+        """Raise ValueError if input path contains NaN or Inf."""
         path = np.array([[0.], [np.nan]])
         self.assertRaises(ValueError, DataContainer, path)
         path2 = np.array([[1.], [np.inf]])
         self.assertRaises(ValueError, DataContainer, path2)
 
     def test_inputTypeAndShape(self):
-        """!@brief Raise errors if input path is not n-by-3 numpy ndarray."""
+        """Raise errors if input path is not n-by-3 numpy ndarray."""
         #an input with wrong type
         path = [0., 1., 2.]
         self.assertRaises(TypeError, DataContainer, path)

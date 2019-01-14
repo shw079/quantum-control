@@ -1,6 +1,4 @@
-'''!@namespace testing.testState
-
-@brief Unittests for State.py
+'''Unittests for State.py
 
 '''
 
@@ -23,7 +21,7 @@ class test_State(unittest.TestCase):
     #     np.testing.assert_array_equal(state_obj.get_value(), state_input)
     
     def test_init(self):
-        """!@brief Test initialization with or without specified state 
+        """Test initialization with or without specified state 
         probability.
         
         """
@@ -38,7 +36,7 @@ class test_State(unittest.TestCase):
         np.testing.assert_array_equal(state.value, value)
 
     def test_init_input(self):
-        """!@brief Test constructor for instantiation of a State"""
+        """Test constructor for instantiation of a State"""
 
         m = 5
         #correct input
@@ -53,7 +51,7 @@ class test_State(unittest.TestCase):
         self.assertRaises(ValueError, State, m, value)
 
     def test_calc_bra(self):
-    	"""!@brief Test calculation of bra or complex conjugate of 
+    	"""Test calculation of bra or complex conjugate of 
         input state.
         
         """
@@ -65,7 +63,7 @@ class test_State(unittest.TestCase):
     	np.testing.assert_array_equal(bra,np.conj(state_input.reshape(1,2*const.m+1)))
 
     def test_calc_ket(self):
-    	"""!@brief Test calculation of ket (reshaped array of state) 
+    	"""Test calculation of ket (reshaped array of state) 
         of input state
 
         """
