@@ -1,0 +1,1537 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python API &mdash; Quantum Control 0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to Quantum Control’s documentation!" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Quantum Control
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-constants">constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dataContainer">dataContainer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-functions">functions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-importPath">importPath module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-molecule">molecule module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-noiseAnalyzer">noiseAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-solvers">solvers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-state">state module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-transform">transform module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-visualization">visualization module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Quantum Control</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Python API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-api">
+<h1>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">¶</a></h1>
+<p>The driver program <code class="docutils literal notranslate"><span class="pre">main.py</span></code> utilizes the following modules in <code class="docutils literal notranslate"><span class="pre">/modules</span></code>:</p>
+<ul class="simple">
+<li>constants.py</li>
+<li>dataContainer.py</li>
+<li>functions.py</li>
+<li>importPath.py</li>
+<li>molecule.py</li>
+<li>noiseAnalyzer.py</li>
+<li>solvers.py</li>
+<li>state.py</li>
+<li>transform.py</li>
+<li>visualization.py</li>
+</ul>
+<div class="section" id="module-constants">
+<span id="constants-module"></span><h2>constants module<a class="headerlink" href="#module-constants" title="Permalink to this headline">¶</a></h2>
+<p>Physical constants used within this project</p>
+<dl class="data">
+<dt id="constants.B">
+<code class="descclassname">constants.</code><code class="descname">B</code><em class="property"> = 9.249999999999999e-07</em><a class="headerlink" href="#constants.B" title="Permalink to this definition">¶</a></dt>
+<dd><p>float; Rotational rotational constant with unit converted to
+atomic units</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="constants.hbar">
+<code class="descclassname">constants.</code><code class="descname">hbar</code><em class="property"> = 1.0</em><a class="headerlink" href="#constants.hbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>float; Reduced Planck’s constant</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="constants.m">
+<code class="descclassname">constants.</code><code class="descname">m</code><em class="property"> = 8</em><a class="headerlink" href="#constants.m" title="Permalink to this definition">¶</a></dt>
+<dd><p>int; Maximum energy quantum number</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="constants.mu">
+<code class="descclassname">constants.</code><code class="descname">mu</code><em class="property"> = 0.2788867924528302</em><a class="headerlink" href="#constants.mu" title="Permalink to this definition">¶</a></dt>
+<dd><p>float; Dipole moment with unit converted to atomic units</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="constants.w1">
+<code class="descclassname">constants.</code><code class="descname">w1</code><em class="property"> = 9.249999999999999e-07</em><a class="headerlink" href="#constants.w1" title="Permalink to this definition">¶</a></dt>
+<dd><p>float; First energy level spacing</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dataContainer">
+<span id="datacontainer-module"></span><h2>dataContainer module<a class="headerlink" href="#module-dataContainer" title="Permalink to this headline">¶</a></h2>
+<p>This module holds implementation for class DataContainer to store
+data provided by user and generated by other classes.</p>
+<dl class="class">
+<dt id="dataContainer.DataContainer">
+<em class="property">class </em><code class="descclassname">dataContainer.</code><code class="descname">DataContainer</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#dataContainer.DataContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A DataContainer contains all data associated with a single path.</p>
+<p>Class DataContainer provides a container to store data associated
+with a single path specified by user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>n</em><em>,</em><em>2</em><em>)</em>) – A desired path of dipole moment projection provided by the
+user. Each row contains the x- and y-projection at each time
+point.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="dataContainer.DataContainer.n">
+<code class="descname">n</code><a class="headerlink" href="#dataContainer.DataContainer.n" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Number of time points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dataContainer.DataContainer.path_desired">
+<code class="descname">path_desired</code><a class="headerlink" href="#dataContainer.DataContainer.path_desired" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,2)</em> – User-specified desired path of dipole moment projection
+described by x and y (in this order).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dataContainer.DataContainer.field">
+<code class="descname">field</code><a class="headerlink" href="#dataContainer.DataContainer.field" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,2)</em> – Control fields e_x and e_y at each time point calculated by
+PathToField.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dataContainer.DataContainer.path_actual">
+<code class="descname">path_actual</code><a class="headerlink" href="#dataContainer.DataContainer.path_actual" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,2)</em> – Path of dipole moment projection described by x and y that is
+resulted from the control field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dataContainer.DataContainer.state">
+<code class="descname">state</code><a class="headerlink" href="#dataContainer.DataContainer.state" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(2m+1,n)</em> – Amplitudes of (2m+1) basis describing the system at each time
+point.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dataContainer.DataContainer.noise_stat_mean">
+<code class="descname">noise_stat_mean</code><a class="headerlink" href="#dataContainer.DataContainer.noise_stat_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,2)</em> – mean x and y at each time point.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dataContainer.DataContainer.noise_stat_var">
+<code class="descname">noise_stat_var</code><a class="headerlink" href="#dataContainer.DataContainer.noise_stat_var" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,2)</em> – variance of x and y at each time point.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li>TypeError: – If input is not an instance of numpy.ndarray</li>
+<li>ValueError: – If input numpy.ndarray is not n-by-2, or contains nan or inf</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-functions">
+<span id="functions-module"></span><h2>functions module<a class="headerlink" href="#module-functions" title="Permalink to this headline">¶</a></h2>
+<p>Functions used in solver class</p>
+<dl class="function">
+<dt id="functions.cosphi">
+<code class="descclassname">functions.</code><code class="descname">cosphi</code><span class="sig-paren">(</span><em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.cosphi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator for x-component of dipole moment projection.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> (<em>int</em>) – Maxium energy quantum number.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>cosphi</strong> – Matrix representation of operator for x-component of dipole
+moment projection.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(2m+1,2m+1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.d2dphi2">
+<code class="descclassname">functions.</code><code class="descname">d2dphi2</code><span class="sig-paren">(</span><em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.d2dphi2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the operator to get the second derivative of phi,
+used for solving b-vector in solvers.PathToField._get_b method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> (<em>int</em>) – Maxium energy quantum number.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>d2dphi2</strong> – Matrix representation of the operator to get the second
+derivative of phi.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(2m+1,2m+1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.d2dt2">
+<code class="descclassname">functions.</code><code class="descname">d2dt2</code><span class="sig-paren">(</span><em>x</em>, <em>dt</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.d2dt2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate second derivative of a sequence of scalar numbers.
+Assume the time differecne between two adjacent points is the
+same throughout the entire sequence.</p>
+<p>This is used for solving b-vector in solvers.PathToField._get_b
+method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>n</em><em>,</em><em>)</em>) – An 1-D sequence of numbers.</li>
+<li><strong>dt</strong> (<em>float</em>) – Step size of time, i.e. the time difference between two
+adjacent numbers in <cite>x</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>d2x</strong> – The second derivative of the original sequence <cite>x</cite>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.array, shape=(n,)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.ddphi">
+<code class="descclassname">functions.</code><code class="descname">ddphi</code><span class="sig-paren">(</span><em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.ddphi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the operator to get the first derivative of phi,
+used for solving b-vector in solvers.PathToField._get_b method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> (<em>int</em>) – Maxium energy quantum number.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>ddphi</strong> – Matrix representation of the operator to get the first
+derivative of phi.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(2m+1,2m+1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.sinphi">
+<code class="descclassname">functions.</code><code class="descname">sinphi</code><span class="sig-paren">(</span><em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.sinphi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator for y-component of dipole moment projection.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> (<em>int</em>) – Maxium energy quantum number.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>sinphi</strong> – Matrix representation of operator for y-component of dipole
+moment projection.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(2m+1,2m+1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-importPath">
+<span id="importpath-module"></span><h2>importPath module<a class="headerlink" href="#module-importPath" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="importPath.import_my_module">
+<code class="descclassname">importPath.</code><code class="descname">import_my_module</code><span class="sig-paren">(</span><em>full_name</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_my_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for importing a python module from path. Python 3.4+ only.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>full_name</strong> (<em>str</em>) – Name of the module (no file extension)</li>
+<li><strong>path</strong> (<em>str</em>) – Path to the module (with file extension)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>mod</strong> – Module object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="importPath.import_path">
+<em class="property">class </em><code class="descclassname">importPath.</code><code class="descname">import_path</code><a class="headerlink" href="#importPath.import_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.Tk</span></code></p>
+<p>Class provides the viualization window for the user to draw a path. The path can also be loaded from
+a data file or generated with a provided function. The coordinates of the path are then recorded in a list for
+future use, and can be retrieved with the get_coordinates() function.
+credit to: stack_exchange_40604233 for base design</p>
+<dl class="attribute">
+<dt id="importPath.import_path.width">
+<code class="descname">width</code><a class="headerlink" href="#importPath.import_path.width" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Width of the GUI in pixels</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="importPath.import_path.height">
+<code class="descname">height</code><a class="headerlink" href="#importPath.import_path.height" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Height of the GUI in pixels</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="importPath.import_path.canvas">
+<code class="descname">canvas</code><a class="headerlink" href="#importPath.import_path.canvas" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tkinter object</em> – Tkinter canvas object for allowing the user to draw a path and select files</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="importPath.import_path.counter">
+<code class="descname">counter</code><a class="headerlink" href="#importPath.import_path.counter" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Counter for use in drawing path</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="importPath.import_path.previous_x">
+<code class="descname">previous_x</code><a class="headerlink" href="#importPath.import_path.previous_x" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Last pointer x position</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="importPath.import_path.previous_y">
+<code class="descname">previous_y</code><a class="headerlink" href="#importPath.import_path.previous_y" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Last pointer y position</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="importPath.import_path.current_x">
+<code class="descname">current_x</code><a class="headerlink" href="#importPath.import_path.current_x" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Current x position</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="importPath.import_path.current_y">
+<code class="descname">current_y</code><a class="headerlink" href="#importPath.import_path.current_y" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Current y position</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="importPath.import_path.coordinate_array">
+<code class="descname">coordinate_array</code><a class="headerlink" href="#importPath.import_path.coordinate_array" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n, 2)</em> – Coordinates for the user path</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all data held in the object and start over</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.draw_line">
+<code class="descname">draw_line</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.draw_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the path as it’s being drawn</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>object</em>) – Tkinter object that stores (among other things), the x and y positon of the cursor</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.finished">
+<code class="descname">finished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.finished" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.get_coordinates">
+<code class="descname">get_coordinates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.get_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of coordinates as numpy array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>coords</strong> – Coordinates of the path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(n,2)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.instructions">
+<code class="descname">instructions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.instructions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display instuctions when ‘instructions’ button clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.load_from_file">
+<code class="descname">load_from_file</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.load_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow user to choose file for input</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – Filename for user data/user function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.plot_coordinates">
+<code class="descname">plot_coordinates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.plot_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot coordinates held in coordinate list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.position_previous">
+<code class="descname">position_previous</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.position_previous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Need to track the previous position for drawing lines</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>object</em>) – Tkinter object that stores (among other things), the x and y positon of the cursor</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="importPath.import_path.record_coordinates">
+<code class="descname">record_coordinates</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#importPath.import_path.record_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keep every coordinate in a list, but not repeating coordinates
+NOTE: need to subtract y from height since pixels are recorded from top</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>object</em>) – Tkinter object that stores (among other things), the x and y positon of the cursor</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-molecule">
+<span id="molecule-module"></span><h2>molecule module<a class="headerlink" href="#module-molecule" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of class Rotor as a basic unit to describe a system
+of interest.</p>
+<dl class="class">
+<dt id="molecule.Molecule">
+<em class="property">class </em><code class="descclassname">molecule.</code><code class="descname">Molecule</code><a class="headerlink" href="#molecule.Molecule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract base class for molecules (i.e., system of interest)</p>
+<dl class="method">
+<dt id="molecule.Molecule.evolve">
+<code class="descname">evolve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Molecule.evolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolve the state to next time point by a unitary operator</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="molecule.Rotor">
+<em class="property">class </em><code class="descclassname">molecule.</code><code class="descname">Rotor</code><span class="sig-paren">(</span><em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#molecule.Molecule" title="molecule.Molecule"><code class="xref py py-class docutils literal notranslate"><span class="pre">molecule.Molecule</span></code></a></p>
+<p>A basic unit to describe a rotor molecule.</p>
+<p>Class Rotor provides a basic unit to describe and manipulate a
+rotor molecule. It can be used within a solver like
+solvers.PathToField or solvers.FieldToPath.</p>
+<p>In contains information including the maximum energy quantum
+number <cite>m</cite>, the current time, and the current state of the
+molecule. It also has the external field applied to the rotor and
+the hamiltonian of the rotor. A rotor molecule can evolve itself
+according to its hamiltonian, update the time, state, field and
+write them into its history, as well as exporting the history as
+np.ndarray.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> (<em>int</em>) – Maximum energy quantum number</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="molecule.Rotor.state">
+<code class="descname">state</code><a class="headerlink" href="#molecule.Rotor.state" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>State object</em> – Contining amplitudes of basic wave functions for the molecule</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="molecule.Rotor.field">
+<code class="descname">field</code><a class="headerlink" href="#molecule.Rotor.field" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(2,)</em> – External control field expresses as (e_x, e_y)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="molecule.Rotor.hamiltonian">
+<code class="descname">hamiltonian</code><a class="headerlink" href="#molecule.Rotor.hamiltonian" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(2m+1,2m+1)</em> – Matrix representation of molecule-specific Hamiltonian
+operator.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="molecule.Rotor.dipole_x">
+<code class="descname">dipole_x</code><a class="headerlink" href="#molecule.Rotor.dipole_x" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(2m+1,2m+1)</em> – Matrix representation of operator for x-projection of dipole
+moment.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="molecule.Rotor.dipole_y">
+<code class="descname">dipole_y</code><a class="headerlink" href="#molecule.Rotor.dipole_y" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(2m+1,2m+1)</em> – Matrix representation of operator for y-projection of dipole
+moment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="molecule.Rotor.evolve">
+<code class="descname">evolve</code><span class="sig-paren">(</span><em>dt</em><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor.evolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolve and update the state of molecule using its
+hamiltonian.</p>
+<p>Method <cite>evolve</cite> invokes the method in hamiltonian to evolve
+the molecule state by <cite>dt</cite> forward in time. It then updates
+the time and state, and records them into history.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dt</strong> (<em>float</em>) – Step size of time.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="molecule.Rotor.get_fields_asarray">
+<code class="descname">get_fields_asarray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor.get_fields_asarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return history of field as an array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>fields</strong> – Control fields to apply to the molecule. Each row is a
+field described as (e_x,e_y) at a time point.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(n,2)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="molecule.Rotor.get_states_asarray">
+<code class="descname">get_states_asarray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor.get_states_asarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return history of state as an array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>states</strong> – State amplitudes of the molecule at each time points.
+Each column of this returned 2D-array is a state
+amplitudes vector.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(2m+1,n)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="molecule.Rotor.get_time_asarray">
+<code class="descname">get_time_asarray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor.get_time_asarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return history of time as an array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>times</strong> – Array containing n time points.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(n,)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="molecule.Rotor.set_field">
+<code class="descname">set_field</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor.set_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the external field and calculate hamiltonian
+accordingly.</p>
+<p><cite>set_field</cite> will set rotor.field to input field object and
+change self.hamiltonian to the new hamiltonian based on the
+new field. This DOES NOT add a new value to history but
+instead change the last value of history, and hence should
+only be used to set the initial field when a rotor object
+instantiated within a solver. (solvers.FieldToPath or
+solvers.PathToField)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>field</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>2</em><em>,</em><em>)</em>) – New external field expressed as (e_x, e_y) to set to the
+molecule.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="molecule.Rotor.update_field">
+<code class="descname">update_field</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor.update_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set and update field of molecule with history appended and
+hamiltonian recalculated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>field</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>2</em><em>,</em><em>)</em>) – New external field expressed as (e_x, e_y) to set to the
+molecule.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="molecule.Rotor.update_state">
+<code class="descname">update_state</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor.update_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set and update state of molecule with history appended.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>State object</em>) – Current state of the molecule.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="molecule.Rotor.update_time">
+<code class="descname">update_time</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#molecule.Rotor.update_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set and update time of molecule with history appended.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (<em>float</em>) – Current time.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-noiseAnalyzer">
+<span id="noiseanalyzer-module"></span><h2>noiseAnalyzer module<a class="headerlink" href="#module-noiseAnalyzer" title="Permalink to this headline">¶</a></h2>
+<p>noiseanalyser.py</p>
+<dl class="class">
+<dt id="noiseAnalyzer.NoiseAnalyser">
+<em class="property">class </em><code class="descclassname">noiseAnalyzer.</code><code class="descname">NoiseAnalyser</code><span class="sig-paren">(</span><em>smoothfield</em>, <em>dt</em>, <em>variance</em>, <em>numfield</em>, <em>processors=4</em><span class="sig-paren">)</span><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for doing some noise analysis for a given field to calculate the mean and variance for the output path.
+The NoiseAnalyzer module uses some data in the DataContainer object and some data are specified by the user.Since calulating path from each noisy field is independet of the calculating the path for the other noisy fields, this part can be parallel. In this module:</p>
+<ul class="simple">
+<li>The field that is calculated through the simulation is the input.</li>
+<li>The user specifies the variance of the noise and the number of samples that are going to be made for analysis.</li>
+<li>Every set of noise is added to the field and the path is calculated for each set of noisy field through FieldToPath.</li>
+<li>In the last part mean and variance of calculated paths are calculated as the output.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>smoothfield</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>n</em><em>,</em><em>2</em><em>)</em>) – Control fields e_x and e_y at each time point calculated by
+PathToField. Now, stored in the DataContainer.</li>
+<li><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=1000</em><em>)</em>) – Difference of time between two adjacent time points. This is
+path-specific and is currently calculated when a
+dataContainer.DataContainer object is instantiated with a
+desired path.</li>
+<li><strong>variance</strong> (<em>folat</em>) – Variance of the distribution of numbers that are added to the field as noise.</li>
+<li><strong>numfield</strong> (<em>integer</em>) – Number of samples that are used for noise analysis.</li>
+<li><strong>processors</strong> (<em>int</em><em>, </em><em>optional</em><em>(</em><em>default=4</em><em>)</em>) – Number of proccessors for the parallelizing this part of the code.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.n">
+<code class="descname">n</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.n" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>integer</em> – number of points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.field">
+<code class="descname">field</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.field" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n, 2)</em> – Control fields.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.dt">
+<code class="descname">dt</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.dt" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float, optional (default=1000)</em> – Difference of time between two adjacent time points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.numfield">
+<code class="descname">numfield</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.numfield" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>integer</em> – Number of samples that are used for noise analysis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.variance">
+<code class="descname">variance</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.variance" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>folat</em> – Variance of the distribution of numbers that are added to the field as noise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.processors">
+<code class="descname">processors</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.processors" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int, optional(default=4)</em> – Number of proccessors for the parallelizing this part of the code.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.path">
+<code class="descname">path</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.arrray shape(n,2*numfield)</em> – Matrix that contains all paths that are calculate from noisy fields.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.noisy_field">
+<code class="descname">noisy_field</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.noisy_field" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.arrray shape(n,2*numfield)</em> – Matrix that contains all noisy field controls.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.pathmean">
+<code class="descname">pathmean</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.pathmean" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape(n,2)</em> – Mean path which is calculated from all paths that are output of PathToField solver.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="noiseAnalyzer.NoiseAnalyser.pathvar">
+<code class="descname">pathvar</code><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.pathvar" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape(n,2)</em> – Variance of the noisy field.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="noiseAnalyzer.NoiseAnalyser.analyze">
+<code class="descname">analyze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a wraper of other member method to do the statistics.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>pathmean</strong> (<em>numpy.array, shape(n,2)</em>) – Mean of the path from noisy fields.</li>
+<li><strong>pathvar</strong> (<em>numpy.array, shape(n,2)</em>) – variance of the path from noisy fields.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="noiseAnalyzer.NoiseAnalyser.calc_a_path">
+<code class="descname">calc_a_path</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.calc_a_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the path from PathToField for one noisy field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<em>integer</em>) – counter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>path</strong> – matrix containing on path.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(n,2)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="noiseAnalyzer.NoiseAnalyser.calc_noisy_field">
+<code class="descname">calc_noisy_field</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.calc_noisy_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method produces some random number with normal
+distribution to be added to the control field.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="noiseAnalyzer.NoiseAnalyser.calc_path">
+<code class="descname">calc_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.calc_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parallel version of calc_a_path to calculate the path for all noisy fields.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="noiseAnalyzer.NoiseAnalyser.calc_statistic">
+<code class="descname">calc_statistic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#noiseAnalyzer.NoiseAnalyser.calc_statistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean path from the calculated path from noisy fields. This method also calcules a matrix with the same dimension as the path that shows the variance of each point cooridante variance from the mean path.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-solvers">
+<span id="solvers-module"></span><h2>solvers module<a class="headerlink" href="#module-solvers" title="Permalink to this headline">¶</a></h2>
+<p>Module solvers implements two classes to calculate</p>
+<ol class="arabic simple">
+<li>control fields for a given path (PathToField), and</li>
+<li>resulting path from a given field (FieldToPath).</li>
+</ol>
+<dl class="class">
+<dt id="solvers.FieldToPath">
+<em class="property">class </em><code class="descclassname">solvers.</code><code class="descname">FieldToPath</code><span class="sig-paren">(</span><em>fields</em>, <em>dt=1000</em>, <em>molecule=None</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.FieldToPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#solvers.Solver" title="solvers.Solver"><code class="xref py py-class docutils literal notranslate"><span class="pre">solvers.Solver</span></code></a></p>
+<p>Calculate the resulting path from a given set of control fields.</p>
+<p>Class FieldToPath is used to solve the trajectory of molecule’s
+dipole moment projection for a given set of control fields in
+time. The system of interest by default is a rotor
+(molecule.Rotor.)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fields</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>n</em><em>,</em><em>2</em><em>)</em>) – A prescribed set of control fields to apply to the molecule.</li>
+<li><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=1000</em><em>)</em>) – Difference of time between two adjacent time points. This is
+path-specific and is currently calculated when a
+dataContainer.DataContainer object is instantiated with a
+desired path.</li>
+<li><strong>molecule</strong> (<em>Molecule object</em><em>, </em><em>optional</em><em> (</em><em>default=Rotor</em><em>)</em>) – System of interest. Default to a Rotor molecule with a system
+dimension of m=8 specified in constants.py.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="solvers.FieldToPath.molecule">
+<code class="descname">molecule</code><a class="headerlink" href="#solvers.FieldToPath.molecule" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Molecule object</em> – System of interest.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.FieldToPath.n">
+<code class="descname">n</code><a class="headerlink" href="#solvers.FieldToPath.n" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Number of time points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.FieldToPath.fields">
+<code class="descname">fields</code><a class="headerlink" href="#solvers.FieldToPath.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,2)</em> – Time-series of control field prescribed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.FieldToPath.dt">
+<code class="descname">dt</code><a class="headerlink" href="#solvers.FieldToPath.dt" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Delta t between two adjacent time points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.FieldToPath.time">
+<code class="descname">time</code><a class="headerlink" href="#solvers.FieldToPath.time" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,)</em> – Time vector in atomic units.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.FieldToPath.path">
+<code class="descname">path</code><a class="headerlink" href="#solvers.FieldToPath.path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,2)</em> – Resulting path of molecule’s dipole moment projection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="solvers.FieldToPath.export">
+<code class="descname">export</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#solvers.FieldToPath.export" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export calculated time vector, fields, and states as
+np.ndarray.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>time</strong> (<em>numpy.array, shape=(n,)</em>) – Time vector based on dt. In unit of picoseconds.</li>
+<li><strong>path</strong> (<em>numpy.array, shape=(n,2)</em>) – Resulting path of molecule’s dipole moment projection.</li>
+<li><strong>states</strong> (<em>numpy.array, shape=(2m+1,n)</em>) – State amplitudes of the system at every time point.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="solvers.FieldToPath.solve">
+<code class="descname">solve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#solvers.FieldToPath.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate path of rotor dipole moment projection from
+given fields.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="solvers.PathToField">
+<em class="property">class </em><code class="descclassname">solvers.</code><code class="descname">PathToField</code><span class="sig-paren">(</span><em>path_desired</em>, <em>dt=1000</em>, <em>molecule=None</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.PathToField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#solvers.Solver" title="solvers.Solver"><code class="xref py py-class docutils literal notranslate"><span class="pre">solvers.Solver</span></code></a></p>
+<p>PathToField is a solver that solves the control fields for a
+given path of dipole moment projection.</p>
+<p>Class PathToField is used to solve a set of control fields that
+drive the dipole moment projection of the system of interest to
+follow a given path. The system of interest by default is a rotor
+(molecule.Rotor.)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path_desired</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>n</em><em>,</em><em>2</em><em>)</em>) – A desired path of molecule dipole moment projection.</li>
+<li><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=1000</em><em>)</em>) – Difference of time between two adjacent time points. This is
+path-specific and is currently calculated when a
+dataContainer.DataContainer object is instantiated with a
+desired path.</li>
+<li><strong>molecule</strong> (<em>Molecule object</em><em>, </em><em>optional</em><em> (</em><em>default=Rotor</em><em>)</em>) – System of interest. Default to a Rotor molecule with a system
+dimension of m=8 specified in constants.py.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="solvers.PathToField.molecule">
+<code class="descname">molecule</code><a class="headerlink" href="#solvers.PathToField.molecule" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Molecule object</em> – System of interest.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.PathToField.path">
+<code class="descname">path</code><a class="headerlink" href="#solvers.PathToField.path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,2)</em> – Path specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.PathToField.n">
+<code class="descname">n</code><a class="headerlink" href="#solvers.PathToField.n" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Number of time points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.PathToField.dt">
+<code class="descname">dt</code><a class="headerlink" href="#solvers.PathToField.dt" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Delta t between two adjacent time points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="solvers.PathToField.time">
+<code class="descname">time</code><a class="headerlink" href="#solvers.PathToField.time" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,)</em> – Time vector in atomic units.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="solvers.PathToField.export">
+<code class="descname">export</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#solvers.PathToField.export" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export calculated time vector, fields, path, and states
+as np.ndarray.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>time</strong> (<em>numpy.array, shape=(n,)</em>) – Time vector based on dt. In unit of picoseconds.</li>
+<li><strong>fields</strong> (<em>numpy.array, shape=(n,2)</em>) – Control fields required for the path of interest. In
+unit of V/angstrom.</li>
+<li><strong>path</strong> (<em>numpy.array, shape=(n,2)</em>) – Resulting path based on the calculated fields.</li>
+<li><strong>states</strong> (<em>numpy.array, shape=(2m+1,n)</em>) – State amplitudes of the system at every time point.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="solvers.PathToField.solve">
+<code class="descname">solve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#solvers.PathToField.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the control field required for each time step.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="solvers.Solver">
+<em class="property">class </em><code class="descclassname">solvers.</code><code class="descname">Solver</code><a class="headerlink" href="#solvers.Solver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract base class for a solver used for quantum control.</p>
+<dl class="method">
+<dt id="solvers.Solver.export">
+<code class="descname">export</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#solvers.Solver.export" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export the calculated results as arrays.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="solvers.Solver.solve">
+<code class="descname">solve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#solvers.Solver.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve for the quantity of interesst.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-state">
+<span id="state-module"></span><h2>state module<a class="headerlink" href="#module-state" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of class State to hold amplitutes of basic wave
+functions describing the system and member methods to use.</p>
+<dl class="class">
+<dt id="state.State">
+<em class="property">class </em><code class="descclassname">state.</code><code class="descname">State</code><span class="sig-paren">(</span><em>m</em>, <em>value=None</em><span class="sig-paren">)</span><a class="headerlink" href="#state.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains amplitudes of basis wave functions and to derive
+properies of the system.</p>
+<p>Class State provides the following functionalities:</p>
+<p>1. As a container for calculated state at a single time point,
+which is a (2m+1,) array where m is the maximum energy quantum
+number.</p>
+<p>2. Functions to access the state and, in conjunction with
+other objects (e.g., operators), to derive other properties of
+the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>m</strong> (<em>int</em>) – Maximim energy quantum number.</li>
+<li><strong>value</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>2m+1</em><em>,</em><em>)</em>) – Amplitude of each basic wave function. Default to None which
+will generate an amplitude-vector for the ground state.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="state.State.m">
+<code class="descname">m</code><a class="headerlink" href="#state.State.m" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Maximim energy quantum number.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="state.State.value">
+<code class="descname">value</code><a class="headerlink" href="#state.State.value" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(2m+1,), optional (default=None)</em> – Amplitude of each basic wave function. Default to None which
+will generate an amplitude-vector for the ground state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="state.State.as_bra">
+<code class="descname">as_bra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#state.State.as_bra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the complex conjugate (known as <cite>bra</cite>) of
+the weights (self.value).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Conjugate transpose of the state amplitudes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(1,2m+1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="state.State.as_ket">
+<code class="descname">as_ket</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#state.State.as_ket" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the state amplitudes vector, known as <cite>ket</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Vector of state amplitudes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.array, shape=(2m+1,1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="state.State.get_expt">
+<code class="descname">get_expt</code><span class="sig-paren">(</span><em>operator</em><span class="sig-paren">)</span><a class="headerlink" href="#state.State.get_expt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the expectation value of an observable for the
+state.</p>
+<p>This is same as the following expression:
+&lt; bra | operator | ket &gt;
+where the <cite>operator</cite> is the matrix representation of a
+corresponding observable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>operator</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>2m+1</em><em>,</em><em>2m+1</em><em>)</em>) – The matrix representation of a specific observable of
+interest.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>expt</strong> – A scalar of the calculated expectation value for the
+observable described by the input operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-transform">
+<span id="transform-module"></span><h2>transform module<a class="headerlink" href="#module-transform" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transform.transform_path">
+<code class="descclassname">transform.</code><code class="descname">transform_path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#transform.transform_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes user defined input path by interpolating (in
+a manner that creates a higher density of points at early times) and
+smoothing using a savitzky-golay filter for compatibility with solver.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>numpy.array</em><em>, </em><em>shape=</em><em>(</em><em>n</em><em>,</em><em>2</em><em>)</em>) – </li>
+<li><strong>representation of the path.</strong> (<em>Matrix</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>new_path</strong> (<em>numpy.array, shape=(n2,2)</em>)</li>
+<li><em>New paths whose dimensions are greater than those of the original input</em></li>
+<li><em>path (i.e., n2 &gt; n), as the length of the array is expanded during the</em></li>
+<li><em>interpolation function.</em></li>
+<li><strong>dt</strong> (<em>float</em>)</li>
+<li><em>Time step size.</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-visualization">
+<span id="visualization-module"></span><h2>visualization module<a class="headerlink" href="#module-visualization" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="visualization.Visualization">
+<em class="property">class </em><code class="descclassname">visualization.</code><code class="descname">Visualization</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for visualizing data of a DataStore object.</p>
+<p>The visualization module uses data in a DataContainer object for
+plotting. This module allows plotting of:</p>
+<ul class="simple">
+<li>control fields amplitude over time for both x and y fields.</li>
+<li>actual and expected trajectory of the rigid rotor for dimensions
+x and y over time, together with a phase plot of x and y
+trajectories.</li>
+<li>a heatmap of probability density for rotational angle over time.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dat</strong> (<em>object</em>) – A DataContainer used for plotting.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="visualization.Visualization.t">
+<code class="descname">t</code><a class="headerlink" href="#visualization.Visualization.t" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,).</em> – Time points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.m">
+<code class="descname">m</code><a class="headerlink" href="#visualization.Visualization.m" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Magnetic quantum number.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.state">
+<code class="descname">state</code><a class="headerlink" href="#visualization.Visualization.state" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(2m+1, n)</em> – System state at each time point.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.field">
+<code class="descname">field</code><a class="headerlink" href="#visualization.Visualization.field" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n, 2)</em> – Control fields.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.cos_phi_actual">
+<code class="descname">cos_phi_actual</code><a class="headerlink" href="#visualization.Visualization.cos_phi_actual" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,)</em> – Actual x trajectory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.sin_phi_actual">
+<code class="descname">sin_phi_actual</code><a class="headerlink" href="#visualization.Visualization.sin_phi_actual" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,)</em> – Actual y trajectory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.cos_phi_desired">
+<code class="descname">cos_phi_desired</code><a class="headerlink" href="#visualization.Visualization.cos_phi_desired" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,)</em> – Desired x trajectory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.sin_phi_desired">
+<code class="descname">sin_phi_desired</code><a class="headerlink" href="#visualization.Visualization.sin_phi_desired" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,)</em> – Desired y trajectory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.mean_cos_phi_actual_noise">
+<code class="descname">mean_cos_phi_actual_noise</code><a class="headerlink" href="#visualization.Visualization.mean_cos_phi_actual_noise" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,)</em> – Mean actual x trajectory with noise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.mean_sin_phi_actual_noise">
+<code class="descname">mean_sin_phi_actual_noise</code><a class="headerlink" href="#visualization.Visualization.mean_sin_phi_actual_noise" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n,)</em> – Mean actual y trajectory with noise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="visualization.Visualization.noise_stat_var">
+<code class="descname">noise_stat_var</code><a class="headerlink" href="#visualization.Visualization.noise_stat_var" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.array, shape=(n, 2)</em> – Variance of actual trajectories with noise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualization.Visualization.density">
+<code class="descname">density</code><span class="sig-paren">(</span><em>n_grid=100</em>, <em>out=None</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a probability density heatmap over time for different
+rotational angles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_grid</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=100</em><em>)</em>) – Number of equally spaced rotational angles to calculate
+probability density in <span class="math notranslate nohighlight">\([0, 2{\pi})\)</span>. Default
+to 100.</li>
+<li><strong>out</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – The path to save the figure if not None. If None, show
+the figure in the console. Default to None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>proba</strong> – A numpy ndarray for probability density for plotting.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.array, shape=(n_grid, n)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualization.Visualization.fields">
+<code class="descname">fields</code><span class="sig-paren">(</span><em>out=None</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot contol fields amplitude over time for both x and y
+dimensions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>out</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – The path to save the figure if not None. If None, show
+the figure in the console. Default to None.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualization.Visualization.noise_variance">
+<code class="descname">noise_variance</code><span class="sig-paren">(</span><em>out=None</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.noise_variance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot variance of trajectories over time under noise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>out</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – The path to save the figure if not None. If None, show
+the figure in the console. Default to None.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualization.Visualization.trajectory">
+<code class="descname">trajectory</code><span class="sig-paren">(</span><em>noise=True</em>, <em>out=None</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.trajectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot trajectories of the rigid rotor.</p>
+<p>Plot actual and expected trajectories of x (i.e.
+&lt;cos(<span class="math notranslate nohighlight">\({\phi}\)</span>)&gt;) and y (i.e. &lt;sin(<span class="math notranslate nohighlight">\({\phi}\)</span>)&gt;) over time
+and also the phase plot of x and y.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>noise</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=True</em><em>)</em>) – Whether to plot mean trajectories under noise over time.
+Default to True.</li>
+<li><strong>out</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – The path to save the figure if not None. If None, show
+the figure in the console. Default to None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to Quantum Control’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shuo Wang, Alicia Magann, Shuwen Yue, Daniel Kozuch, Yi-Che Chang, and Zahra Bajalan.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
