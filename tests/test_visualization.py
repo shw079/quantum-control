@@ -25,6 +25,7 @@ class TestVisualization(unittest.TestCase):
     """Unit testing for visualization module.
 
     """
+    @unittest.skip("window popup doesn't work on Travis CI")
     def test_density(self):
         """Test whether the calculation of probability density 
            from state is correct.
