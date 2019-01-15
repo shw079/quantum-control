@@ -21,7 +21,7 @@ class test_noiseAnalyzer(unittest.TestCase):
         dt = 1000
         myNA = NoiseAnalyser(input_field, dt, 0.0000001, 1)
         myNA.calc_noisy_field()
-        np.testing.assert_array_almost_equal(myNA.noisy_field,input_field) 
+        np.testing.assert_array_almost_equal(myNA.noisy_field,input_field,decimal=3) 
     
     def test_3(self):
         input_path=np.arange(10).reshape((5,2))
