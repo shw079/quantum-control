@@ -26,9 +26,9 @@ class NoiseAnalyser(object):
         self.path=np.empty((len(self.field), 2 * self.numfield),dtype=complex)
 
     def analyze(self):
-        self.calc_noisy_field()
-        self.calc_path()
-        self.calc_statistic()
+        self._calc_noisy_field()
+        self._calc_path()
+        self._calc_statistic()
 
         return self.pathmean.astype(float), self.pathvar.astype(float)        
  
