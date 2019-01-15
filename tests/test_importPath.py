@@ -48,7 +48,7 @@ class test_importPath(unittest.TestCase):
 		npt.assert_array_almost_equal(np.array([np.cos(t1)*t1,np.sin(t1)*t1])-
 									  np.array([np.cos(t0)*t0,np.sin(t0)*t0]),coords[-1])
 
-        @unittest.skip("Opens gui window, can't test on Travis CI")
+	@unittest.skip("Opens gui window, can't test on Travis CI")
 	def test_clear(self):
 		'''Test clear button actually removes data'''
 
