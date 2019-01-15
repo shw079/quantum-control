@@ -6,15 +6,15 @@ from solvers import FieldToPath
 #import math
 #import functions as f
 #import constants as const
-# from joblib import Parallel, delayed
-from multiprocessing import Pool
+from joblib import Parallel, delayed
+#from multiprocessing import Pool
 
 class NoiseAnalyser(object):
     """this part does some noise analysis for a given field
 
     """
 
-    def __init__(self,smoothfield,dt,variance,numfield,processors=8):
+    def __init__(self,smoothfield,dt,variance,numfield,processors=4):
         self.field=smoothfield
         self.dt=dt
         self.numfield=numfield
@@ -39,12 +39,16 @@ class NoiseAnalyser(object):
         path_solver = FieldToPath(self.noisy_field[:,[i*2,i*2+1]], self.dt)
         # Then invoke the solve() method of the path_solver object
         path_solver.solve()
-        self.path[:,[i*2,i*2+1]]= path_solver.export()[1]
+        #self.path[:,[i*2,i*2+1]]= path_solver.export()[1]
+        return path_solver.export()[1]
 
     def calc_path(self):
         '''Parallel version of calc_a_path'''
-        p = Pool(self.processors)
-        p.map(self.calc_a_path, range(self.numfield))       
+        #p = Pool(self.processors)
+        #p.map(self.calc_a_path, range(self.numfield))
+        noisy_paths = Parallel(n_jobs=self.processors)(delayed(self.calc_a_path)(i) for i in range(0,self.numfield))
+        for i in range(0, len(noisy_paths)):
+            self.path[:,[i*2,i*2+1]] = noisy_paths[i]
  
     def calc_statistic(self):
         xcollec= np.zeros((len(self.path),self.numfield))

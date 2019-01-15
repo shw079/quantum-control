@@ -8,10 +8,14 @@ from visualization import Visualization
 from noiseAnalyzer import NoiseAnalyser
 import matplotlib.pyplot as plt
 
+import numpy as np
+import time
+
 # Get user-specified path
-root = importPath.import_path()
-root.mainloop()
-path_in = root.get_coordinates()
+#root = importPath.import_path()
+#root.mainloop()
+#path_in = root.get_coordinates()
+path_in = np.loadtxt("tests/example_user_data.dat")
 
 # Instantiate a DataContainer object with path specified by the user
 data = DataContainer(path_in)
@@ -22,8 +26,11 @@ s.solve()
 data.t, data.field, data.path_actual, data.state = s.export()
 
 # Analyze resulting paths from noisy control fields
-myNA = NoiseAnalyser(data.field, data.dt_atomic,0.01, 4)
+myNA = NoiseAnalyser(data.field, data.dt_atomic,0.01, 8, processors=8)
+start = time.time()
 data.noise_stat_mean,data.noise_stat_var = myNA.analyze()
+end = time.time()
+print(end - start) 
 
 plt.figure(1)
 plt.plot(data.t,data.path_actual[:,0],label='path_actual')
