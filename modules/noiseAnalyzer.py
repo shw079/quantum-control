@@ -80,10 +80,10 @@ class NoiseAnalyser(object):
         
  
     def calc_noisy_field(self):
-    """This method produces some random number with normal distribution to be added to the control field.
+        """This method produces some random number with normal 
+        distribution to be added to the control field.
 
- 
-    """
+        """
         noisy_field=np.empty((len(self.field), 2 * self.numfield), dtype=complex)
         for i in range(self.numfield):
             sx=np.random.normal(0, self.variance, len(self.field))
@@ -95,20 +95,20 @@ class NoiseAnalyser(object):
        
      
     def calc_a_path(self, i):
-    """Calculates the path from PathToField for one noisy field. 
-      
-    Parameters
-    ----------
-    i : integer
-        counter
+        """Calculates the path from PathToField for one noisy field. 
+          
+        Parameters
+        ----------
+        i : integer
+            counter
 
-    Returns
-    ----------
-    path : numpy.array, shape=(n,2) 
-        matrix containing on path.
+        Returns
+        ----------
+        path : numpy.array, shape=(n,2) 
+            matrix containing on path.
 
 
-    """
+        """
         #def calc_a_path(i):
         path_solver = FieldToPath(self.noisy_field[:,[i*2,i*2+1]], self.dt)
         # Then invoke the solve() method of the path_solver object
@@ -116,19 +116,19 @@ class NoiseAnalyser(object):
         return path_solver.export()[1]
 
     def calc_path(self):
-    """Parallel version of calc_a_path to calculate the path for all noisy fields. 
-    
+        """Parallel version of calc_a_path to calculate the path for all noisy fields. 
+        
 
-    """
+        """
         noisy_paths = Parallel(n_jobs=self.processors)(delayed(self.calc_a_path)(i) for i in range(0,self.numfield))
         for i in range(0, len(noisy_paths)):
             self.path[:,[i*2,i*2+1]] = noisy_paths[i]
  
     def calc_statistic(self):
-    """Calculate the mean path from the calculated path from noisy fields. This method also calcules a matrix with the same dimension as the path that shows the variance of each point cooridante variance from the mean path.
-   
+        """Calculate the mean path from the calculated path from noisy fields. This method also calcules a matrix with the same dimension as the path that shows the variance of each point cooridante variance from the mean path.
+       
 
-    """
+        """
         xcollec= np.zeros((len(self.path),self.numfield))
         ycollec= np.zeros((len(self.path),self.numfield))
         for j in range(len(self.path)):
@@ -151,17 +151,17 @@ class NoiseAnalyser(object):
         self.pathvar = np.stack((pathxvar,pathyvar),axis=1)
 
     def analyze(self):
-    """ This is a wraper of other member method to do the statistics.    
+        """ This is a wraper of other member method to do the statistics.    
 
-    Returns
-    ----------
-    pathmean : numpy.array, shape(n,2)
-        Mean of the path from noisy fields. 
+        Returns
+        ----------
+        pathmean : numpy.array, shape(n,2)
+            Mean of the path from noisy fields. 
 
-    pathvar : numpy.array, shape(n,2)
-        variance of the path from noisy fields.
+        pathvar : numpy.array, shape(n,2)
+            variance of the path from noisy fields.
 
-    """
+        """
         self.calc_noisy_field()
         self.calc_path()
         self.calc_statistic()
