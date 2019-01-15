@@ -17,6 +17,9 @@ class test_data:
         self.field = None
         self.path_actual = np.array([[0, 0]])
         self.path_desired = np.array([[0, 0]])
+        self.noise_stat_mean = np.array([[0, 0]])
+        self.mean_sin_phi_actual_noise = dat.noise_stat_mean[:, 1]
+        self.noise_stat_var = None
 
 
 class TestVisualization(unittest.TestCase):
