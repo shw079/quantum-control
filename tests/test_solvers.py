@@ -1,6 +1,4 @@
-'''!@namespace testing.testSolvers
-
-@brief Unittets for solvers.py
+'''Unittets for solvers.py
 
 '''
 
@@ -16,10 +14,26 @@ import solvers as s
 from molecule import Rotor
 
 class test_PathToField(unittest.TestCase):
+    """Testing class for class PathtoField in abstract base 
+    class Solver.
+    
+    """
+
     def setUp(self):
+        """instantiation of Rotor object with quantum
+        number m.
+        
+        """
+
         self.rotor = Rotor(const.m)
 
     def test_init(self):
+        """test init constructor with path input, dt, shape
+        of predicted path, and operators used internally within 
+        class instance
+        
+        """
+
         path_desired = np.arange(10).reshape((5,2))
         fsolver = s.PathToField(path_desired)
         #maybe more?
@@ -49,18 +63,40 @@ class test_PathToField(unittest.TestCase):
 
 
     def test_get_det(self):
+        """Tests for private function _get_det to solve
+        for determinant of matrix A
+        
+        """
+
         path_desired = np.arange(10).reshape((5,2))
         fsolver = s.PathToField(path_desired)
         det = fsolver._get_det()
         self.assertTrue(np.isscalar(det))
 
     def test_solve(self):
+        """Tests solve function to calculate the control
+        field required for a time step
+        
+        """
+
         path_desired = np.arange(10).reshape((5,2))
         fsolver = s.PathToField(path_desired)
         fsolver.solve()
 
 class test_PathToField_sigmoid_path(unittest.TestCase):
+    """Testing class for class PathtoField in abstract base 
+    class Solver for a particular know given path: a sigmoid path.
+    
+    """
+
     def setUp(self):
+        """initiate variables and obtain sigmoid path for 
+        testing.
+
+        ***This is no longer needed?***
+
+        """
+
         #calculate time points
         n = 100000
         rotor_period = 2*np.pi*const.hbar/const.B
@@ -70,6 +106,11 @@ class test_PathToField_sigmoid_path(unittest.TestCase):
         self.time = np.arange(self.t_final, step=self.dt, dtype=float)
 
     def _get_sigmoid_path(self):
+        """Generate sigmoid path as input for solver and 
+        for solved path checking.
+        
+        """
+
         tf = self.t_final
         dt = self.dt
         t = np.arange(0, tf, step=dt, dtype=float)
@@ -94,6 +135,12 @@ class test_PathToField_sigmoid_path(unittest.TestCase):
         return path
 
     def test_solve_early(self):
+        """Given a path, solve all fields, states, and paths. 
+        Test the solved path with the initial input path for only the
+        first 10 time points.
+        
+        """
+
         #only do the first 10 time points
         n = 10
         self.time = self.time[0:n]
@@ -116,10 +163,25 @@ class test_PathToField_sigmoid_path(unittest.TestCase):
         fsolver.solve()
 
 class test_FieldToPath(unittest.TestCase):
+    """Testing class for class FieldToPath in abstract base 
+    class Solver.
+    
+    """
+
     def setUp(self):
+        """instantiation of Rotor object with quantum
+        number m.
+        
+        """
+
         self.rotor = Rotor(const.m)
 
     def test_init(self):
+        """test init constructor with fields input, calculated
+        path shape.
+        
+        """
+
         n = 5
         fields = np.arange(2*n, dtype=float).reshape((n,2))
         psolver = s.FieldToPath(fields)
@@ -131,6 +193,8 @@ class test_FieldToPath(unittest.TestCase):
         self.assertEqual(psolver.path.shape, (n,2))
 
     def test_init_with_dt(self):
+        """tested __init__ function with dt given"""
+
         n = 5
         fields = np.arange(2*n, dtype=float).reshape((n,2))
         dt = 20
@@ -139,7 +203,14 @@ class test_FieldToPath(unittest.TestCase):
         np.testing.assert_array_almost_equal(psolver.time, np.array([0., 20., 40., 60., 80.]))
 
 class test_FieldToPath_sigmoid_path(unittest.TestCase):
+    """Testing class for class FieldToPath in abstract base 
+    class Solver for a particular know given path: a sigmoid path.
+    
+    """
+
     def setUp(self):
+        """init system with test data for sigmoid"""
+
         self.rotor = Rotor(const.m)
 
         fname_fields = 'testdata_solver/fields_real_for_sigmoid_path.txt'
@@ -154,6 +225,11 @@ class test_FieldToPath_sigmoid_path(unittest.TestCase):
         self.time = np.arange(self.t_final, step=self.dt, dtype=float)
 
     def test_solve_short(self):
+        """Test solver in FieldToPath for time, states, and path
+        output.
+        
+        """
+
         n = 50
         self.t_final = self.time[n]
         self.time = self.time[0:n]

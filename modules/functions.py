@@ -1,6 +1,4 @@
-'''!@namespace modules.functions
-
-@brief Functions used in solver class
+'''Functions used in solver class
 
 '''
 
@@ -8,11 +6,18 @@ import numpy as np
 from state import State
 
 def cosphi(m):
-    """!@brief Calculates for x component of path 
-    
-    @param m: Maxium energy quantum number
+    """Get operator for x-component of dipole moment projection.
 
-    @return Matrix representation of x component of path. A np.ndarry of shape (2m+1,2m+1) where m is the maximum energy quantum number.
+    Parameters
+    ----------
+    m : int
+        Maxium energy quantum number.
+
+    Returns
+    -------
+    cosphi : numpy.array, shape=(2m+1,2m+1)
+        Matrix representation of operator for x-component of dipole 
+        moment projection.
 
     """
     cosphi_input=np.full((2*m),0.5)
@@ -20,11 +25,18 @@ def cosphi(m):
     return cosphi
 
 def sinphi(m):
-    """!@brief Calculates for y component of path 
+    """Get operator for y-component of dipole moment projection.
     
-    @param m: Maxium energy quantum number
+    Parameters
+    ----------
+    m : int
+        Maxium energy quantum number.
 
-    @return Matrix representation of y component of path. A np.ndarry of shape (2m+1,2m+1) where m is the maximum energy quantum number.
+    Returns
+    -------
+    sinphi : numpy.array, shape=(2m+1,2m+1)
+        Matrix representation of operator for y-component of dipole 
+        moment projection.
 
     """
     sinphi_input1=np.full((2*m),0.5j)
@@ -33,11 +45,19 @@ def sinphi(m):
     return sinphi
 
 def ddphi(m):
-    """!@brief Calculates first derivative of phi, used for solving b-vector in pathtofield)
+    """Calculates the operator to get the first derivative of phi, 
+    used for solving b-vector in solvers.PathToField._get_b method.
 
-    @param m: Maxium energy quantum number
- 
-    @return Matrix representation of the first derivative of phi. A np.ndarray of shape (2m+1,2m+1) where m is the maxium energy quantum number.    
+    Parameters
+    ----------
+    m : int
+        Maxium energy quantum number.
+
+    Returns
+    -------
+    ddphi : numpy.array, shape=(2m+1,2m+1)
+        Matrix representation of the operator to get the first 
+        derivative of phi.
 
     """
     ddphi_input = np.arange(-m,m+1)
@@ -45,24 +65,47 @@ def ddphi(m):
     return ddphi
 
 def d2dphi2(m):
-    """!@brief Calculates first derivative of phi, used for solving b-vector in pathtofield)
-    @param m: Maxium energy quantum number
-    
-    @return Matrix representation of the second derivative of phi. A np.ndarray of shape (2m+1,2m+1) where m is the maxium energy quantum number.    
+    """Calculates the operator to get the second derivative of phi, 
+    used for solving b-vector in solvers.PathToField._get_b method.
+
+    Parameters
+    ----------
+    m : int
+        Maxium energy quantum number.
+
+    Returns
+    -------
+    d2dphi2 : numpy.array, shape=(2m+1,2m+1)
+        Matrix representation of the operator to get the second 
+        derivative of phi.
 
     """
     d2dphi2_input = np.arange(-m,m+1)**2
     d2dphi2 = -1*np.diag(d2dphi2_input,k=0)
     return d2dphi2
 
-def d2dt2(x,dt): # pass in a 1d np.array
-    """!@brief Calculate second derivative of path using centered finite differences, used for solving b-vector in pathtofield
+def d2dt2(x,dt):
+    """Calculate second derivative of a sequence of scalar numbers. 
+    Assume the time differecne between two adjacent points is the 
+    same throughout the entire sequence. 
 
-    @param x: 1D np.ndarray that represents the x or y of the path
+    This is used for solving b-vector in solvers.PathToField._get_b 
+    method.
 
-    @param dt: Step size of time
+    Parameters
+    ----------
 
-    @return Matrix representation of the second derivative of phi. A np.ndarray of shape (2m+1,2m+1) where m is the maxium energy quantum number.    
+    x : numpy.array, shape=(n,)
+        An 1-D sequence of numbers.
+
+    dt : float
+        Step size of time, i.e. the time difference between two 
+        adjacent numbers in `x`.
+
+    Returns
+    -------
+    d2x : numpy.array, shape=(n,)
+        The second derivative of the original sequence `x`.
 
     """
     # initial step (finite differences method)

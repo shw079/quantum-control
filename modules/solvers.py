@@ -1,8 +1,7 @@
-'''!@namespace modules.solvers
+'''Module solvers implements two classes to calculate 
 
-@brief Module solvers implements two classes to calculate (1) control
-fields for a given path (PathToField), and (2) resulting path from a 
-given field (FieldToPath). 
+    1. control fields for a given path (PathToField), and 
+    2. resulting path from a given field (FieldToPath). 
 
 '''
 
@@ -16,57 +15,69 @@ import abc
 import tqdm
 
 class Solver(abc.ABC):
-    """!@brief Abstract base class for a solver used for quantum 
-    control.
+    """Abstract base class for a solver used for quantum control.
 
     """
 
     @abc.abstractmethod
     def __init__(self):
-        """!@brief Instantiate a solver object."""
+        """Instantiate a solver object."""
         pass
 
     @abc.abstractmethod
     def solve(self):
-        """!@brief Solve for the quantity of interesst."""
+        """Solve for the quantity of interesst."""
         pass
 
     @abc.abstractmethod
     def export(self):
-        """!@brief Export the calculated results as arrays."""
+        """Export the calculated results as arrays."""
         pass
 
 class PathToField(Solver):
-    """!@brief Solve control fields for a given path of dipole moment 
-    projection.
+    """PathToField is a solver that solves the control fields for a 
+    given path of dipole moment projection.
 
     Class PathToField is used to solve a set of control fields that
     drive the dipole moment projection of the system of interest to 
     follow a given path. The system of interest by default is a rotor 
     (molecule.Rotor.)  
 
+    Parameters
+    ----------
+    path_desired: numpy.array, shape=(n,2)
+        A desired path of molecule dipole moment projection.
+
+    dt: float, optional (default=1000)
+        Difference of time between two adjacent time points. This is 
+        path-specific and is currently calculated when a 
+        dataContainer.DataContainer object is instantiated with a
+        desired path.
+
+    molecule: Molecule object, optional (default=Rotor)
+        System of interest. Default to a Rotor molecule with a system 
+        dimension of m=8 specified in constants.py.
+
+    Attributes
+    ----------
+    molecule: Molecule object
+        System of interest.
+
+    path: numpy.array, shape=(n,2)
+        Path specified.
+
+    n: int
+        Number of time points.
+
+    dt: float
+        Delta t between two adjacent time points.
+
+    time: numpy.array, shape=(n,)
+        Time vector in atomic units.
+
     """
 
     def __init__(self, path_desired, dt=1000, molecule=None):
-        """!@brief Instantiate a PathToField object for solving a 
-        specified path.
-
-        
-
-        @param path_desired: A desired path of molecule dipole moment
-        projection. Guaranteed to be a n-by-2 numpy.ndarray where `n`
-        is the number of time points?
-
-        @param dt: (Optional) Difference of time between two adjacent 
-        time points. This is path-specific but currently needs to be
-        provided by user directly. Guaranteed to be a scalar?
-
-        @param molecule: (Optional) System of interest. A 
-        solver.molecule.Rotor object with its quantum number `m` 
-        specified in solver.constants will be used if this argument 
-        is not provided by the user.
-
-        """
         # Create a Rotor object as the system of interest if not 
         # provided by the user
         if molecule is None:
@@ -107,7 +118,7 @@ class PathToField(Solver):
         self.molecule.set_field(field)
 
     def solve(self):
-        """!@brief Calculate the control field required for each time step.
+        """Calculate the control field required for each time step.
         """
 
         for j in tqdm.tqdm(range(1,self.n)):
@@ -118,19 +129,23 @@ class PathToField(Solver):
         # self._velidate()
 
     def export(self):
-        """!@brief Export calculated time vector, fields, and states as np.ndarray.
+        """Export calculated time vector, fields, path, and states 
+        as np.ndarray.
 
-        @return time: Time vector based on dt. In unit of picoseconds.
-        Numpy.ndarray of shape (n,)
+        Returns
+        -------
+        time: numpy.array, shape=(n,)
+            Time vector based on dt. In unit of picoseconds.
 
-        @return fields: Control fields required for the path of 
-        interest. In unit of V/angstrom. Numpy.ndarray of shape (n,2)
+        fields: numpy.array, shape=(n,2) 
+            Control fields required for the path of interest. In 
+            unit of V/angstrom.
 
-        @return path: Resulting path based on the calculated fields. 
-        np.ndarray of shape (n,2)
+        path: numpy.array, shape=(n,2)
+            Resulting path based on the calculated fields.
 
-        @return states: States of the system at every time point.
-        Numpy.ndarray of shape (2m+1,n)
+        states: numpy.array, shape=(2m+1,n)
+            State amplitudes of the system at every time point.
 
         """
 
@@ -156,15 +171,18 @@ class PathToField(Solver):
     def _get_field(self, j, real=False):
         """Calculate the required field for the next step.
 
-        Parameters:
+        Parameters
+        ----------
+        j: int
+            System is at the j-th time point.
 
-            j: System is at the j-th time point.
+        real: bool, optional (default=False)
+            If True, force the returned value to be only the real 
+            part of a complex number.
 
-            real: (optional) If True, force the returned value to be only 
-            the real part of a complex number.
-
-        Return value:
-
+        Returns
+        -------
+        field: numpy.array, shape=(2,)
             An array of size 2 containing x- and y-component of the
             control field for the next step.
 
@@ -207,27 +225,51 @@ class PathToField(Solver):
 
 
 class FieldToPath(Solver):
-    """!@brief Calculate the resulting path from a given set of control fields.
+    """Calculate the resulting path from a given set of control fields.
+    
+    Class FieldToPath is used to solve the trajectory of molecule's 
+    dipole moment projection for a given set of control fields in 
+    time. The system of interest by default is a rotor 
+    (molecule.Rotor.) 
+
+    Parameters
+    ----------
+    fields: numpy.array, shape=(n,2)
+        A prescribed set of control fields to apply to the molecule.
+
+    dt: float, optional (default=1000)
+        Difference of time between two adjacent time points. This is 
+        path-specific and is currently calculated when a 
+        dataContainer.DataContainer object is instantiated with a
+        desired path.
+
+    molecule: Molecule object, optional (default=Rotor)
+        System of interest. Default to a Rotor molecule with a system 
+        dimension of m=8 specified in constants.py.
+
+    Attributes
+    ----------
+    molecule: Molecule object
+        System of interest.
+
+    n: int
+        Number of time points.
+
+    fields: numpy.array, shape=(n,2)
+        Time-series of control field prescribed.
+
+    dt: float
+        Delta t between two adjacent time points.
+
+    time: numpy.array, shape=(n,)
+        Time vector in atomic units.
+
+    path: numpy.array, shape=(n,2)
+        Resulting path of molecule's dipole moment projection.
+
     """
 
     def __init__(self, fields, dt=1000, molecule=None):
-        """!@brief Instantiate a FieldToPath object for solving path 
-        for given fields.
-
-        @param fields: Control fields of interest. Guaranteed to be a 
-        n-by-2 numpy.ndarray where `n` is the number of time points?
-
-        @param dt: (Optional) Difference of time between two adjacent 
-        time points. This is path-specific but currently needs to be 
-        provided by user directly. Guaranteed to be a scalar?
-
-        @param molecule: (Optional) System of interest. A 
-        solver.molecule.Rotor object with its quantum number `m` 
-        specified in solver.constants will be used if this argument 
-        is not provided by the user.
-
-        """
-
         # Create a Rotor object as the system of interest if not 
         # provided by the user
         if molecule is None:
@@ -258,7 +300,9 @@ class FieldToPath(Solver):
         self.molecule.set_field(field)
 
     def solve(self):
-        """!@brief Calculate path of rotor dipole moment projection from given fields.
+        """Calculate path of rotor dipole moment projection from 
+        given fields.
+
         """
 
         for i in tqdm.tqdm(range(1,self.n)):
@@ -266,16 +310,19 @@ class FieldToPath(Solver):
             self.molecule.set_field(self._fields_list[i])
 
     def export(self):
-        """!@brief Export calculated time vector, fields, and states as np.ndarray.
+        """Export calculated time vector, fields, and states as 
+        np.ndarray.
 
-        @return time: Time vector based on dt. In unit of picoseconds.
-        Numpy.ndarray of shape (n,)
+        Returns
+        -------
+        time: numpy.array, shape=(n,)
+            Time vector based on dt. In unit of picoseconds.
 
-        @return path: Resulting path from the given fields. Numpy 
-        ndarray of shape (n,2).
+        path: numpy.array, shape=(n,2)
+            Resulting path of molecule's dipole moment projection.
 
-        @return states: States of the system at every time point.
-        Numpy ndarray of shape (2m+1,n)
+        states: numpy.array, shape=(2m+1,n)
+            State amplitudes of the system at every time point.
         
         """
 
