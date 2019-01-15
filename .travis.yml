@@ -1,9 +1,9 @@
 language: python
 python:
   - "3.6"
-env:
-  - TRAVIS_BUILD_DIR = ./tests/
 install:
   - pip install -r requirements.txt
+before_script:
+  - cd .tests/
 script:
-  - pytest ./tests/
+  - pytest
