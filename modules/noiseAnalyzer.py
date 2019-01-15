@@ -1,6 +1,3 @@
-'''noiseanalyser.py
-'''
-
 import numpy as np
 from solvers import FieldToPath
 from joblib import Parallel, delayed
