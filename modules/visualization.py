@@ -30,7 +30,7 @@ class Visualization:
     m : int
         Magnetic quantum number.
 
-    state : numpy.array, shape=((2m+1, n))
+    state : numpy.array, shape=(2m+1, n)
         System state at each time point.
 
     field : numpy.array, shape=(n, 2)
