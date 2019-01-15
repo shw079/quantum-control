@@ -12,13 +12,14 @@ import matplotlib.pyplot as plt
 # Get user-specified path
 root = importPath.import_path()
 root.mainloop()
+root.plot_coordinates()
 path_in = root.get_coordinates()
 
 # Instantiate a DataContainer object with path specified by the user
 data = DataContainer(path_in)
 
 # Solve for the required control fields
-s = solvers.PathToField(data.path_desired, data.dt_atomic)
+s = solvers.PathToField(data.path_desired, data.dt_atomic, variance=0.01, numfield=8, processors=8)
 s.solve()
 data.t, data.field, data.path_actual, data.state = s.export()
 
