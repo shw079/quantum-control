@@ -19,12 +19,12 @@ path_in = root.get_coordinates()
 data = DataContainer(path_in)
 
 # Solve for the required control fields
-s = solvers.PathToField(data.path_desired, data.dt_atomic, variance=0.01, numfield=8, processors=8)
+s = solvers.PathToField(data.path_desired, data.dt_atomic)
 s.solve()
 data.t, data.field, data.path_actual, data.state = s.export()
 
 # Analyze resulting paths from noisy control fields
-myNA = NoiseAnalyser(data.field, data.dt_atomic,0.01, 4)
+myNA = NoiseAnalyser(data.field, data.dt_atomic, variance=0.01, numfield=8, processors=8)
 data.noise_stat_mean,data.noise_stat_var = myNA.analyze()
 
 # Visualize results
