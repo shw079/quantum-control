@@ -8,7 +8,7 @@ from visualization import Visualization
 
 
 class test_data:
-    """Class to contain temporary data for unit testing
+    """Class to contain temporary data for unit testing.
 
     """
     def __init__(self):
@@ -20,12 +20,12 @@ class test_data:
 
 
 class TestVisualization(unittest.TestCase):
-    """Unit testing for visualization module
+    """Unit testing for visualization module.
 
     """
     def test_density(self):
         """Test whether the calculation of probability density 
-           from state is correct
+           from state is correct.
 
         """
         proba_calculated = Visualization(test_data())\
