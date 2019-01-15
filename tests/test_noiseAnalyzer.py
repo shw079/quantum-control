@@ -20,7 +20,7 @@ class test_noiseAnalyzer(unittest.TestCase):
         input_field = np.arange(10).reshape((5,2))
         dt = 1000
         myNA = NoiseAnalyser(input_field, dt, 0.0000001, 1)
-        myNA.calc_noisy_field()
+        myNA._calc_noisy_field()
         np.testing.assert_array_almost_equal(myNA.noisy_field,input_field) 
     
     def test_3(self):
@@ -29,9 +29,22 @@ class test_noiseAnalyzer(unittest.TestCase):
         dt = 1000
         myNA = NoiseAnalyser(input_field, dt, 1, 1)
         myNA.path=input_path
-        myNA.calc_statistic()
+        myNA._calc_statistic()
         np.testing.assert_array_equal( myNA.pathmean,input_path)
         np.testing.assert_array_equal( myNA.pathvar,np.zeros((5,2)))
+
+    def test_calc_path_parallel(self):
+        input_field = np.arange(10).reshape((5,2))
+        dt = 1000
+        myNA = NoiseAnalyser(input_field, dt, 1.e-7, 5)
+        myNA._calc_noisy_field()
+        myNA._calc_path()
+        np.testing.assert_array_equal(myNA.path.shape, (5,10))
+
+        path_actual = myNA._calc_a_path(input_field)
+        myNA._calc_statistic()
+        np.testing.assert_array_almost_equal(path_actual, myNA.pathmean, decimal=5)
+
         
 if __name__ == '__main__':
     unittest.main()
