@@ -8,7 +8,7 @@ import importlib
 import matplotlib.pyplot as plt
 
 def import_my_module(full_name, path):
-	"""Function for importing a python module from path. Python 3.4+ only.
+	"""Function for importing a python module from path.
 	
 	Parameters
 	----------
